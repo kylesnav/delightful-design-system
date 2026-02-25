@@ -2,15 +2,20 @@
 
 A warm, neo-brutalist design system built on OKLCH color science. 3-tier token architecture, 20+ components, full light/dark mode, and a complete motion system.
 
-**[View the design system](https://kylesnav.github.io/delightful-design-system/delightful-design-system.html)**
+**[Live Demo](https://kylesnav.github.io/delightful-design-system/delightful-design-system.html)** · **[Claude Code Plugin](https://github.com/kylesnav/delightful-claude-plugin)** · **[Obsidian Theme](https://github.com/kylesnav/obsidian-delightful)**
+
+![Delightful Design System — Light Mode](screenshots/design-system-light.png)
 
 ## Ecosystem
 
-- **[Claude Code Plugin](claude-plugin/)** — Skills and agents for building and refactoring UI with the Delightful design system. Includes exportable CSS tokens, a Tailwind preset, and Figma/Style Dictionary tokens.
-- **[Obsidian Theme](obsidian-theme/)** — A full Obsidian theme translating the design system's tokens and visual language into the Obsidian editor.
-- **[Ghostty Theme](ghostty/)** — A Ghostty terminal theme with optional GLSL shaders.
-- **[iTerm2 Theme](iterm2/)** — An iTerm2 color profile using the Delightful palette.
-- **[Shell Config](shell/)** — Starship prompt and zsh config using Delightful colors. Works with any terminal.
+| Tool | Description |
+|------|-------------|
+| **[Claude Code Plugin](claude-plugin/)** | Skills and agents for building and refactoring UI with Delightful. Includes CSS tokens, a Tailwind preset, and Figma/Style Dictionary tokens. |
+| **[VSCode Theme](vscode-theme/)** | Light and dark color themes for Visual Studio Code, generated from OKLCH tokens. |
+| **[Obsidian Theme](obsidian-theme/)** | A full Obsidian theme translating the design system's tokens and visual language into the editor. |
+| **[Ghostty Theme](ghostty/)** | A Ghostty terminal theme with optional GLSL shaders. |
+| **[iTerm2 Theme](iterm2/)** | An iTerm2 color profile using the Delightful palette. |
+| **[Shell Config](shell/)** | Starship prompt and zsh config using Delightful colors. Works with any terminal. |
 
 ## Design Principles
 
@@ -28,6 +33,14 @@ Component     → Typography, spacing, radius, motion, button, toggle
 ```
 
 Components reference semantic tokens. Semantic tokens reference primitives. Nothing skips a tier.
+
+## Screenshots
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Light](screenshots/design-system-light.png) | ![Dark](screenshots/design-system-dark.png) |
+
+> Screenshots pending — run the browser automation capture step or add manually.
 
 ## License
 
