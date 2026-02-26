@@ -2,7 +2,7 @@
   "name": "delightful-theme",
   "displayName": "Delightful",
   "description": "A warm, neo-brutalist color theme from the Delightful Design System",
-  "version": "1.0.0",
+  "version": "0.3.1",
   "publisher": "kylesnav",
   "license": "MIT",
   "engines": {
