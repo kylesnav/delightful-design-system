@@ -478,16 +478,31 @@
        ========================================================================== */
     .cmd-palette-overlay {
       position: fixed; inset: 0; z-index: var(--z-modal);
-      background: var(--overlay-bg); display: none;
-      align-items: flex-start; justify-content: center;
+      background: var(--overlay-bg);
+      display: none; align-items: flex-start; justify-content: center;
       padding-top: 20vh;
+      opacity: 0;
+      transition: opacity 200ms var(--ease-out),
+                  display 200ms var(--ease-out) allow-discrete;
     }
-    .cmd-palette-overlay.active { display: flex; }
+    .cmd-palette-overlay.active {
+      display: flex; opacity: 1;
+      @starting-style { opacity: 0; }
+    }
     .cmd-palette {
       width: 100%; max-width: 520px;
       background: var(--bg-elevated); border: 2px solid var(--border-default);
       border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
       overflow: hidden;
+      transform: scale(0.95) translateY(-10px); opacity: 0;
+      transition: transform 240ms var(--ease-smooth),
+                  opacity 240ms var(--ease-smooth);
+    }
+    .cmd-palette-overlay.active .cmd-palette {
+      transform: scale(1) translateY(0); opacity: 1;
+      @starting-style {
+        transform: scale(0.95) translateY(-10px); opacity: 0;
+      }
     }
     .cmd-palette-input {
       width: 100%; padding: var(--space-4) var(--space-6);
@@ -856,15 +871,30 @@
     /* Modal */
     .modal-overlay {
       position: fixed; inset: 0; background: var(--overlay-bg);
-      z-index: var(--z-modal); display: none;
-      align-items: center; justify-content: center;
+      z-index: var(--z-modal);
+      display: none; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity 240ms var(--ease-out),
+                  display 240ms var(--ease-out) allow-discrete;
     }
-    .modal-overlay.active { display: flex; }
+    .modal-overlay.active {
+      display: flex; opacity: 1;
+      @starting-style { opacity: 0; }
+    }
     .modal-box {
       background: var(--bg-elevated); border: 2px solid var(--border-default);
       border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
       padding: var(--space-8); max-width: 440px; width: 90%;
       text-align: center;
+      transform: scale(1.4) translateY(-20px); opacity: 0;
+      transition: transform 360ms var(--ease-bounce),
+                  opacity 360ms var(--ease-bounce);
+    }
+    .modal-overlay.active .modal-box {
+      transform: scale(1) translateY(0); opacity: 1;
+      @starting-style {
+        transform: scale(1.4) translateY(-20px); opacity: 0;
+      }
     }
     .modal-box h3 { font-size: var(--step-2); font-weight: 800; margin-bottom: var(--space-3); }
     .modal-box p { color: var(--text-secondary); margin-bottom: var(--space-6); }
@@ -3261,7 +3291,8 @@
       cmdOverlay.classList.add('active');
       cmdInput.value = '';
       renderCmdList('');
-      requestAnimationFrame(() => cmdInput.focus());
+      // Delay focus until after @starting-style transition begins
+      requestAnimationFrame(() => requestAnimationFrame(() => cmdInput.focus()));
     }
 
     function closeCmdPalette() {
@@ -3611,30 +3642,14 @@
     });
 
     // --- Modal ---
+    // Entry uses @starting-style + transition-behavior: allow-discrete (pure CSS).
+    // Exit: remove .active — CSS transitions handle the fade/scale out.
     const modalOverlay = document.getElementById('modal-overlay');
-    const modalBox = document.getElementById('modal-box');
     document.getElementById('modal-trigger').addEventListener('click', () => {
       modalOverlay.classList.add('active');
-      modalOverlay.style.opacity = '0';
-      modalOverlay.style.transition = 'opacity 240ms var(--ease-out)';
-      void modalOverlay.offsetWidth;
-      modalOverlay.style.opacity = '1';
-      modalBox.classList.add('anim-stamp-in');
-      modalBox.addEventListener('animationend', () => modalBox.classList.remove('anim-stamp-in'), { once: true });
     });
     function closeModal() {
-      modalBox.classList.add('anim-press-away');
-      modalBox.addEventListener('animationend', () => {
-        modalBox.classList.remove('anim-press-away');
-        modalOverlay.style.opacity = '0';
-        setTimeout(() => {
-          modalOverlay.classList.remove('active');
-          modalOverlay.style.opacity = '';
-          modalOverlay.style.transition = '';
-          modalBox.style.opacity = '';
-          modalBox.style.transform = '';
-        }, 240);
-      }, { once: true });
+      modalOverlay.classList.remove('active');
     }
     document.getElementById('modal-close').addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => {
