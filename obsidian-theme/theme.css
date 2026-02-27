@@ -673,9 +673,11 @@ button.mod-cta:active,
 /* --- Destructive / warning buttons (e.g. confirm-delete) --- */
 
 button.mod-warning,
-.mod-warning {
+.mod-warning,
+button.mod-destructive,
+.mod-destructive {
   background-color: var(--d-danger);
-  color: oklch(1.00 0.000 0);
+  color: oklch(1.00 0.000 0) !important;
   border: 2px solid var(--color-base-100);
   border-radius: var(--radius-s);
   box-shadow: 2px 2px 0 var(--color-base-100);
@@ -684,34 +686,44 @@ button.mod-warning,
 }
 
 button.mod-warning:hover,
-.mod-warning:hover {
+.mod-warning:hover,
+button.mod-destructive:hover,
+.mod-destructive:hover {
   background-color: var(--d-danger-hover);
   transform: translateY(-2px);
   box-shadow: 4px 4px 0 var(--color-base-100);
 }
 
 button.mod-warning:active,
-.mod-warning:active {
+.mod-warning:active,
+button.mod-destructive:active,
+.mod-destructive:active {
   transform: translate(2px, 2px);
   box-shadow: 0 0 0 transparent;
 }
 
 .theme-dark button.mod-warning,
-.theme-dark .mod-warning {
+.theme-dark .mod-warning,
+.theme-dark button.mod-destructive,
+.theme-dark .mod-destructive {
   background-color: oklch(0.660 0.200 20);
-  color: oklch(1.00 0.000 0);
+  color: oklch(1.00 0.000 0) !important;
   border-color: oklch(0.935 0.008 70 / 0.2);
   box-shadow: 2px 2px 0 oklch(0.92 0.010 65);
 }
 
 .theme-dark button.mod-warning:hover,
-.theme-dark .mod-warning:hover {
+.theme-dark .mod-warning:hover,
+.theme-dark button.mod-destructive:hover,
+.theme-dark .mod-destructive:hover {
   background-color: oklch(0.700 0.190 20);
   box-shadow: 4px 4px 0 oklch(0.92 0.010 65);
 }
 
 .theme-dark button.mod-warning:active,
-.theme-dark .mod-warning:active {
+.theme-dark .mod-warning:active,
+.theme-dark button.mod-destructive:active,
+.theme-dark .mod-destructive:active {
   box-shadow: 0 0 0 transparent;
 }
 
@@ -821,6 +833,32 @@ textarea:focus,
   background-color: var(--color-base-25);
   border-color: oklch(0.330 0.015 65);
   box-shadow: 2px 2px 0 oklch(0.92 0.010 65);
+}
+
+/* --- Notices (toast notifications) --- */
+
+.notice {
+  background-color: var(--color-base-00);
+  color: var(--text-normal);
+  border: 2px solid var(--color-base-100);
+  border-radius: var(--radius-s);
+  box-shadow: 4px 4px 0 var(--color-base-100);
+}
+
+.notice button {
+  color: var(--interactive-accent);
+  font-weight: 600;
+}
+
+.theme-dark .notice {
+  background-color: var(--color-base-25);
+  color: var(--text-normal);
+  border-color: oklch(0.330 0.015 65);
+  box-shadow: 4px 4px 0 oklch(0.92 0.010 65);
+}
+
+.theme-dark .notice button {
+  color: var(--interactive-accent);
 }
 
 /* --- Callouts --- */
@@ -1100,106 +1138,106 @@ hr {
    and .task-list-item[data-task="X"] for text styling. */
 
 /* Cancelled — neutral bg, strikethrough text */
-input[data-task="-"]:checked {
+body.delightful-alt-checkboxes input[data-task="-"]:checked {
   background-color: oklch(0.860 0.014 70);
   border-color: oklch(0.860 0.014 70);
 }
 
-.task-list-item[data-task="-"] {
+body.delightful-alt-checkboxes .task-list-item[data-task="-"] {
   text-decoration: line-through;
   color: var(--text-faint);
 }
 
 /* Important — danger red */
-input[data-task="!"]:checked {
+body.delightful-alt-checkboxes input[data-task="!"]:checked {
   background-color: var(--d-danger);
   border-color: var(--d-danger);
 }
 
 /* Question — gold (dark text for contrast) */
-input[data-task="?"]:checked {
+body.delightful-alt-checkboxes input[data-task="?"]:checked {
   background-color: var(--d-gold);
   border-color: var(--d-gold);
   color: oklch(0.220 0.020 70);
 }
 
 /* Forwarded — cyan */
-input[data-task=">"]:checked {
+body.delightful-alt-checkboxes input[data-task=">"]:checked {
   background-color: var(--d-cyan);
   border-color: var(--d-cyan);
 }
 
 /* Scheduled — gold (dark text) */
-input[data-task="<"]:checked {
+body.delightful-alt-checkboxes input[data-task="<"]:checked {
   background-color: var(--d-gold);
   border-color: var(--d-gold);
   color: oklch(0.220 0.020 70);
 }
 
 /* Star — gold (dark text) */
-input[data-task="*"]:checked {
+body.delightful-alt-checkboxes input[data-task="*"]:checked {
   background-color: var(--d-gold);
   border-color: var(--d-gold);
   color: oklch(0.220 0.020 70);
 }
 
 /* Info — cyan */
-input[data-task="i"]:checked {
+body.delightful-alt-checkboxes input[data-task="i"]:checked {
   background-color: var(--d-cyan);
   border-color: var(--d-cyan);
 }
 
 /* Idea — gold (dark text) */
-input[data-task="I"]:checked {
+body.delightful-alt-checkboxes input[data-task="I"]:checked {
   background-color: var(--d-gold);
   border-color: var(--d-gold);
   color: oklch(0.220 0.020 70);
 }
 
 /* Pro — green */
-input[data-task="p"]:checked {
+body.delightful-alt-checkboxes input[data-task="p"]:checked {
   background-color: var(--d-green);
   border-color: var(--d-green);
 }
 
 /* Con — danger red */
-input[data-task="c"]:checked {
+body.delightful-alt-checkboxes input[data-task="c"]:checked {
   background-color: var(--d-danger);
   border-color: var(--d-danger);
 }
 
 /* Bookmark — purple */
-input[data-task="b"]:checked {
+body.delightful-alt-checkboxes input[data-task="b"]:checked {
   background-color: var(--d-purple);
   border-color: var(--d-purple);
 }
 
 /* Location — green */
-input[data-task="l"]:checked {
+body.delightful-alt-checkboxes input[data-task="l"]:checked {
   background-color: var(--d-green);
   border-color: var(--d-green);
 }
 
 /* Fire/Urgent — danger red */
-input[data-task="f"]:checked {
+body.delightful-alt-checkboxes input[data-task="f"]:checked {
   background-color: var(--d-danger);
   border-color: var(--d-danger);
 }
 
 /* Up — green */
-input[data-task="u"]:checked {
+body.delightful-alt-checkboxes input[data-task="u"]:checked {
   background-color: var(--d-green);
   border-color: var(--d-green);
 }
 
 /* Down — danger red */
-input[data-task="d"]:checked {
+body.delightful-alt-checkboxes input[data-task="d"]:checked {
   background-color: var(--d-danger);
   border-color: var(--d-danger);
 }
 
 /* Win — gold (dark text) */
-input[data-task="w"]:checked {
+body.delightful-alt-checkboxes input[data-task="w"]:checked {
   background-color: var(--d-gold);
   border-color: var(--d-gold);
   color: oklch(0.220 0.020 70);
@@ -1961,6 +1999,15 @@ body.shadow-subtle .kanban-plugin__lane,
 body.shadow-subtle .kanban-plugin__item {
   box-shadow: 1px 1px 0 oklch(0.180 0.010 80 / 0.15);
 }
+body.shadow-subtle .notice {
+  box-shadow: 2px 2px 0 oklch(0.180 0.010 80 / 0.15);
+}
+body.shadow-subtle button.mod-warning,
+body.shadow-subtle .mod-warning,
+body.shadow-subtle button.mod-destructive,
+body.shadow-subtle .mod-destructive {
+  box-shadow: 1px 1px 0 oklch(0.180 0.010 80 / 0.15);
+}
 body.shadow-subtle input[type='text'],
 body.shadow-subtle input[type='search'],
 body.shadow-subtle input[type='email'],
@@ -1993,7 +2040,12 @@ body.shadow-none .graph-controls,
 body.shadow-none .canvas-node-container,
 body.shadow-none .canvas-card-menu,
 body.shadow-none .kanban-plugin__lane,
-body.shadow-none .kanban-plugin__item {
+body.shadow-none .kanban-plugin__item,
+body.shadow-none .notice,
+body.shadow-none button.mod-warning,
+body.shadow-none .mod-warning,
+body.shadow-none button.mod-destructive,
+body.shadow-none .mod-destructive {
   box-shadow: none;
 }
 
@@ -2035,7 +2087,12 @@ body.border-subtle .kanban-plugin__lane,
 body.border-subtle .kanban-plugin__item,
 body.border-subtle .dataview.table-view-table,
 body.border-subtle .calendar,
-body.border-subtle .metadata-container {
+body.border-subtle .metadata-container,
+body.border-subtle .notice,
+body.border-subtle button.mod-warning,
+body.border-subtle .mod-warning,
+body.border-subtle button.mod-destructive,
+body.border-subtle .mod-destructive {
   border-width: 1px;
 }
 
@@ -2256,6 +2313,17 @@ body.theme-dark.delightful-colorful-headings {
 
   button.mod-cta:active,
   .mod-cta:active {
+    transform: none;
+  }
+
+  button.mod-warning:hover,
+  .mod-warning:hover,
+  button.mod-destructive:hover,
+  .mod-destructive:hover,
+  button.mod-warning:active,
+  .mod-warning:active,
+  button.mod-destructive:active,
+  .mod-destructive:active {
     transform: none;
   }
 
