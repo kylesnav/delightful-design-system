@@ -583,6 +583,51 @@
       width: 12px; height: 12px; border-radius: 50%;
       border: 2px solid var(--border-default);
     }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-dot:nth-child(1) { animation: idle-bounce 2s var(--ease-bounce) infinite; }
+      .hero-dot:nth-child(2) { animation: pendulum 2.5s var(--ease-smooth) infinite; }
+      .hero-dot:nth-child(3) { animation: idle-bounce 2s var(--ease-bounce) infinite 0.5s; }
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      margin-top: var(--space-6);
+      padding: var(--space-3) var(--space-6);
+      font-family: var(--font-sans); font-size: var(--ui-text-md); font-weight: 700;
+      color: var(--text-on-accent); background: var(--accent-primary);
+      border: 2px solid var(--border-default); border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md); cursor: pointer; text-decoration: none;
+      transition: transform var(--motion-instant) var(--ease-out),
+                  box-shadow var(--motion-instant) linear;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .hero-cta:active { transform: translateY(1px); box-shadow: var(--shadow-sm); }
+    .hero-cta svg { width: 16px; height: 16px; }
+    .hero-preview-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-3);
+      max-width: 640px; margin: var(--space-8) auto 0;
+    }
+    @media (max-width: 640px) {
+      .hero-preview-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .hero-preview-cell {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      background: var(--bg-surface); border: 2px solid var(--border-default);
+      border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+      overflow: hidden; position: relative;
+    }
+    .hero-preview-dot {
+      width: 16px; height: 16px; border-radius: var(--radius-sm);
+      border: 2px solid var(--border-default); background: var(--bg-surface);
+      box-shadow: var(--shadow-sm);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-preview-cell:nth-child(1) .hero-preview-dot { animation: stamp-in 360ms var(--ease-bounce) both infinite 2s; }
+      .hero-preview-cell:nth-child(2) .hero-preview-dot { animation: wiggle 500ms var(--ease-out) infinite 1s; }
+      .hero-preview-cell:nth-child(3) .hero-preview-dot { animation: idle-bounce 2s var(--ease-bounce) infinite; }
+      .hero-preview-cell:nth-child(4) .hero-preview-dot { animation: rubber-band 500ms var(--ease-bounce) infinite 1.5s; }
+      .hero-preview-cell:nth-child(5) .hero-preview-dot { animation: breathe-shadow 3s var(--ease-smooth) infinite alternate; }
+      .hero-preview-cell:nth-child(6) .hero-preview-dot { animation: spring-snap 400ms var(--ease-spring-gentle) infinite 2.5s; }
+    }
 
     /* ==========================================================================
        SECTION LAYOUT
@@ -2132,6 +2177,15 @@
         <span class="hero-dot" style="background:var(--accent-primary)"></span>
         <span class="hero-dot" style="background:var(--accent-gold)"></span>
         <span class="hero-dot" style="background:var(--accent-cyan)"></span>
+      </div>
+      <a href="#entrances" class="hero-cta anim-in anim-d6">Explore 59 animations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <div class="hero-preview-grid anim-in anim-d7">
+        <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-primary-subtle);border-color:var(--accent-primary)"></div></div>
+        <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-gold-subtle);border-color:var(--accent-gold)"></div></div>
+        <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-cyan-subtle);border-color:var(--accent-cyan)"></div></div>
+        <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-danger-subtle);border-color:var(--accent-danger)"></div></div>
+        <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-green-subtle);border-color:var(--accent-green)"></div></div>
+        <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-purple-subtle);border-color:var(--accent-purple)"></div></div>
       </div>
     </section>
 
