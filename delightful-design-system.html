@@ -1648,6 +1648,41 @@
       height: 16px;
     }
 
+    /* Button Loading State */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-loading {
+      pointer-events: none;
+      position: relative;
+      color: transparent !important;
+    }
+
+    .btn-loading::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--text-on-accent);
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    .btn-secondary.btn-loading::after,
+    .btn-ghost.btn-loading::after {
+      border-color: var(--text-primary);
+      border-right-color: transparent;
+    }
+
+    .btn-gold.btn-loading::after {
+      border-color: var(--text-on-gold);
+      border-right-color: transparent;
+    }
+
     .btn-row {
       display: flex;
       gap: var(--space-3);
@@ -3033,6 +3068,73 @@
 
     .stepper-step.completed .stepper-label {
       color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       ACCORDION
+       ========================================================================== */
+    .accordion-item {
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .accordion-item + .accordion-item {
+      margin-top: -2px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .accordion-item:has(+ .accordion-item) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .accordion-item:only-child {
+      border-radius: var(--radius-md);
+    }
+
+    .accordion-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--space-4) var(--space-5);
+      font-weight: 600;
+      font-size: var(--ui-text-md);
+      cursor: pointer;
+      background: var(--bg-surface);
+      list-style: none;
+      font-family: var(--font-sans);
+    }
+
+    .accordion-trigger::-webkit-details-marker {
+      display: none;
+    }
+
+    .accordion-trigger::after {
+      content: "+";
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: transform var(--motion-fast) var(--ease-out);
+      flex-shrink: 0;
+    }
+
+    .accordion-item[open] .accordion-trigger::after {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      padding: 0 var(--space-5) var(--space-5);
+      font-size: var(--ui-text-md);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* Progressive enhancement: animate open/close in supporting browsers */
+    :root {
+      interpolate-size: allow-keywords;
     }
 
     /* ==========================================================================
@@ -4930,6 +5032,13 @@
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
             </svg></button>
         </div>
+        <div class="subsection-label" style="margin-top:var(--space-6)">Loading State</div>
+        <div class="btn-row">
+          <button class="btn btn-md btn-primary btn-loading">Saving</button>
+          <button class="btn btn-md btn-secondary btn-loading">Loading</button>
+          <button class="btn btn-md btn-danger btn-loading">Deleting</button>
+          <button class="btn btn-md btn-gold btn-loading">Processing</button>
+        </div>
       </div>
 
       <!-- 5b. Form Elements -->
@@ -5210,6 +5319,26 @@
               <div style="font-size:var(--ui-text-xs);color:var(--text-secondary);line-height:var(--leading-normal)">Tokens are the atomic building blocks of the design system. They encode color, spacing, typography, and motion decisions as reusable variables.</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Accordion -->
+      <div class="subsection">
+        <div class="subsection-label">Accordion</div>
+        <div class="subsection-desc">Collapsible disclosure sections using native &lt;details&gt;/&lt;summary&gt; elements. Fully accessible with keyboard support built-in.</div>
+        <div style="max-width:560px">
+          <details class="accordion-item" open>
+            <summary class="accordion-trigger">What is the Delightful Design System?</summary>
+            <div class="accordion-content">A comprehensive design system built with OKLCH color, neo-brutalist aesthetics, and modern CSS features. Every token, component, and interaction is designed to spark joy.</div>
+          </details>
+          <details class="accordion-item">
+            <summary class="accordion-trigger">How are colors defined?</summary>
+            <div class="accordion-content">All colors use the OKLCH color space exclusively. The 3-tier token architecture maps raw primitives to semantic tokens to component-level values, ensuring perceptual consistency across the palette.</div>
+          </details>
+          <details class="accordion-item">
+            <summary class="accordion-trigger">Does it support dark mode?</summary>
+            <div class="accordion-content">Yes. Dark mode uses warm amber-tinted backgrounds with adjusted accent colors. The toggle cycles between light, dark, and system preference modes. All semantic tokens have dark-mode equivalents.</div>
+          </details>
         </div>
       </div>
 
