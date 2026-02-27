@@ -28,6 +28,7 @@ iterm2/                         ← iTerm2 color profile
 shell/                          ← Shared terminal config (works with any terminal)
   starship.toml                     Starship prompt config
   zshrc-snippet                     Zsh additions (aliases, hooks)
+  smart-open                        iTerm2 Semantic History handler (Cmd+click → smart open)
 archive/                        ← Archived prior versions (gitignored)
 ```
 
@@ -119,6 +120,7 @@ When `obsidian-theme/` is updated, copy **all** its files (`theme.css`, `manifes
 | `iterm2/Delightful.itermcolors` | iTerm2 color profile | Primitive hex values change |
 | `shell/starship.toml` | Starship prompt config | Accent hex values change |
 | `shell/zshrc-snippet` | Zsh config | Alias or hook changes |
+| `shell/smart-open` | iTerm2 Cmd+click handler | File type routing changes |
 
 ## Versioning
 
