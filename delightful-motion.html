@@ -352,7 +352,7 @@
        RESET & BASE
        ========================================================================== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; interpolate-size: allow-keywords; }
     body {
       font-family: var(--font-sans);
       font-size: var(--step-0);
@@ -496,6 +496,14 @@
     .back-to-top svg { width: 20px; height: 20px; }
 
     /* ==========================================================================
+       VIEW TRANSITIONS — Theme toggle crossfade
+       ========================================================================== */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 240ms;
+    }
+
+    /* ==========================================================================
        COMMAND PALETTE
        ========================================================================== */
     .cmd-palette-overlay {
@@ -636,6 +644,8 @@
       margin-bottom: var(--space-16);
       padding-bottom: var(--space-16);
       border-bottom: 2px dashed var(--border-subtle);
+      content-visibility: auto;
+      contain-intrinsic-size: auto 500px;
     }
     .motion-section:last-of-type {
       border-bottom: none;
@@ -3347,7 +3357,11 @@
     document.getElementById('theme-toggle').addEventListener('click', () => {
       const current = localStorage.getItem('delightful-theme-mode') || 'system';
       const next = current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light';
-      applyThemeMode(next);
+      if (document.startViewTransition) {
+        document.startViewTransition(() => applyThemeMode(next));
+      } else {
+        applyThemeMode(next);
+      }
     });
 
     // --- Back to top button ---
