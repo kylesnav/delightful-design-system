@@ -4,6 +4,21 @@ All notable changes to the Delightful Design System are documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] — 2026-02-27
+
+### Fixed
+
+- **Cascade layer integrity** — removed duplicate unwrapped semantic token blocks from `delightful-motion.html` and `delightful-animation.html` that were overriding `@layer semantic` definitions
+- **Layer declaration** — added `@layer reset, primitives, semantic, component, utilities;` to motion and animation HTML files for consistent cascade ordering
+- **VSCode themes** regenerated from latest OKLCH tokens
+- **Downstream sync** — synced `delightful-claude-plugin` and `obsidian-delightful` distribution repos to match monorepo
+
+### Changed
+
+- Universal pounce/sink interactions and overflow clipping
+- Consistent press behavior across interactive elements
+- Obsidian theme: alt-checkbox toggle, notice/button variant coverage, reduced motion support
+
 ## [0.4.9] — 2026-02-27
 
 ### Added

@@ -17,7 +17,7 @@
     "textBlockQuote.background": "#f9f2eb",
     "textBlockQuote.border": "#f500a2",
     "textCodeBlock.background": "#f4ece4",
-    "textPreformat.foreground": "#d40237",
+    "textPreformat.foreground": "#db173d",
     "textSeparator.foreground": "#cbc3ba",
     "editor.background": "#fffdfb",
     "editor.foreground": "#1b150f",
@@ -131,7 +131,7 @@
     "list.focusHighlightForeground": "#cd0087",
     "list.highlightForeground": "#cd0087",
     "list.errorForeground": "#ed324b",
-    "list.warningForeground": "#694e00",
+    "list.warningForeground": "#936e00",
     "list.invalidItemForeground": "#ed324b",
     "list.deemphasizedForeground": "#7a736e",
     "list.filterMatchBackground": "#fff2d899",
@@ -246,13 +246,13 @@
     "merge.incomingHeaderBackground": "#d7f3f899",
     "merge.incomingContentBackground": "#d7f3f84d",
     "gitDecoration.addedResourceForeground": "#22a448",
-    "gitDecoration.modifiedResourceForeground": "#694e00",
+    "gitDecoration.modifiedResourceForeground": "#936e00",
     "gitDecoration.deletedResourceForeground": "#ed324b",
     "gitDecoration.renamedResourceForeground": "#00a1b5",
     "gitDecoration.untrackedResourceForeground": "#22a448",
     "gitDecoration.conflictingResourceForeground": "#ed324b",
     "gitDecoration.ignoredResourceForeground": "#7a736e",
-    "gitDecoration.stageModifiedResourceForeground": "#694e00",
+    "gitDecoration.stageModifiedResourceForeground": "#936e00",
     "gitDecoration.stageDeletedResourceForeground": "#ed324b",
     "notificationCenter.border": "#cbc3ba",
     "notifications.background": "#ffffff",
@@ -283,11 +283,11 @@
     "debugToolBar.background": "#ffffff",
     "debugExceptionWidget.background": "#ffe8e8",
     "debugExceptionWidget.border": "#ed324b",
-    "debugTokenExpression.name": "#007685",
+    "debugTokenExpression.name": "#008394",
     "debugTokenExpression.value": "#1b150f",
-    "debugTokenExpression.string": "#694e00",
+    "debugTokenExpression.string": "#936e00",
     "debugTokenExpression.boolean": "#cd0087",
-    "debugTokenExpression.number": "#00722a",
+    "debugTokenExpression.number": "#007f30",
     "debugTokenExpression.error": "#ed324b",
     "testing.iconPassed": "#22a448",
     "testing.iconFailed": "#ed324b",
@@ -366,7 +366,7 @@
         "string.quoted"
       ],
       "settings": {
-        "foreground": "#694e00"
+        "foreground": "#936e00"
       }
     },
     {
@@ -375,7 +375,7 @@
         "constant.numeric"
       ],
       "settings": {
-        "foreground": "#00722a"
+        "foreground": "#007f30"
       }
     },
     {
@@ -386,7 +386,7 @@
         "support.constant"
       ],
       "settings": {
-        "foreground": "#d40237"
+        "foreground": "#db173d"
       }
     },
     {
@@ -395,7 +395,7 @@
         "constant.character.escape"
       ],
       "settings": {
-        "foreground": "#d40237"
+        "foreground": "#db173d"
       }
     },
     {
@@ -406,7 +406,7 @@
         "meta.function-call"
       ],
       "settings": {
-        "foreground": "#007685"
+        "foreground": "#008394"
       }
     },
     {
@@ -467,7 +467,7 @@
         "entity.other.attribute-name"
       ],
       "settings": {
-        "foreground": "#694e00"
+        "foreground": "#936e00"
       }
     },
     {
@@ -477,7 +477,7 @@
         "support.type.property-name.scss"
       ],
       "settings": {
-        "foreground": "#007685"
+        "foreground": "#008394"
       }
     },
     {
@@ -487,7 +487,7 @@
         "support.constant.color"
       ],
       "settings": {
-        "foreground": "#00722a"
+        "foreground": "#007f30"
       }
     },
     {
@@ -566,7 +566,7 @@
         "markup.inline.raw"
       ],
       "settings": {
-        "foreground": "#d40237"
+        "foreground": "#db173d"
       }
     },
     {
@@ -585,25 +585,25 @@
         "support.type.property-name.json"
       ],
       "settings": {
-        "foreground": "#007685"
+        "foreground": "#008394"
       }
     }
   ],
   "semanticTokenColors": {
-    "variable.readonly": "#d40237",
+    "variable.readonly": "#db173d",
     "parameter": {
       "foreground": "#1b150f",
       "italic": true
     },
     "property.declaration": "#a11d6c",
     "function.declaration": {
-      "foreground": "#007685",
+      "foreground": "#008394",
       "bold": true
     },
     "type": "#00a1b5",
     "interface": "#00a1b5",
     "enum": "#00a1b5",
-    "enumMember": "#d40237",
+    "enumMember": "#db173d",
     "namespace": "#534b45"
   }
 }

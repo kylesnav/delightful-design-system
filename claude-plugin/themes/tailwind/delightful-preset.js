@@ -160,6 +160,8 @@ export default {
         smooth: 'var(--ease-smooth)',
         slam: 'var(--ease-slam)',
         elastic: 'var(--ease-elastic)',
+        'spring-gentle': 'var(--ease-spring-gentle)',
+        'spring-bouncy': 'var(--ease-spring-bouncy)',
       },
 
       zIndex: {
