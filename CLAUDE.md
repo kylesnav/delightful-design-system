@@ -29,7 +29,7 @@ The Claude Code plugin lives in two places:
 - `claude-plugin/` in this repo (development copy)
 - `delightful-claude-plugin` repo (distribution copy — installable via `claude plugin install`)
 
-When any file in `claude-plugin/` is updated, copy **all** its contents (`.claude-plugin/`, `agents/`, `skills/`, `themes/`, `reference/`, `README.md`) to the `delightful-claude-plugin` repo and commit/push both repos.
+When any file in `claude-plugin/` is updated, copy **all** its contents to the `delightful-claude-plugin` repo and commit/push both repos.
 
 ## Obsidian External Repo Sync
 
@@ -37,7 +37,7 @@ The Obsidian theme lives in two places:
 - `obsidian-theme/` in this repo (development copy)
 - `obsidian-delightful` repo (distribution copy)
 
-When any file in `obsidian-theme/` is updated, copy **all** its contents (`theme.css`, `manifest.json`, `README.md`, `screenshot.png`, `LICENSE`) to the `obsidian-delightful` repo and commit/push both repos.
+When any file in `obsidian-theme/` is updated, copy **all** its contents to the `obsidian-delightful` repo and commit/push both repos.
 
 ## VSCode Theme
 
@@ -49,7 +49,7 @@ The Ghostty config lives in two places:
 - `ghostty/` in this repo (development copy)
 - `delightful-ghostty` repo (distribution copy)
 
-When any file in `ghostty/` is updated, copy **all** its contents (`themes/`, `config`, `shaders/`, `README.md`) to the `delightful-ghostty` repo and commit/push both repos.
+When any file in `ghostty/` is updated, copy **all** its contents to the `delightful-ghostty` repo and commit/push both repos.
 
 The theme files (`themes/delightful-light`, `themes/delightful-dark`) contain color-only definitions installable via Ghostty's `theme =` directive. They contain hex color values derived from the OKLCH primitives — if primitive token values change, the hex mappings must be recalculated.
 
