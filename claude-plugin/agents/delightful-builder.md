@@ -48,7 +48,7 @@ When building components, follow these exact patterns:
 
 **Buttons:** `.btn` base + `.btn-{variant}` + `.btn-{size}`. Variants: primary (pink), danger (red), gold, cyan, green, purple, secondary (outlined), ghost (transparent).
 
-**Cards:** `.card` with 2px border, solid shadow, neo-brutalist hover (translate -4px,-4px + shadow-lg), active (translate 2px,2px + no shadow).
+**Cards:** `.card` with 2px border, solid shadow, neo-brutalist hover (translate -4px,-4px + shadow-lg), active (translate 2px,2px + shadow collapses).
 
 **Inputs:** `.input` with 2px border, solid shadow, focus state changes border to accent-primary + shadow-pink.
 

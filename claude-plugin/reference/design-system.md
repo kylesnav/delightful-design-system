@@ -452,7 +452,7 @@ All animations MUST be wrapped in `@media (prefers-reduced-motion: no-preference
 ```css
 .btn-bounce {
   transition: transform var(--motion-fast) var(--ease-bounce),
-              background-color var(--motion-fast) ease-out,
+              background-color var(--motion-fast) var(--ease-out),
               box-shadow var(--motion-fast) var(--ease-out);
 }
 .btn-bounce:hover { transform: scale(1.03); }
@@ -462,24 +462,34 @@ All animations MUST be wrapped in `@media (prefers-reduced-motion: no-preference
 ### card-interactive
 ```css
 .card-interactive {
-  transition: transform var(--motion-fast) var(--ease-smooth),
-              box-shadow var(--motion-base) var(--ease-out),
-              border-color var(--motion-fast) ease-out;
+  transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
+              border-color var(--motion-fast) var(--ease-out);
+  will-change: transform;
 }
 .card-interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-lg);
   border-color: var(--border-strong);
+  z-index: 10;
+}
+.card-interactive:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--text-primary);
 }
 ```
 
 ### Neo-Brutalist Card Hover (signature)
+
+The base `.card` class has **no** hover or active states — it is a static container. Only `.card-interactive` gets the pounce/sink interaction:
+
 ```css
-.card:hover {
+/* .card — static, no hover/active */
+/* .card-interactive — interactive, gets pounce/sink */
+.card-interactive:hover {
   transform: translate(-4px, -4px);
   box-shadow: var(--shadow-lg);
 }
-.card:active {
+.card-interactive:active {
   transform: translate(2px, 2px);
   box-shadow: 0 0 0 var(--text-primary);
 }
@@ -501,16 +511,15 @@ All animations MUST be wrapped in `@media (prefers-reduced-motion: no-preference
   font-weight: 700;
   border: 2px solid var(--text-primary);
   cursor: pointer;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
-  transition: transform var(--motion-instant) linear,
-              background var(--motion-fast) var(--ease-out),
-              box-shadow var(--motion-instant) linear;
-  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
+              background var(--motion-fast) var(--ease-out);
+  box-shadow: var(--shadow-md);
 }
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary); }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; transform: none !important; box-shadow: var(--shadow-md) !important; }
 ```
 
 **Sizes:** `.btn-sm` (`--control-sm`, `--ui-text-sm`), `.btn-md` (`--control-lg`, `--ui-text-lg`), `.btn-lg` (`--control-xl`, `--ui-text-xl`)
@@ -633,14 +642,14 @@ All animations MUST be wrapped in `@media (prefers-reduced-motion: no-preference
 .card {
   background: var(--bg-surface);
   border: 2px solid var(--text-primary);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--motion-instant) linear,
-              box-shadow var(--motion-instant) linear;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-fast) var(--ease-out);
 }
-.card:hover { transform: translate(-4px, -4px); box-shadow: var(--shadow-lg); }
-.card:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary); }
+.card:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
+.card:active { transform: translate(2px, 2px); box-shadow: none; }
 ```
 
 **Variants:** `.card-featured` (pink top border), `.card-featured-red`, `.card-featured-gold`, `.card-featured-cyan`, `.card-featured-green`, `.card-featured-purple`, `.card-compact` (smaller padding)
@@ -1294,8 +1303,8 @@ document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dar
 
 1. **Borders over shadows** — Cards/buttons get `border: 2px solid var(--text-primary)` + solid shadow (no blur)
 2. **Solid shadows only** — `box-shadow: Xpx Ypx 0` — zero blur radius
-3. **Hover = lift + bigger shadow** — `transform: translate(-4px, -4px); box-shadow: var(--shadow-lg);`
-4. **Active = press + no shadow** — `transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary);`
+3. **Hover = lift + bigger shadow** — `transform: translate(-2px, -2px); box-shadow: var(--shadow-lg);`
+4. **Active = press + no shadow** — `transform: translate(2px, 2px); box-shadow: none;`
 5. **Bold typography** — Headings 650-800 weight, tight tracking
 6. **Color is confident** — Pink for primary actions, red for danger, gold for highlight, cyan for tertiary, green for success, purple for creative/special
 7. **Warm backgrounds** — `--bg-page` is warm cream, not pure white

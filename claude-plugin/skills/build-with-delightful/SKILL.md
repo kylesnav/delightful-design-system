@@ -4,8 +4,7 @@ description: Build new web projects and UI using the Delightful design system. U
 allowed-tools: "Bash WebFetch"
 metadata:
   author: Delightful Design System
-  version: 0.4.9
-  category: frontend-design
+  version: 0.5.0
   tags: [design-system, css, neo-brutalist, oklch, ui]
 ---
 
@@ -50,8 +49,10 @@ Create components and pages using **only** Delightful tokens and patterns:
 - Shadows are solid (zero blur): `Xpx Ypx 0`
 - Borders are `2px solid` on cards/buttons
 - All interactive elements have: `:hover` (lift + shadow), `:active` (press + no shadow), `:focus-visible` (outline), `:disabled` (opacity 0.4)
-- Neo-brutalist hover pattern: `transform: translate(-4px, -4px); box-shadow: var(--shadow-lg);`
-- Neo-brutalist active pattern: `transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary);`
+- Neo-brutalist card hover: `transform: translate(-4px, -4px); box-shadow: var(--shadow-lg);`
+- Neo-brutalist button hover: `transform: translateY(-2px); box-shadow: var(--shadow-lg);`
+- Neo-brutalist active (all): `transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary);`
+- Transition timing: `transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear`
 - Use native `<details>`/`<summary>` for accordions, native `<input type="range">` for sliders
 - Use container queries (`container-type: inline-size` + `@container`) for component-level responsive behavior
 - Include `.skip-link` for keyboard accessibility
