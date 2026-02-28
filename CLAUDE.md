@@ -109,21 +109,9 @@ When performing a release, spawn a 3-agent team:
 
 All three run in parallel. The release commit and tag happen only after all three pass.
 
-## Linear Issue Status Management
+## Linear
 
-When working on a Linear issue, keep its status current. Available statuses:
-
-- **Backlog** — not yet planned
-- **Todo** — planned but not started
-- **In Progress** — actively being worked on
-- **In Review** — work complete, awaiting review
-- **Done** — fully complete and verified
-- **Canceled** — no longer needed
-- **Duplicate** — duplicate of another issue
-
-Move issues to **In Progress** when you start, **In Review** when the work is done and ready for review, and **Done** when verified. Update parent issues too — if all sub-issues are done, move the parent forward.
-
-Use the Linear MCP tools (`save_issue` with `state`) to update statuses. Do this as you go, not in a batch at the end.
+Update your own sub-issue to **In Progress** / **In Review** as you work. Never update parent issues, other sub-issues, or mark anything Done.
 
 ## Conventions
 
