@@ -1,44 +1,10 @@
 # Delightful Design System
 
-Monorepo for the Delightful design system, its Claude Code plugin, and its Obsidian theme.
-
-## Architecture
-
-```
-delightful-design-system.html   ← SINGLE SOURCE OF TRUTH (all tokens, components, patterns)
-sample-warm-palette.html        ← Palette variant demo (not a derivative)
-delightful-motion.html          ← Motion system showcase (54 animations, 12 categories)
-delightful-animation.html       ← Animation system showcase (3,938 lines, 8 categories, 24 demos)
-claude-plugin/                  ← Claude Code plugin
-  themes/css/                       Standalone CSS token export
-  themes/tailwind/                  Tailwind v3 preset
-  themes/figma/                     Figma / Style Dictionary tokens
-  reference/design-system.md        Full token + component reference
-  agents/                           delightful-auditor, delightful-builder
-  skills/                           build-with-delightful, refactor-with-delightful
-obsidian-theme/                 ← Obsidian theme (also lives in obsidian-delightful repo)
-vscode-theme/                  ← VSCode color theme extension
-  themes/                          Light + dark theme JSON (generated)
-  scripts/                         OKLCH-to-hex generation script
-ghostty/                        ← Ghostty terminal theme
-  ghostty-theme                     Ghostty config (colors + behavior)
-  shaders/                          Optional GLSL shaders (vignette, bloom)
-iterm2/                         ← iTerm2 color profile
-  Delightful.itermcolors            Color profile (XML plist)
-shell/                          ← Shared terminal config (works with any terminal)
-  starship.toml                     Starship prompt config
-  zshrc-snippet                     Zsh additions (aliases, hooks)
-  smart-open                        iTerm2 Semantic History handler (Cmd+click → smart open)
-archive/                        ← Archived prior versions (gitignored)
-```
-
-## Source of Truth
-
-`delightful-design-system.html` is the canonical definition of every token, component, and pattern. All other files are derivatives. Never introduce new tokens or change values in a derivative — change the HTML first, then propagate.
+Monorepo for the Delightful design system, and various themes and plugins that can use it. You are building a joyful, delightful design system. It should be extremely cutting edge, use /frontend-design as needed.
 
 ## Change Propagation
 
-After modifying `delightful-design-system.html`, update all derivatives:
+After completing modifications to `delightful-design-system.html`, update all derivatives you can find, some of which include:
 
 1. `claude-plugin/themes/css/delightful-tokens.css` — extract updated token definitions (all 3 tiers)
 2. `claude-plugin/themes/tailwind/delightful-preset.js` — update Tailwind color/spacing/radius/shadow mappings
@@ -62,6 +28,14 @@ The Claude Code plugin lives in two places:
 - `delightful-claude-plugin` repo (distribution copy — installable via `claude plugin install`)
 
 When any file in `claude-plugin/` is updated, copy **all** its contents (`.claude-plugin/`, `agents/`, `skills/`, `themes/`, `reference/`, `README.md`) to the `delightful-claude-plugin` repo and commit/push both repos.
+
+## Obsidian External Repo Sync
+
+The Obsidian theme lives in two places:
+- `obsidian-theme/` in this repo (development copy)
+- `obsidian-delightful` repo (distribution copy)
+
+When `obsidian-theme/` is updated, copy **all** its files (`theme.css`, `manifest.json`, `README.md`) to the `obsidian-delightful` repo and commit/push both repos.
 
 ## VSCode Theme
 
@@ -89,42 +63,9 @@ The motion file is NOT a derivative in the same way as CSS/Tailwind/Figma export
 
 `delightful-animation.html` is a self-contained showcase of JS-powered animations (spring physics, timeline/FLIP, particles, gestures). Like the motion file, it duplicates the token block from the source of truth and must be kept in sync. It sits above the CSS Motion System — CSS animations handle transitions, JS handles physics-based and interactive animations.
 
-## Obsidian External Repo Sync
-
-The Obsidian theme lives in two places:
-- `obsidian-theme/` in this repo (development copy)
-- `obsidian-delightful` repo (distribution copy)
-
-When `obsidian-theme/` is updated, copy **all** its files (`theme.css`, `manifest.json`, `README.md`) to the `obsidian-delightful` repo and commit/push both repos.
-
-## File Roles
-
-| File | Role | Update when |
-|------|------|-------------|
-| `delightful-design-system.html` | Source of truth | First — all changes start here |
-| `delightful-motion.html` | Motion system showcase | Motion tokens change, visual patterns change |
-| `delightful-animation.html` | Animation system showcase | Token values change |
-| `claude-plugin/themes/css/delightful-tokens.css` | Standalone CSS tokens | Tokens change |
-| `claude-plugin/themes/tailwind/delightful-preset.js` | Tailwind preset | Tokens change |
-| `claude-plugin/themes/figma/tokens.json` | Figma/Style Dictionary tokens | Tokens change |
-| `claude-plugin/reference/design-system.md` | Full reference doc | Tokens or components change |
-| `claude-plugin/agents/*.md` | Agent instructions | Rules or patterns change |
-| `claude-plugin/skills/*/SKILL.md` | Skill workflows | Rules, patterns, or workflow change |
-| `obsidian-theme/theme.css` | Obsidian theme | Tokens or visual patterns change |
-| `obsidian-theme/manifest.json` | Theme metadata | Version bump |
-| `vscode-theme/themes/*.json` | VSCode color theme | Tokens or syntax colors change |
-| `vscode-theme/package.json` | VSCode extension metadata | Version bump |
-| `vscode-theme/scripts/generate-themes.mjs` | Theme generator | Token names or structure change |
-| `ghostty/ghostty-theme` | Ghostty terminal theme | Primitive hex values change |
-| `ghostty/shaders/*.glsl` | Optional GLSL shaders | Visual effect tweaks |
-| `iterm2/Delightful.itermcolors` | iTerm2 color profile | Primitive hex values change |
-| `shell/starship.toml` | Starship prompt config | Accent hex values change |
-| `shell/zshrc-snippet` | Zsh config | Alias or hook changes |
-| `shell/smart-open` | iTerm2 Cmd+click handler | File type routing changes |
-
 ## Versioning
 
-The canonical version is the latest git tag (`git tag -l | sort -V | tail -1`). Currently **v0.4.9**. The repo is public on GitHub but not published to npm (`"private": true` in `package.json` prevents accidental `npm publish`).
+The canonical version is the latest git tag (`git tag -l | sort -V | tail -1`). The repo is public on GitHub but not published to npm (`"private": true` in `package.json` prevents accidental `npm publish`).
 
 When bumping the version, update **all 6 files** and create a matching git tag:
 

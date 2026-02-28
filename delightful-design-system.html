@@ -639,7 +639,7 @@
       }
 
       .toggle-bg-anim {
-        transition: background-color var(--motion-fast) ease-out;
+        transition: background-color var(--motion-fast) var(--ease-out);
       }
 
       .float-1 {
@@ -661,7 +661,7 @@
       }
 
       .shake-anim {
-        animation: shake var(--motion-base) ease-out;
+        animation: shake var(--motion-base) var(--ease-out);
       }
 
       .blur-grid:hover .blur-card:not(:hover) {
@@ -670,7 +670,7 @@
       }
 
       .blur-card {
-        transition: filter var(--motion-base) ease-out, opacity var(--motion-base) ease-out, border-color var(--motion-fast) ease-out;
+        transition: filter var(--motion-base) var(--ease-out), opacity var(--motion-base) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
       }
     }
 
@@ -1113,11 +1113,16 @@
         padding: var(--space-1) var(--space-3);
         border-radius: var(--radius-sm);
         white-space: nowrap;
+        transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 
         &:hover,
         &.active {
           color: var(--text-primary);
           background: var(--bg-subtle);
+        }
+
+        &:active {
+          transform: translateY(1px);
         }
       }
     }
@@ -1140,10 +1145,18 @@
       background: var(--bg-surface);
       color: var(--text-primary);
       cursor: pointer;
+      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
+                  background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
 
       &:hover {
         background: var(--bg-subtle);
         border-color: var(--border-strong);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        background: var(--bg-muted);
+        transform: translateY(1px);
       }
 
       & svg {
@@ -1164,6 +1177,16 @@
       color: var(--text-primary);
       cursor: pointer;
       padding: 0;
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out);
+
+      &:hover {
+        transform: translateY(-1px);
+        background: var(--bg-subtle);
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
 
       & svg {
         width: 16px;
@@ -1300,7 +1323,7 @@
       border-top: 4px solid var(--text-primary);
       position: relative;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
       transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear, border-color var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out), filter var(--motion-fast) var(--ease-out);
       will-change: transform, opacity, filter, box-shadow;
 
@@ -1407,9 +1430,19 @@
       overflow: hidden;
       background: var(--bg-surface);
       cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
+                  border-color var(--motion-fast) var(--ease-out);
 
       &:hover {
         border-color: var(--border-strong);
+        transform: translate(-2px, -2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      &:active {
+        transform: translate(2px, 2px);
+        box-shadow: 0 0 0 var(--text-primary);
       }
     }
 
@@ -1529,15 +1562,16 @@
       font-weight: 700;
       border: 2px solid var(--text-primary);
       cursor: pointer;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       white-space: nowrap;
-      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out), box-shadow var(--motion-instant) linear;
+      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
+                  background var(--motion-fast) var(--ease-out);
       will-change: transform;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-lg);
       }
 
       &:active {
@@ -1550,7 +1584,7 @@
         cursor: not-allowed;
         pointer-events: none;
         transform: none !important;
-        box-shadow: var(--shadow-sm) !important;
+        box-shadow: var(--shadow-md) !important;
       }
     }
 
@@ -1579,7 +1613,7 @@
       color: var(--text-on-accent);
       box-shadow: var(--shadow-pink);
 
-      &:hover { background: var(--accent-primary-hover); box-shadow: var(--shadow-pink); }
+      &:hover { background: var(--accent-primary-hover); box-shadow: 6px 6px 0 var(--accent-primary); }
     }
 
     .btn-danger {
@@ -1587,7 +1621,7 @@
       color: var(--text-on-accent);
       box-shadow: var(--shadow-danger);
 
-      &:hover { background: var(--accent-danger-hover); box-shadow: var(--shadow-danger); }
+      &:hover { background: var(--accent-danger-hover); box-shadow: 6px 6px 0 var(--accent-danger); }
     }
 
     .btn-gold {
@@ -1595,7 +1629,7 @@
       color: var(--text-on-gold);
       box-shadow: var(--shadow-gold);
 
-      &:hover { background: var(--accent-gold-hover); box-shadow: var(--shadow-gold); }
+      &:hover { background: var(--accent-gold-hover); box-shadow: 6px 6px 0 var(--accent-gold); }
     }
 
     .btn-cyan {
@@ -1603,7 +1637,7 @@
       color: var(--text-on-accent);
       box-shadow: var(--shadow-cyan);
 
-      &:hover { background: var(--accent-cyan-hover); box-shadow: var(--shadow-cyan); }
+      &:hover { background: var(--accent-cyan-hover); box-shadow: 6px 6px 0 var(--accent-cyan); }
     }
 
     .btn-green {
@@ -1611,7 +1645,7 @@
       color: var(--text-on-accent);
       box-shadow: var(--shadow-green);
 
-      &:hover { background: var(--accent-green-hover); box-shadow: var(--shadow-green); }
+      &:hover { background: var(--accent-green-hover); box-shadow: 6px 6px 0 var(--accent-green); }
     }
 
     .btn-purple {
@@ -1619,19 +1653,19 @@
       color: var(--text-on-accent);
       box-shadow: var(--shadow-purple);
 
-      &:hover { background: var(--accent-purple-hover); box-shadow: var(--shadow-purple); }
+      &:hover { background: var(--accent-purple-hover); box-shadow: 6px 6px 0 var(--accent-purple); }
     }
 
     .btn-secondary {
       background: var(--bg-surface);
       color: var(--text-primary);
       border: 2px solid var(--border-default);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
 
       &:hover {
         background: var(--bg-surface);
         border-color: var(--border-strong);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-lg);
       }
     }
 
@@ -1883,9 +1917,14 @@
         cursor: pointer;
         display: flex;
         padding: 0;
+        transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out);
 
         &:hover {
           color: var(--text-primary);
+        }
+
+        &:active {
+          transform: scale(0.85);
         }
       }
     }
@@ -1942,7 +1981,11 @@
       justify-content: center;
       flex-shrink: 0;
       cursor: pointer;
-      transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
+
+      &:active {
+        transform: scale(0.85);
+      }
     }
 
     .check-box {
@@ -2009,6 +2052,11 @@
       border: none;
       padding: 0;
       flex-shrink: 0;
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out);
+
+      &:active {
+        transform: scale(0.92);
+      }
 
       &[aria-checked="true"] {
         background: var(--toggle-on-bg);
@@ -2094,9 +2142,9 @@
     .card {
       background: var(--bg-surface);
       border: 2px solid var(--text-primary);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-md);
       padding: var(--space-6);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
       /* Transition kept for grid-dimming animations on sibling cards */
       transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
                   border-color var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out),
@@ -2210,11 +2258,15 @@
 
         &.sortable {
           cursor: pointer;
-          transition: color var(--motion-fast) ease-out, background var(--motion-fast) ease-out;
+          transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 
           &:hover {
             color: var(--text-primary);
             background: var(--border-subtle);
+          }
+
+          &:active {
+            transform: translateY(1px);
           }
         }
 
@@ -2225,7 +2277,7 @@
           margin-left: var(--space-1);
           vertical-align: middle;
           opacity: 0.4;
-          transition: transform var(--motion-fast) var(--ease-bounce), opacity var(--motion-fast) ease-out;
+          transition: transform var(--motion-fast) var(--ease-bounce), opacity var(--motion-fast) var(--ease-out);
         }
 
         &.sorted-asc .sort-icon {
@@ -2244,7 +2296,7 @@
       & td {
         padding: var(--space-3) var(--space-4);
         border-bottom: 1px solid var(--border-subtle);
-        transition: background var(--motion-fast) ease-out;
+        transition: background var(--motion-fast) var(--ease-out);
       }
 
       & tr:last-child td {
@@ -2252,7 +2304,7 @@
       }
 
       & tbody tr {
-        transition: background var(--motion-fast) ease-out, transform var(--motion-fast) var(--ease-bounce), box-shadow var(--motion-fast) ease-out;
+        transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-bounce), box-shadow var(--motion-fast) var(--ease-out);
         will-change: transform, background;
 
         &:hover {
@@ -2392,10 +2444,16 @@
       color: var(--text-secondary);
       cursor: pointer;
       text-decoration: none;
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
 
       &:hover {
         background: var(--bg-subtle);
         color: var(--text-primary);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(1px);
       }
 
       &.active {
@@ -2431,9 +2489,14 @@
       border-bottom: 2px solid transparent;
       margin-bottom: -1px;
       font-family: var(--font-sans);
+      transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
 
       &:hover {
         color: var(--text-primary);
+      }
+
+      &:active {
+        transform: translateY(1px);
       }
 
       &.active {
@@ -2452,9 +2515,14 @@
       & a {
         color: var(--text-secondary);
         text-decoration: none;
+        transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out);
 
         &:hover {
           color: var(--text-primary);
+        }
+
+        &:active {
+          transform: translateY(1px);
         }
       }
 
@@ -2487,10 +2555,16 @@
       color: var(--text-secondary);
       cursor: pointer;
       font-family: var(--font-sans);
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
 
       &:hover {
         background: var(--bg-subtle);
         border-color: var(--border-strong);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(1px);
       }
 
       &.active {
@@ -2569,9 +2643,14 @@
       color: var(--text-muted);
       padding: 2px;
       border-radius: 2px;
+      transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out);
 
       &:hover {
         color: var(--text-secondary);
+      }
+
+      &:active {
+        transform: scale(0.85);
       }
     }
 
@@ -2803,9 +2882,14 @@
       color: inherit;
       opacity: 0.6;
       padding: 2px;
+      transition: transform var(--motion-instant) linear, opacity var(--motion-fast) var(--ease-out);
 
       &:hover {
         opacity: 1;
+      }
+
+      &:active {
+        transform: scale(0.85);
       }
     }
 
@@ -2997,10 +3081,14 @@
       cursor: pointer;
       text-align: left;
       width: 100%;
-      transition: background var(--motion-fast) var(--ease-out);
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out);
 
       &:hover {
         background: var(--bg-subtle);
+      }
+
+      &:active {
+        transform: translateY(1px);
       }
 
       & svg {
@@ -3137,6 +3225,15 @@
       background: var(--bg-surface);
       list-style: none;
       font-family: var(--font-sans);
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out);
+
+      &:hover {
+        background: var(--bg-subtle);
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
 
       &::-webkit-details-marker {
         display: none;
@@ -3235,7 +3332,6 @@
 
     .bar-chart {
       display: flex;
-      align-items: flex-end;
       gap: var(--space-3);
       height: 160px;
       padding-top: var(--space-4);
@@ -3246,14 +3342,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-end;
       gap: var(--space-1);
+      height: 100%;
     }
 
     .bar {
       width: 100%;
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
       min-height: 4px;
-      transition: height 0.6s var(--ease-smooth);
+      transition: height var(--motion-deliberate) var(--ease-smooth);
     }
 
     .bar-label {
@@ -3289,12 +3387,8 @@
       margin-top: var(--space-2);
     }
 
-    .kpi-up {
-      color: var(--accent-green-text);
-    }
-
-    .kpi-down {
-      color: var(--accent-danger-text);
+    .kpi-up, .kpi-down {
+      /* Color set per-card via inline style to match card accent */
     }
 
     .donut-chart {
@@ -3557,13 +3651,25 @@
       border: none;
       border-radius: var(--radius-full);
       cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      &:active {
+        transform: translate(2px, 2px);
+        box-shadow: 0 0 0 var(--text-primary);
+      }
     }
 
     @supports (background: oklch(0.6 0.24 var(--hue-1))) {
       @media (prefers-reduced-motion: no-preference) {
         .color-pill-1 {
           background: oklch(0.60 0.24 var(--hue-1));
-          transition: --hue-1 var(--motion-slow) ease-out;
+          transition: --hue-1 var(--motion-slow) var(--ease-out);
         }
 
         .color-pill-1:hover {
@@ -3572,7 +3678,7 @@
 
         .color-pill-2 {
           background: oklch(0.60 0.24 var(--hue-2));
-          transition: --hue-2 var(--motion-slow) ease-out;
+          transition: --hue-2 var(--motion-slow) var(--ease-out);
         }
 
         .color-pill-2:hover {
@@ -3581,7 +3687,7 @@
 
         .color-pill-3 {
           background: oklch(0.60 0.24 var(--hue-3));
-          transition: --hue-3 var(--motion-slow) ease-out;
+          transition: --hue-3 var(--motion-slow) var(--ease-out);
         }
 
         .color-pill-3:hover {
@@ -3632,7 +3738,7 @@
     .spotlight-gradient {
       position: absolute;
       inset: 0;
-      background: radial-gradient(600px circle at 50% 50%, oklch(0.22 0.04 350), oklch(0.140 0.012 60));
+      background: radial-gradient(600px circle at 50% 50%, oklch(0.35 0.06 350), oklch(0.140 0.012 60));
     }
 
     .magnetic-zone {
@@ -3653,6 +3759,10 @@
       border: none;
       border-radius: var(--radius-full);
       cursor: pointer;
+
+      &:active {
+        transform: scale(0.95) !important;
+      }
     }
 
     /* ==========================================================================
@@ -3732,7 +3842,7 @@
       z-index: 100;
       opacity: 0;
       pointer-events: none;
-      transition: opacity var(--motion-fast) ease-out, transform var(--motion-fast) var(--ease-bounce), box-shadow var(--motion-fast) ease-out;
+      transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear;
       box-shadow: var(--shadow-sm);
 
       &.visible {
@@ -3741,7 +3851,13 @@
       }
 
       &:hover {
-        transform: scale(1.1);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      &:active {
+        transform: translateY(1px);
+        box-shadow: none;
       }
 
       & svg {
@@ -5723,17 +5839,17 @@
           <div class="kpi-card">
             <div class="kpi-value" style="color:var(--accent-primary-text)">2,847</div>
             <div class="kpi-label">Active Users</div>
-            <div class="kpi-change kpi-up">+12.3% from last month</div>
+            <div class="kpi-change kpi-up" style="color:var(--accent-primary-text)">+12.3% from last month</div>
           </div>
           <div class="kpi-card" style="border-top-color:var(--accent-gold)">
             <div class="kpi-value" style="color:var(--accent-gold-text)">94.2%</div>
             <div class="kpi-label">Uptime</div>
-            <div class="kpi-change kpi-up">+0.8% from last quarter</div>
+            <div class="kpi-change kpi-up" style="color:var(--accent-gold-text)">+0.8% from last quarter</div>
           </div>
           <div class="kpi-card" style="border-top-color:var(--accent-cyan)">
             <div class="kpi-value" style="color:var(--accent-cyan-text)">23ms</div>
             <div class="kpi-label">Response Time</div>
-            <div class="kpi-change kpi-up">4.2ms faster</div>
+            <div class="kpi-change kpi-up" style="color:var(--accent-cyan-text)">4.2ms faster</div>
           </div>
         </div>
       </div>
@@ -7052,9 +7168,15 @@
   </div>
 
   <style>
+    .cmdpal-item {
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out);
+    }
     .cmdpal-item:hover,
     .cmdpal-item.focused {
       background: var(--bg-subtle);
+    }
+    .cmdpal-item:active {
+      transform: translateY(1px);
     }
   </style>
 
@@ -7355,6 +7477,13 @@
               item.style.opacity = '1'; item.style.transform = 'translateY(0) scale(1)';
             }, i * delay);
           });
+          setTimeout(() => {
+            items.forEach(item => {
+              item.style.transition = '';
+              item.style.transform = '';
+              item.style.opacity = '';
+            });
+          }, items.length * delay + duration + 50);
         });
       }
       function staggerRevealAll() {
@@ -7410,7 +7539,7 @@
         spotlightPanel.addEventListener('mousemove', e => {
           const rect = spotlightPanel.getBoundingClientRect();
           const x = e.clientX - rect.left, y = e.clientY - rect.top;
-          spotlightGrad.style.background = `radial-gradient(600px circle at ${x}px ${y}px, oklch(0.22 0.04 350), oklch(0.135 0.010 60))`;
+          spotlightGrad.style.background = `radial-gradient(600px circle at ${x}px ${y}px, oklch(0.35 0.06 350), oklch(0.135 0.010 60))`;
         });
       }
 

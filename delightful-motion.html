@@ -519,6 +519,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      overflow-x: clip;
     }
     :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
@@ -578,28 +579,32 @@
       font-size: var(--ui-text-sm); font-weight: 600; color: var(--text-secondary);
       text-decoration: none; padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-sm); white-space: nowrap;
-      transition: color var(--motion-instant) ease-out, background var(--motion-instant) ease-out;
+      transition: transform var(--motion-instant) linear, color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
     }
     .nav-links a:hover { color: var(--text-primary); background: var(--bg-subtle); }
+    .nav-links a:active { transform: translateY(1px); }
     .nav-right { display: flex; gap: var(--space-2); align-items: center; }
     .nav-btn {
       width: 36px; height: 36px; border-radius: var(--radius-sm);
       border: 2px solid var(--border-default); background: var(--bg-surface);
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       color: var(--text-primary); text-decoration: none;
-      transition: background var(--motion-instant) ease-out, box-shadow var(--motion-instant) linear;
+      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
+                  border-color var(--motion-fast) var(--ease-out);
+      box-shadow: var(--shadow-sm);
     }
-    .nav-btn:hover { box-shadow: var(--shadow-sm); }
-    .nav-btn:active { box-shadow: none; transform: translateY(1px); }
+    .nav-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); border-color: var(--border-strong); }
+    .nav-btn:active { transform: translateY(1px); box-shadow: none; }
     .nav-btn svg { width: 18px; height: 18px; }
     .nav-kbd {
       font-size: var(--ui-text-xs); font-family: var(--font-sans);
       padding: 2px var(--space-1); border-radius: 4px;
       border: 1px solid var(--border-subtle); background: var(--bg-subtle);
       color: var(--text-muted); cursor: pointer; white-space: nowrap;
-      transition: border-color var(--motion-instant) ease-out;
+      transition: transform var(--motion-instant) linear, border-color var(--motion-fast) var(--ease-out);
     }
     .nav-kbd:hover { border-color: var(--border-default); }
+    .nav-kbd:active { transform: translateY(1px); }
     .icon-sun { display: none; } .icon-moon { display: none; } .icon-monitor { display: none; }
     [data-theme="light"] .icon-sun { display: block; }
     [data-theme="dark"] .icon-moon { display: block; }
@@ -645,11 +650,12 @@
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       box-shadow: var(--shadow-md);
       opacity: 0; pointer-events: none;
-      transition: opacity var(--motion-base) var(--ease-out), box-shadow var(--motion-instant) linear;
+      transition: opacity var(--motion-base) var(--ease-out), transform var(--motion-instant) linear,
+                  box-shadow var(--motion-instant) linear;
     }
     .back-to-top.visible { opacity: 1; pointer-events: auto; }
-    .back-to-top:hover { box-shadow: var(--shadow-lg); }
-    .back-to-top:active { box-shadow: var(--shadow-sm); transform: translateY(1px); }
+    .back-to-top:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .back-to-top:active { transform: translateY(1px); box-shadow: none; }
     .back-to-top svg { width: 20px; height: 20px; }
 
     /* ==========================================================================
@@ -707,12 +713,13 @@
       padding: var(--space-2) var(--space-6);
       font-size: var(--ui-text-md); color: var(--text-secondary);
       cursor: pointer; display: flex; align-items: center; gap: var(--space-3);
-      transition: background var(--motion-instant) ease-out, color var(--motion-instant) ease-out;
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
     }
     .cmd-palette-item:hover,
     .cmd-palette-item.active {
       background: var(--bg-subtle); color: var(--text-primary);
     }
+    .cmd-palette-item:active { transform: translateY(1px); }
     .cmd-palette-item .cmd-section-dot {
       width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
     }
@@ -848,7 +855,7 @@
        ========================================================================== */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
       gap: var(--space-6);
     }
     .motion-card {
@@ -918,8 +925,8 @@
       cursor: pointer; white-space: nowrap;
       transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear;
     }
-    .play-btn:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
-    .play-btn:active { box-shadow: none; transform: translateY(1px); }
+    .play-btn:hover { box-shadow: var(--shadow-md); transform: translate(-2px, -2px); }
+    .play-btn:active { box-shadow: 0 0 0 var(--text-primary); transform: translate(2px, 2px); }
     .play-all-btn {
       background: var(--bg-surface); color: var(--text-primary);
       border: 2px solid var(--border-default); border-radius: var(--radius-sm);
@@ -928,8 +935,8 @@
       cursor: pointer;
       transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear;
     }
-    .play-all-btn:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
-    .play-all-btn:active { box-shadow: none; transform: translateY(1px); }
+    .play-all-btn:hover { box-shadow: var(--shadow-md); transform: translate(-2px, -2px); }
+    .play-all-btn:active { box-shadow: 0 0 0 var(--text-primary); transform: translate(2px, 2px); }
     .motion-card-desc {
       font-size: var(--ui-text-sm); color: var(--text-secondary);
       line-height: var(--leading-normal); margin-bottom: var(--space-3);
@@ -980,7 +987,7 @@
     .card-compact {
       background: var(--bg-surface); border: 2px solid var(--border-default);
       border-radius: var(--radius-md); padding: var(--space-4);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
     }
     .card-title {
       font-size: var(--ui-text-md); font-weight: 700; margin-bottom: var(--space-1);
@@ -1073,7 +1080,7 @@
        COMBO SHOWCASE
        ========================================================================== */
     .combo-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
       gap: var(--space-6);
     }
     .combo-card {

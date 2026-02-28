@@ -4,8 +4,7 @@ description: Refactor existing project UI to use the Delightful design system. U
 allowed-tools: "Bash WebFetch"
 metadata:
   author: Delightful Design System
-  version: 0.4.9
-  category: frontend-design
+  version: 0.5.0
   tags: [design-system, css, refactoring, migration, oklch]
 ---
 
@@ -112,8 +111,10 @@ Replace values file-by-file, component-by-component:
 - Subtle dividers: `border: 1px solid var(--border-subtle)`
 
 **Interactions to Delightful patterns:**
-- Hover: `transform: translate(-4px, -4px)` + `box-shadow: var(--shadow-lg)` (or `translateY(-2px)` for subtler lift)
-- Active: `transform: translate(2px, 2px)` + `box-shadow: 0 0 0 var(--text-primary)`
+- Card hover: `transform: translate(-4px, -4px)` + `box-shadow: var(--shadow-lg)`
+- Button hover: `transform: translateY(-2px)` + `box-shadow: var(--shadow-lg)`
+- Active (all): `transform: translate(2px, 2px)` + `box-shadow: 0 0 0 var(--text-primary)`
+- Transition timing: `transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear`
 - Focus: `:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }`
 
 **Native form controls:**
