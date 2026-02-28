@@ -37,7 +37,7 @@ The Obsidian theme lives in two places:
 - `obsidian-theme/` in this repo (development copy)
 - `obsidian-delightful` repo (distribution copy)
 
-When `obsidian-theme/` is updated, copy **all** its files (`theme.css`, `manifest.json`, `README.md`) to the `obsidian-delightful` repo and commit/push both repos.
+When any file in `obsidian-theme/` is updated, copy **all** its contents (`theme.css`, `manifest.json`, `README.md`, `screenshot.png`, `LICENSE`) to the `obsidian-delightful` repo and commit/push both repos.
 
 ## VSCode Theme
 
@@ -57,7 +57,7 @@ The theme files (`themes/delightful-light`, `themes/delightful-dark`) contain co
 
 When asked to verify, check, or update distribution repos, diff these paths:
 - `claude-plugin/` vs `../delightful-claude-plugin/` (all contents)
-- `obsidian-theme/` vs `../obsidian-delightful/` (theme.css, manifest.json, README.md)
+- `obsidian-theme/` vs `../obsidian-delightful/` (all contents)
 - `ghostty/` vs `../delightful-ghostty/` (all contents)
 
 Report any files that differ. In sync mode, copy from source (this repo) to distribution and commit both.
