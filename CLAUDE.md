@@ -21,6 +21,8 @@ If token names, values, or component patterns changed, also update:
 - `claude-plugin/skills/build-with-delightful/SKILL.md`
 - `claude-plugin/skills/refactor-with-delightful/SKILL.md`
 
+> **Note:** The auditor agent now reads `reference/design-system.md` at runtime for token mappings, so only its violation checks and allowed exceptions need manual updates — not the mapping tables.
+
 ## Claude Plugin External Repo Sync
 
 The Claude Code plugin lives in two places:
@@ -50,6 +52,15 @@ The Ghostty themes live in two places:
 When `ghostty/themes/` or `ghostty/README.md` is updated, copy them to the `delightful-ghostty` repo and commit/push both repos. The personal `config` and `shaders/` are NOT synced — they stay in the monorepo only.
 
 The theme files (`themes/delightful-light`, `themes/delightful-dark`) contain color-only definitions installable via Ghostty's `theme =` directive. They contain hex color values derived from the OKLCH primitives — if primitive token values change, the hex mappings must be recalculated.
+
+## Sync Verification
+
+When asked to verify, check, or update distribution repos, diff these paths:
+- `claude-plugin/` vs `../delightful-claude-plugin/` (all contents)
+- `obsidian-theme/` vs `../obsidian-delightful/` (theme.css, manifest.json, README.md)
+- `ghostty/themes/` + `ghostty/README.md` vs `../delightful-ghostty/`
+
+Report any files that differ. In sync mode, copy from source (this repo) to distribution and commit both.
 
 ## iTerm2
 
@@ -87,6 +98,16 @@ When bumping the version, update **all 6 files** and create a matching git tag:
 After updating all files, commit and tag: `git tag vX.Y.Z`.
 
 Never set versions independently — all 6 files must always match.
+
+## Release Process
+
+When performing a release, spawn a 3-agent team:
+
+1. **Token-sync agent** — Validates all derivatives are in sync with `delightful-design-system.html` (the 8 files in Change Propagation)
+2. **Test agent** — Runs the full test suite and visual regression checks
+3. **Distribution-sync agent** — Diffs and syncs to all distribution repos (claude-plugin → delightful-claude-plugin, obsidian-theme → obsidian-delightful, ghostty → delightful-ghostty)
+
+All three run in parallel. The release commit and tag happen only after all three pass.
 
 ## Conventions
 
