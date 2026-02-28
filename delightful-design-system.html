@@ -111,31 +111,31 @@
       /* Warm red for danger */
       --accent-danger-hover: oklch(0.570 0.230 20);
       --accent-danger-subtle: oklch(0.950 0.040 20);
-      --accent-danger-text: oklch(0.550 0.220 20);
+      --accent-danger-text: oklch(0.570 0.220 20);
 
       --accent-gold: oklch(0.840 0.175 85);
       /* Warm gold */
       --accent-gold-hover: oklch(0.820 0.165 84);
       --accent-gold-subtle: oklch(0.965 0.060 85);
-      --accent-gold-text: oklch(0.440 0.130 85);
+      --accent-gold-text: oklch(0.560 0.170 85);
 
       --accent-cyan: oklch(0.650 0.148 210);
       /* Cyan-blue (tertiary brand) */
       --accent-cyan-hover: oklch(0.600 0.150 210);
       --accent-cyan-subtle: oklch(0.945 0.030 210);
-      --accent-cyan-text: oklch(0.520 0.148 210);
+      --accent-cyan-text: oklch(0.560 0.148 210);
 
       --accent-green: oklch(0.630 0.170 148);
       /* Green (success/safe) */
       --accent-green-hover: oklch(0.580 0.165 148);
       --accent-green-subtle: oklch(0.945 0.035 148);
-      --accent-green-text: oklch(0.480 0.165 148);
+      --accent-green-text: oklch(0.520 0.170 148);
 
       --accent-purple: oklch(0.640 0.220 300);
       /* Purple/Violet */
       --accent-purple-hover: oklch(0.580 0.230 300);
       --accent-purple-subtle: oklch(0.950 0.035 300);
-      --accent-purple-text: oklch(0.520 0.220 300);
+      --accent-purple-text: oklch(0.560 0.230 300);
 
       --status-info: var(--accent-primary);
       --status-error: var(--accent-danger);
@@ -300,6 +300,21 @@
       --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
       --ease-slam: cubic-bezier(0.55, 0.06, 0.68, 0.19);
       --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      /* Spring easings — true multi-oscillation curves via linear() */
+      --ease-spring-gentle: linear(
+        0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%,
+        0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%,
+        0.991 45.7%, 1.006 50%, 1.015 55%, 1.017 63.9%,
+        1.001 85.9%, 1
+      );
+      --ease-spring-bouncy: linear(
+        0, 0.004, 0.016, 0.035, 0.063 9.1%,
+        0.141, 0.25, 0.391, 0.563, 0.765, 1,
+        0.891, 0.813 45.5%, 0.785, 0.766, 0.754, 0.75,
+        0.754, 0.766, 0.785, 0.813 63.6%, 0.891, 1 72.7%,
+        0.973, 0.953, 0.941, 0.938, 0.941, 0.953, 0.973, 1,
+        0.988, 0.984, 0.988, 1
+      );
 
       --btn-primary-bg: var(--accent-primary);
       --btn-primary-text: var(--text-on-accent);
@@ -561,6 +576,21 @@
         }
       }
 
+      /* text-stamp — Per-character drop-in. 40ms stagger via JS. */
+      @keyframes text-stamp {
+        0% {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .anim-text-stamp {
+        animation: text-stamp 200ms var(--ease-bounce) both;
+      }
+
       .anim-in {
         animation: fadeInUp 0.5s var(--ease-smooth) both;
       }
@@ -756,23 +786,23 @@
     }
 
     .overline-pink {
-      color: var(--accent-primary-text);
+      color: var(--accent-primary);
     }
 
     .overline-red {
-      color: var(--accent-danger-text);
+      color: var(--accent-danger);
     }
 
     .overline-gold {
-      color: var(--accent-gold-text);
+      color: var(--accent-gold);
     }
 
     .overline-cyan {
-      color: var(--accent-cyan-text);
+      color: var(--accent-cyan);
     }
 
     .overline-green {
-      color: var(--accent-green-text);
+      color: var(--accent-green);
     }
 
     .section-title {
@@ -1530,12 +1560,12 @@
 
     .contrast-pass {
       background: var(--accent-cyan-subtle);
-      color: var(--accent-cyan-text);
+      color: var(--accent-cyan);
     }
 
     .contrast-fail {
       background: var(--accent-danger-subtle);
-      color: var(--accent-danger-text);
+      color: var(--accent-danger);
     }
 
     .contrast-preview {
@@ -1550,6 +1580,15 @@
       font-weight: 600;
     }
 
+    /* === Press Interaction System ===
+       POUNCE (signature): buttons, cards, tiles — hover lifts (translateY + shadow escalation), active slams XY + shadow vanish
+         - Buttons: shadow-sm → shadow-md (hover), translate(2px,2px) + shadow-none (active)
+         - Cards/Tiles: shadow-md → shadow-lg (hover), translate(2px,2px) + shadow-none (active) — bigger elements, bigger shadows
+       SINK (utility): nav-btns, pagination, sidebar, tags — hover lifts Y only, active sinks Y only
+         - No shadow escalation, just vertical movement
+       Both use --motion-instant timing for transform/shadow, --motion-fast for color changes
+    */
+
     /* ==========================================================================
        BUTTONS
        ========================================================================== */
@@ -1562,16 +1601,15 @@
       font-weight: 700;
       border: 2px solid var(--text-primary);
       cursor: pointer;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-md);
       white-space: nowrap;
-      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
-                  background var(--motion-fast) var(--ease-out);
+      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out), box-shadow var(--motion-instant) linear;
       will-change: transform;
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-sm);
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-md);
       }
 
       &:active {
@@ -1584,109 +1622,30 @@
         cursor: not-allowed;
         pointer-events: none;
         transform: none !important;
-        box-shadow: var(--shadow-md) !important;
+        box-shadow: var(--shadow-sm) !important;
       }
     }
 
-    .btn-sm {
-      height: var(--control-sm);
-      padding: 0 12px;
-      font-size: var(--ui-text-sm);
-    }
+    .btn-sm { height: var(--control-sm); padding: 0 var(--space-3); font-size: var(--ui-text-sm); }
+    .btn-md { height: var(--control-md); padding: 0 var(--space-4); font-size: var(--ui-text-md); }
+    .btn-lg { height: var(--control-lg); padding: 0 var(--space-6); font-size: var(--ui-text-lg); }
 
-    .btn-md {
-      height: var(--control-lg);
-      padding: 0 20px;
-      font-size: var(--ui-text-lg);
-    }
-
-    .btn-lg {
-      height: var(--control-xl);
-      padding: 0 28px;
-      font-size: var(--ui-text-xl);
-      border-radius: var(--radius-lg);
-    }
-
-    /* Standard Brutalist Buttons */
-    .btn-primary {
-      background: var(--accent-primary);
-      color: var(--text-on-accent);
-      box-shadow: var(--shadow-pink);
-
-      &:hover { background: var(--accent-primary-hover); box-shadow: 6px 6px 0 var(--accent-primary); }
-    }
-
-    .btn-danger {
-      background: var(--accent-danger);
-      color: var(--text-on-accent);
-      box-shadow: var(--shadow-danger);
-
-      &:hover { background: var(--accent-danger-hover); box-shadow: 6px 6px 0 var(--accent-danger); }
-    }
-
-    .btn-gold {
-      background: var(--accent-gold);
-      color: var(--text-on-gold);
-      box-shadow: var(--shadow-gold);
-
-      &:hover { background: var(--accent-gold-hover); box-shadow: 6px 6px 0 var(--accent-gold); }
-    }
-
-    .btn-cyan {
-      background: var(--accent-cyan);
-      color: var(--text-on-accent);
-      box-shadow: var(--shadow-cyan);
-
-      &:hover { background: var(--accent-cyan-hover); box-shadow: 6px 6px 0 var(--accent-cyan); }
-    }
-
-    .btn-green {
-      background: var(--accent-green);
-      color: var(--text-on-accent);
-      box-shadow: var(--shadow-green);
-
-      &:hover { background: var(--accent-green-hover); box-shadow: 6px 6px 0 var(--accent-green); }
-    }
-
-    .btn-purple {
-      background: var(--accent-purple);
-      color: var(--text-on-accent);
-      box-shadow: var(--shadow-purple);
-
-      &:hover { background: var(--accent-purple-hover); box-shadow: 6px 6px 0 var(--accent-purple); }
-    }
-
-    .btn-secondary {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      border: 2px solid var(--border-default);
-      box-shadow: var(--shadow-md);
-
-      &:hover {
-        background: var(--bg-surface);
-        border-color: var(--border-strong);
-        box-shadow: var(--shadow-lg);
-      }
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-secondary);
-
-      &:hover {
-        background: var(--bg-subtle);
-        color: var(--text-primary);
-      }
-
-      [data-theme="dark"] & {
-        color: oklch(0.850 0.010 70);
-
-        &:hover {
-          background: var(--bg-surface);
-          color: var(--text-primary);
-        }
-      }
-    }
+    .btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-text); }
+    .btn-primary:hover { background: var(--accent-primary-hover); }
+    .btn-danger { background: var(--btn-danger-bg); color: var(--btn-danger-text); }
+    .btn-danger:hover { background: var(--accent-danger-hover); }
+    .btn-gold { background: var(--btn-gold-bg); color: var(--btn-gold-text); }
+    .btn-gold:hover { background: var(--accent-gold-hover); }
+    .btn-cyan { background: var(--btn-cyan-bg); color: var(--btn-cyan-text); }
+    .btn-cyan:hover { background: var(--accent-cyan-hover); }
+    .btn-green { background: var(--btn-green-bg); color: var(--btn-green-text); }
+    .btn-green:hover { background: var(--accent-green-hover); }
+    .btn-purple { background: var(--btn-purple-bg); color: var(--btn-purple-text); }
+    .btn-purple:hover { background: var(--accent-purple-hover); }
+    .btn-secondary { background: var(--bg-surface); color: var(--text-primary); }
+    .btn-secondary:hover { background: var(--bg-muted); }
+    .btn-ghost { background: transparent; color: var(--text-primary); border-color: transparent; box-shadow: none; }
+    .btn-ghost:hover { background: var(--bg-subtle); border-color: var(--border-subtle); box-shadow: var(--shadow-sm); }
 
     .btn-icon {
       width: 36px;
@@ -1774,7 +1733,7 @@
 
     .form-error-text {
       font-size: var(--ui-text-xs);
-      color: var(--accent-danger-text);
+      color: var(--accent-danger);
     }
 
     .input {
@@ -2131,7 +2090,7 @@
       font-size: var(--ui-text-sm);
       font-weight: 600;
       font-variant-numeric: tabular-nums;
-      color: var(--accent-primary-text);
+      color: var(--accent-primary);
       min-width: 3ch;
       text-align: right;
     }
@@ -2349,25 +2308,25 @@
     /* Table header color variants */
     .table-header-pink th {
       background: var(--accent-primary-subtle);
-      color: var(--accent-primary-text);
+      color: var(--accent-primary);
       border-bottom-color: var(--accent-primary);
     }
 
     .table-header-gold th {
       background: var(--accent-gold-subtle);
-      color: var(--accent-gold-text);
+      color: var(--accent-gold);
       border-bottom-color: var(--accent-gold);
     }
 
     .table-header-cyan th {
       background: var(--accent-cyan-subtle);
-      color: var(--accent-cyan-text);
+      color: var(--accent-cyan);
       border-bottom-color: var(--accent-cyan);
     }
 
     .table-header-purple th {
       background: var(--accent-purple-subtle);
-      color: var(--accent-purple-text);
+      color: var(--accent-purple);
       border-bottom-color: var(--accent-purple);
     }
 
@@ -2386,32 +2345,32 @@
 
     .badge-pink {
       background: var(--accent-primary-subtle);
-      color: var(--accent-primary-text);
+      color: var(--accent-primary);
     }
 
     .badge-red {
       background: var(--accent-danger-subtle);
-      color: var(--accent-danger-text);
+      color: var(--accent-danger);
     }
 
     .badge-gold {
       background: var(--accent-gold-subtle);
-      color: var(--accent-gold-text);
+      color: var(--accent-gold);
     }
 
     .badge-cyan {
       background: var(--accent-cyan-subtle);
-      color: var(--accent-cyan-text);
+      color: var(--accent-cyan);
     }
 
     .badge-green {
       background: var(--accent-green-subtle);
-      color: var(--accent-green-text);
+      color: var(--accent-green);
     }
 
     .badge-purple {
       background: var(--accent-purple-subtle);
-      color: var(--accent-purple-text);
+      color: var(--accent-purple);
     }
 
     /* ==========================================================================
@@ -2458,7 +2417,7 @@
 
       &.active {
         background: var(--accent-primary-subtle);
-        color: var(--accent-primary-text);
+        color: var(--accent-primary);
         font-weight: 550;
       }
 
@@ -2500,7 +2459,7 @@
       }
 
       &.active {
-        color: var(--accent-primary-text);
+        color: var(--accent-primary);
         border-bottom-color: var(--accent-primary);
         font-weight: 600;
       }
@@ -2829,42 +2788,42 @@
 
     .alert-pink {
       background: var(--accent-primary-subtle);
-      color: var(--accent-primary-text);
+      color: var(--accent-primary);
       border-color: var(--accent-primary);
       box-shadow: var(--shadow-pink);
     }
 
     .alert-danger {
       background: var(--accent-danger-subtle);
-      color: var(--accent-danger-text);
+      color: var(--accent-danger);
       border-color: var(--accent-danger);
       box-shadow: var(--shadow-danger);
     }
 
     .alert-gold {
       background: var(--accent-gold-subtle);
-      color: var(--accent-gold-text);
+      color: var(--accent-gold);
       border-color: var(--accent-gold);
       box-shadow: var(--shadow-gold);
     }
 
     .alert-cyan {
       background: var(--accent-cyan-subtle);
-      color: var(--accent-cyan-text);
+      color: var(--accent-cyan);
       border-color: var(--accent-cyan);
       box-shadow: var(--shadow-cyan);
     }
 
     .alert-green {
       background: var(--accent-green-subtle);
-      color: var(--accent-green-text);
+      color: var(--accent-green);
       border-color: var(--accent-green);
       box-shadow: var(--shadow-green);
     }
 
     .alert-purple {
       background: var(--accent-purple-subtle);
-      color: var(--accent-purple-text);
+      color: var(--accent-purple);
       border-color: var(--accent-purple);
       box-shadow: var(--shadow-purple);
     }
@@ -2970,11 +2929,11 @@
       }
     }
 
-    .avatar-pink { background: var(--accent-primary-subtle); color: var(--accent-primary-text); }
-    .avatar-gold { background: var(--accent-gold-subtle); color: var(--accent-gold-text); }
-    .avatar-cyan { background: var(--accent-cyan-subtle); color: var(--accent-cyan-text); }
-    .avatar-green { background: var(--accent-green-subtle); color: var(--accent-green-text); }
-    .avatar-purple { background: var(--accent-purple-subtle); color: var(--accent-purple-text); }
+    .avatar-pink { background: var(--accent-primary-subtle); color: var(--accent-primary); }
+    .avatar-gold { background: var(--accent-gold-subtle); color: var(--accent-gold); }
+    .avatar-cyan { background: var(--accent-cyan-subtle); color: var(--accent-cyan); }
+    .avatar-green { background: var(--accent-green-subtle); color: var(--accent-green); }
+    .avatar-purple { background: var(--accent-purple-subtle); color: var(--accent-purple); }
 
     /* ==========================================================================
        TOOLTIP
@@ -3153,7 +3112,7 @@
       }
 
       &.active .stepper-label {
-        color: var(--accent-primary-text);
+        color: var(--accent-primary);
       }
 
       &.completed .stepper-label {
@@ -3996,6 +3955,19 @@
         border-width: 0px;
       }
     }
+
+    /* accordion-squish — Grid-based smooth height animation */
+    .accordion-squish {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 240ms var(--ease-smooth);
+    }
+    .accordion-squish > * {
+      overflow: hidden;
+    }
+    .accordion-squish.accordion-open {
+      grid-template-rows: 1fr;
+    }
     } /* end @layer component */
 
     /* ==========================================================================
@@ -4352,19 +4324,19 @@
         <div class="subsection-label">What we do</div>
         <div class="grid-2" style="gap:var(--space-4)">
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-cyan-text)">Warm cream base</div>
+            <div class="card-title" style="color:var(--accent-cyan)">Warm cream base</div>
             <div class="card-desc">Not pure white, not cool. OKLCH cream-tinted backgrounds that feel like sunlight on paper.</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-cyan-text)">Typography-driven hierarchy</div>
+            <div class="card-title" style="color:var(--accent-cyan)">Typography-driven hierarchy</div>
             <div class="card-desc">Size, weight, spacing — Inter at 800 weight for headings. Visual order through confidence.</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-cyan-text)">Solid shadows everywhere</div>
+            <div class="card-title" style="color:var(--accent-cyan)">Solid shadows everywhere</div>
             <div class="card-desc">Zero-blur offset shadows in black or brand colors. Every element has tactile depth.</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-cyan-text)">Motion with purpose</div>
+            <div class="card-title" style="color:var(--accent-cyan)">Motion with purpose</div>
             <div class="card-desc">Sub-240ms springs for movement. CSS ease-out for color. prefers-reduced-motion
               respected.</div>
           </div>
@@ -4375,21 +4347,21 @@
         <div class="subsection-label">What we avoid</div>
         <div class="grid-2" style="gap:var(--space-4)">
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-danger-text)">Gradients & glassmorphism</div>
+            <div class="card-title" style="color:var(--accent-danger)">Gradients & glassmorphism</div>
             <div class="card-desc">No frosted glass aesthetics, no gradient backgrounds, no heavy decoration.</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-danger-text)">Rainbow palettes</div>
+            <div class="card-title" style="color:var(--accent-danger)">Rainbow palettes</div>
             <div class="card-desc">Three brand colors — pink, gold, cyan. Green for success, red for danger. That's it.
             </div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-danger-text)">Generic SaaS energy</div>
+            <div class="card-title" style="color:var(--accent-danger)">Generic SaaS energy</div>
             <div class="card-desc">No cookie-cutter templates. Every interface should feel crafted for its context.
             </div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-danger-text)">Placeholder text</div>
+            <div class="card-title" style="color:var(--accent-danger)">Placeholder text</div>
             <div class="card-desc">Real content always. No lorem ipsum. Words carry meaning and inform design.</div>
           </div>
         </div>
@@ -5028,7 +5000,7 @@
           <div class="card">
             <div class="card-title">Typewriter</div>
             <div
-              style="padding:var(--space-4);background:var(--bg-subtle);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:0.9375rem;color:var(--accent-primary-text);overflow:hidden;margin-top:var(--space-3)">
+              style="padding:var(--space-4);background:var(--bg-subtle);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:0.9375rem;color:var(--accent-primary);overflow:hidden;margin-top:var(--space-3)">
               <span class="typewriter-text"
                 style="display:inline-block;overflow:hidden;white-space:nowrap;border-right:2px solid var(--accent-primary);width:0;animation:typing 2s steps(28) 0.5s forwards, blink 0.6s step-end infinite">--accent-primary:
                 oklch(0.64 0.27 350);</span>
@@ -5151,7 +5123,7 @@
         <div class="grid-2" style="margin-bottom:var(--space-8)">
           <div
             style="padding:var(--space-6);background:var(--bg-surface);border:2px solid var(--border-default);border-radius:var(--radius-lg)">
-            <div class="state-label" style="margin-bottom:var(--space-3);color:var(--accent-cyan-text)">Correct —
+            <div class="state-label" style="margin-bottom:var(--space-3);color:var(--accent-cyan)">Correct —
               Concentric radii</div>
             <div
               style="background:var(--accent-primary-subtle);border:2px solid var(--accent-primary);border-radius:16px;padding:8px">
@@ -5166,7 +5138,7 @@
           </div>
           <div
             style="padding:var(--space-6);background:var(--bg-surface);border:2px solid var(--border-default);border-radius:var(--radius-lg)">
-            <div class="state-label" style="margin-bottom:var(--space-3);color:var(--accent-danger-text)">Incorrect —
+            <div class="state-label" style="margin-bottom:var(--space-3);color:var(--accent-danger)">Incorrect —
               Matching radii</div>
             <div
               style="background:var(--accent-danger-subtle);border:2px solid var(--accent-danger);border-radius:16px;padding:8px">
@@ -5555,7 +5527,7 @@
               <button class="popover-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit</button>
               <button class="popover-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Duplicate</button>
               <div class="popover-divider"></div>
-              <button class="popover-item" style="color:var(--accent-danger-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</button>
+              <button class="popover-item" style="color:var(--accent-danger)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</button>
             </div>
           </div>
           <div style="position:relative">
@@ -5837,19 +5809,19 @@
         <div class="subsection-label">KPI Cards</div>
         <div class="grid-3">
           <div class="kpi-card">
-            <div class="kpi-value" style="color:var(--accent-primary-text)">2,847</div>
+            <div class="kpi-value">2,847</div>
             <div class="kpi-label">Active Users</div>
-            <div class="kpi-change kpi-up" style="color:var(--accent-primary-text)">+12.3% from last month</div>
+            <div class="kpi-change kpi-up" style="color:var(--accent-primary)">+12.3% from last month</div>
           </div>
           <div class="kpi-card" style="border-top-color:var(--accent-gold)">
-            <div class="kpi-value" style="color:var(--accent-gold-text)">94.2%</div>
+            <div class="kpi-value">94.2%</div>
             <div class="kpi-label">Uptime</div>
-            <div class="kpi-change kpi-up" style="color:var(--accent-gold-text)">+0.8% from last quarter</div>
+            <div class="kpi-change kpi-up" style="color:var(--accent-gold)">+0.8% from last quarter</div>
           </div>
           <div class="kpi-card" style="border-top-color:var(--accent-cyan)">
-            <div class="kpi-value" style="color:var(--accent-cyan-text)">23ms</div>
+            <div class="kpi-value">23ms</div>
             <div class="kpi-label">Response Time</div>
-            <div class="kpi-change kpi-up" style="color:var(--accent-cyan-text)">4.2ms faster</div>
+            <div class="kpi-change kpi-up" style="color:var(--accent-cyan)">4.2ms faster</div>
           </div>
         </div>
       </div>
@@ -6204,37 +6176,37 @@
         <div class="subsection-label">Motion Guidelines</div>
         <div class="grid-2" style="gap:var(--space-4)">
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-primary-text)">Use ease-out for...</div>
+            <div class="card-title" style="color:var(--accent-primary)">Use ease-out for...</div>
             <div class="card-desc">Color changes, opacity fades, border transitions. Anything that responds immediately
               and decelerates naturally.</div>
             <div class="card-meta">100–160ms · CSS transitions</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-primary-text)">Use ease-bounce for...</div>
+            <div class="card-title" style="color:var(--accent-primary)">Use ease-bounce for...</div>
             <div class="card-desc">Toggle switches, checkboxes, small interactive elements. Creates playful overshooting
               that adds personality.</div>
             <div class="card-meta">160–240ms · Spring-like feel</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-primary-text)">Use ease-smooth for...</div>
+            <div class="card-title" style="color:var(--accent-primary)">Use ease-smooth for...</div>
             <div class="card-desc">Entrance animations, page transitions, modal reveals. Smooth deceleration creates a
               natural, controlled feel.</div>
             <div class="card-meta">240–360ms · Entrance/exit</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-danger-text)">Never animate...</div>
+            <div class="card-title" style="color:var(--accent-danger)">Never animate...</div>
             <div class="card-desc">Layout shifts that cause content reflow, font-size changes, or anything that blocks
               user interaction. Keep the thread clear.</div>
             <div class="card-meta">Avoid transform + layout simultaneously</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-primary-text)">Use ease-slam for...</div>
+            <div class="card-title" style="color:var(--accent-primary)">Use ease-slam for...</div>
             <div class="card-desc">Hard stops, dismissals, and stamp-like impacts. Decelerates sharply for a weighty,
               definitive feel.</div>
             <div class="card-meta">160–360ms · Exits and impacts</div>
           </div>
           <div class="card card-compact">
-            <div class="card-title" style="color:var(--accent-primary-text)">Use ease-elastic for...</div>
+            <div class="card-title" style="color:var(--accent-primary)">Use ease-elastic for...</div>
             <div class="card-desc">Springy overshoots and playful entrances. Pulls back before springing forward for
               lively, energetic motion.</div>
             <div class="card-meta">240–500ms · Entrances and emphasis</div>
@@ -6323,7 +6295,7 @@
           <div class="card-desc" style="margin-bottom:var(--space-4)">Scale-in checkmark, 160ms.</div>
           <button class="btn btn-sm btn-primary" id="success-trigger">Submit</button>
           <div id="success-msg"
-            style="display:none;margin-top:var(--space-2);color:var(--accent-green-text);font-size:0.875rem;font-weight:550">
+            style="display:none;margin-top:var(--space-2);color:var(--accent-green);font-size:0.875rem;font-weight:550">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               style="vertical-align:middle;margin-right:4px" stroke-linecap="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -6792,11 +6764,11 @@
             <div class="badge badge-pink" style="align-self:flex-start">v0.4.5</div>
           </div>
           <div class="card card-accent-gold">
-            <div class="kpi-value" style="color:var(--accent-gold-text)">42</div>
+            <div class="kpi-value" style="color:var(--accent-gold)">42</div>
             <div class="kpi-label">Color Primitives</div>
           </div>
           <div class="card card-accent-cyan">
-            <div class="kpi-value" style="color:var(--accent-cyan-text)">3</div>
+            <div class="kpi-value" style="color:var(--accent-cyan)">3</div>
             <div class="kpi-label">Token Tiers</div>
           </div>
           <div class="card card-accent-green bento-span-2">
@@ -6805,7 +6777,7 @@
           </div>
           <div class="card card-accent-purple" style="display:flex;align-items:center;justify-content:center">
             <div style="text-align:center">
-              <div style="font-size:var(--step-2);font-weight:800;color:var(--accent-purple-text)">7</div>
+              <div style="font-size:var(--step-2);font-weight:800;color:var(--accent-purple)">7</div>
               <div style="font-size:var(--ui-text-xs);color:var(--text-muted)">Color Families</div>
             </div>
           </div>
@@ -6855,15 +6827,15 @@
               <div
                 style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-bottom:var(--space-6)">
                 <div class="card card-compact card-featured">
-                  <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-primary-text)">2,847</div>
+                  <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-primary)">2,847</div>
                   <div style="font-size:0.75rem;color:var(--text-muted)">Active Users</div>
                 </div>
                 <div class="card card-compact card-featured card-featured-gold">
-                  <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-gold-text)">94.2%</div>
+                  <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-gold)">94.2%</div>
                   <div style="font-size:0.75rem;color:var(--text-muted)">Uptime</div>
                 </div>
                 <div class="card card-compact card-featured card-featured-cyan">
-                  <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-cyan-text)">1.2s</div>
+                  <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-cyan)">1.2s</div>
                   <div style="font-size:0.75rem;color:var(--text-muted)">Avg Load</div>
                 </div>
               </div>
@@ -6912,15 +6884,15 @@
           </div>
           <div class="grid-3" style="margin-bottom:var(--space-6)">
             <div class="card card-compact" style="text-align:center">
-              <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-primary-text)">47</div>
+              <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-primary)">47</div>
               <div style="font-size:0.75rem;color:var(--text-muted)">Components</div>
             </div>
             <div class="card card-compact" style="text-align:center">
-              <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-gold-text)">156</div>
+              <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-gold)">156</div>
               <div style="font-size:0.75rem;color:var(--text-muted)">Tokens</div>
             </div>
             <div class="card card-compact" style="text-align:center">
-              <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-cyan-text)">12</div>
+              <div style="font-size:var(--step-2);font-weight:700;color:var(--accent-cyan)">12</div>
               <div style="font-size:0.75rem;color:var(--text-muted)">Prototypes</div>
             </div>
           </div>

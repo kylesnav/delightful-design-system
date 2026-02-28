@@ -125,27 +125,27 @@ const light = {
   accentDanger:       'oklch(0.620 0.220 20)',
   accentDangerHover:  'oklch(0.570 0.230 20)',
   accentDangerSubtle: 'oklch(0.950 0.040 20)',
-  accentDangerText:   'oklch(0.550 0.220 20)',
+  accentDangerText:   'oklch(0.570 0.220 20)',
 
   accentGold:       'oklch(0.840 0.175 85)',
   accentGoldHover:  'oklch(0.820 0.165 84)',
   accentGoldSubtle: 'oklch(0.965 0.060 85)',
-  accentGoldText:   'oklch(0.440 0.130 85)',
+  accentGoldText:   'oklch(0.560 0.170 85)',
 
   accentCyan:       'oklch(0.650 0.148 210)',
   accentCyanHover:  'oklch(0.600 0.150 210)',
   accentCyanSubtle: 'oklch(0.945 0.030 210)',
-  accentCyanText:   'oklch(0.520 0.148 210)',
+  accentCyanText:   'oklch(0.560 0.148 210)',
 
   accentGreen:       'oklch(0.630 0.170 148)',
   accentGreenHover:  'oklch(0.580 0.165 148)',
   accentGreenSubtle: 'oklch(0.945 0.035 148)',
-  accentGreenText:   'oklch(0.480 0.165 148)',
+  accentGreenText:   'oklch(0.520 0.170 148)',
 
   accentPurple:       'oklch(0.640 0.220 300)',
   accentPurpleHover:  'oklch(0.580 0.230 300)',
   accentPurpleSubtle: 'oklch(0.950 0.035 300)',
-  accentPurpleText:   'oklch(0.520 0.220 300)',
+  accentPurpleText:   'oklch(0.560 0.230 300)',
 };
 
 const dark = {

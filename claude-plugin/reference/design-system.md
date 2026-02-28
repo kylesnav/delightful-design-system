@@ -125,11 +125,11 @@ Note: In dark mode, `--border-default` is muted (`oklch(0.550 0.010 65)`) to red
 | Family | Base | Hover | Subtle | Text |
 |---|---|---|---|---|
 | Pink | `oklch(0.640 0.270 350)` | `oklch(0.580 0.280 350)` | `oklch(0.955 0.040 350)` | `oklch(0.560 0.270 350)` |
-| Danger | `oklch(0.620 0.220 20)` | `oklch(0.570 0.230 20)` | `oklch(0.950 0.040 20)` | `oklch(0.550 0.220 20)` |
-| Gold | `oklch(0.840 0.175 85)` | `oklch(0.820 0.165 84)` | `oklch(0.965 0.060 85)` | `oklch(0.440 0.130 85)` |
-| Cyan | `oklch(0.650 0.148 210)` | `oklch(0.600 0.150 210)` | `oklch(0.945 0.030 210)` | `oklch(0.520 0.148 210)` |
-| Green | `oklch(0.630 0.170 148)` | `oklch(0.580 0.165 148)` | `oklch(0.945 0.035 148)` | `oklch(0.480 0.165 148)` |
-| Purple | `oklch(0.640 0.220 300)` | `oklch(0.580 0.230 300)` | `oklch(0.950 0.035 300)` | `oklch(0.520 0.220 300)` |
+| Danger | `oklch(0.620 0.220 20)` | `oklch(0.570 0.230 20)` | `oklch(0.950 0.040 20)` | `oklch(0.570 0.220 20)` |
+| Gold | `oklch(0.840 0.175 85)` | `oklch(0.820 0.165 84)` | `oklch(0.965 0.060 85)` | `oklch(0.560 0.170 85)` |
+| Cyan | `oklch(0.650 0.148 210)` | `oklch(0.600 0.150 210)` | `oklch(0.945 0.030 210)` | `oklch(0.560 0.148 210)` |
+| Green | `oklch(0.630 0.170 148)` | `oklch(0.580 0.165 148)` | `oklch(0.945 0.035 148)` | `oklch(0.520 0.170 148)` |
+| Purple | `oklch(0.640 0.220 300)` | `oklch(0.580 0.230 300)` | `oklch(0.950 0.035 300)` | `oklch(0.560 0.230 300)` |
 
 **Status:** `--status-info` = primary, `--status-error` = danger, `--status-warning` = gold, `--status-success` = green
 
@@ -274,6 +274,9 @@ Note: In dark mode, `--border-default` is muted (`oklch(0.550 0.010 65)`) to red
 --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 --ease-slam: cubic-bezier(0.55, 0.06, 0.68, 0.19);
 --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+/* Spring easings — true multi-oscillation curves via linear() */
+--ease-spring-gentle: linear(0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50%, 1.015 55%, 1.017 63.9%, 1.001 85.9%, 1);
+--ease-spring-bouncy: linear(0, 0.004, 0.016, 0.035, 0.063 9.1%, 0.141, 0.25, 0.391, 0.563, 0.765, 1, 0.891, 0.813 45.5%, 0.785, 0.766, 0.754, 0.75, 0.754, 0.766, 0.785, 0.813 63.6%, 0.891, 1 72.7%, 0.973, 0.953, 0.941, 0.938, 0.941, 0.953, 0.973, 1, 0.988, 0.984, 0.988, 1);
 ```
 
 **Duration guidance:**
@@ -295,6 +298,8 @@ Note: In dark mode, `--border-default` is muted (`oklch(0.550 0.010 65)`) to red
 | `--ease-smooth` | Smooth deceleration, content reveals |
 | `--ease-slam` | Fast-in abrupt stop, stamps, thuds |
 | `--ease-elastic` | Exaggerated overshoot, springy elements |
+| `--ease-spring-gentle` | Gentle spring with subtle overshoot, settles quickly |
+| `--ease-spring-bouncy` | Bouncy spring with multiple oscillations, playful attention-grabbing |
 
 See the [Motion System](https://kylesnav.github.io/delightful-design-system/delightful-motion.html) for 59 named animations across 10 categories with live interactive demos.
 
@@ -430,6 +435,30 @@ All animations MUST be wrapped in `@media (prefers-reduced-motion: no-preference
 /* ... up to .anim-d12 (0.72s) */
 ```
 
+### text-stamp (per-character drop-in)
+```css
+@keyframes text-stamp {
+  0% { transform: translateY(-20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.anim-text-stamp {
+  animation: text-stamp 200ms var(--ease-bounce) both;
+}
+/* Apply to individual characters/spans, stagger 40ms via JS animation-delay */
+```
+
+### accordion-squish (grid-based height animation)
+```css
+.accordion-squish {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 240ms var(--ease-smooth);
+}
+.accordion-squish > * { overflow: hidden; }
+.accordion-squish.accordion-open { grid-template-rows: 1fr; }
+/* Toggle .accordion-open class to animate height smoothly */
+```
+
 ---
 
 ## Interaction Patterns
@@ -511,28 +540,28 @@ The base `.card` class has **no** hover or active states — it is a static cont
   font-weight: 700;
   border: 2px solid var(--text-primary);
   cursor: pointer;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   white-space: nowrap;
-  transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear,
-              background var(--motion-fast) var(--ease-out);
-  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-instant) linear;
+  box-shadow: var(--shadow-sm);
 }
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary); }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; transform: none !important; box-shadow: var(--shadow-md) !important; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; transform: none !important; box-shadow: var(--shadow-sm) !important; }
 ```
 
-**Sizes:** `.btn-sm` (`--control-sm`, `--ui-text-sm`), `.btn-md` (`--control-lg`, `--ui-text-lg`), `.btn-lg` (`--control-xl`, `--ui-text-xl`)
+**Sizes:** `.btn-sm` (`--control-sm`, `--ui-text-sm`), `.btn-md` (`--control-md`, `--ui-text-md`), `.btn-lg` (`--control-lg`, `--ui-text-lg`)
 
-**Variants:**
-- `.btn-primary` — `background: var(--accent-primary); color: var(--text-on-accent); box-shadow: var(--shadow-pink);`
-- `.btn-danger` — `background: var(--accent-danger); color: var(--text-on-accent); box-shadow: var(--shadow-danger);`
-- `.btn-gold` — `background: var(--accent-gold); color: var(--text-on-gold); box-shadow: var(--shadow-gold);`
-- `.btn-cyan` — `background: var(--accent-cyan); color: var(--text-on-accent); box-shadow: var(--shadow-cyan);`
-- `.btn-green` — `background: var(--accent-green); color: var(--text-on-accent); box-shadow: var(--shadow-green);`
-- `.btn-purple` — `background: var(--accent-purple); color: var(--text-on-accent); box-shadow: var(--shadow-purple);`
-- `.btn-secondary` — `background: var(--bg-surface); border: 2px solid var(--border-default);`
-- `.btn-ghost` — `background: transparent; color: var(--text-secondary);`
+**Variants** (all inherit base `.btn` shadow-sm → shadow-md press behavior — no shadow overrides):
+- `.btn-primary` — `background: var(--btn-primary-bg); color: var(--btn-primary-text);`
+- `.btn-danger` — `background: var(--btn-danger-bg); color: var(--btn-danger-text);`
+- `.btn-gold` — `background: var(--btn-gold-bg); color: var(--btn-gold-text);`
+- `.btn-cyan` — `background: var(--btn-cyan-bg); color: var(--btn-cyan-text);`
+- `.btn-green` — `background: var(--btn-green-bg); color: var(--btn-green-text);`
+- `.btn-purple` — `background: var(--btn-purple-bg); color: var(--btn-purple-text);`
+- `.btn-secondary` — `background: var(--bg-surface); color: var(--text-primary);`
+- `.btn-ghost` — `background: transparent; border-color: transparent; box-shadow: none;` (hover adds `shadow-sm`)
 
 ```html
 <button class="btn btn-primary btn-md">Primary</button>
@@ -645,11 +674,8 @@ The base `.card` class has **no** hover or active states — it is a static cont
   border-radius: var(--radius-md);
   padding: var(--space-6);
   box-shadow: var(--shadow-md);
-  transition: transform var(--motion-fast) var(--ease-out),
-              box-shadow var(--motion-fast) var(--ease-out);
+  /* Static container — no hover/active. Use .card-interactive for pounce/sink. */
 }
-.card:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
-.card:active { transform: translate(2px, 2px); box-shadow: none; }
 ```
 
 **Variants:** `.card-featured` (pink top border), `.card-featured-red`, `.card-featured-gold`, `.card-featured-cyan`, `.card-featured-green`, `.card-featured-purple`, `.card-compact` (smaller padding)
@@ -1303,8 +1329,8 @@ document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dar
 
 1. **Borders over shadows** — Cards/buttons get `border: 2px solid var(--text-primary)` + solid shadow (no blur)
 2. **Solid shadows only** — `box-shadow: Xpx Ypx 0` — zero blur radius
-3. **Hover = lift + bigger shadow** — `transform: translate(-2px, -2px); box-shadow: var(--shadow-lg);`
-4. **Active = press + no shadow** — `transform: translate(2px, 2px); box-shadow: none;`
+3. **Hover = lift + bigger shadow** — Buttons: `shadow-sm` base -> `shadow-md` hover. Cards/tiles: `shadow-md` base -> `shadow-lg` hover.
+4. **Active = press + no shadow** — `transform: translate(2px, 2px); box-shadow: 0 0 0;`
 5. **Bold typography** — Headings 650-800 weight, tight tracking
 6. **Color is confident** — Pink for primary actions, red for danger, gold for highlight, cyan for tertiary, green for success, purple for creative/special
 7. **Warm backgrounds** — `--bg-page` is warm cream, not pure white
