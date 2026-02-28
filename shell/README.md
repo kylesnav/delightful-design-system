@@ -1,23 +1,16 @@
-# Shell — Delightful Config
+# Delightful Shell
 
-Shared Starship prompt and zsh config using Delightful Design System colors. Works with any terminal (Ghostty, iTerm2, etc.).
+Starship prompt, zsh config, and shell utilities from the Delightful Design System. Works with any terminal.
 
 ## Contents
 
 ```
 starship.toml       Starship prompt config using Delightful colors
 zshrc-snippet       Zsh additions (starship, aliases, hooks)
+smart-open          iTerm2 Semantic History handler (Cmd+click routing)
 ```
 
 ## Install
-
-The fastest way to set up shell config (along with your terminal theme) is the setup script:
-
-```bash
-bash scripts/setup-terminal.sh
-```
-
-Or install manually:
 
 ### Starship Prompt
 
@@ -34,6 +27,21 @@ Copy the snippet into your `~/.zshrc`, or source it:
 
 ```bash
 source /path/to/zshrc-snippet
+```
+
+### smart-open (iTerm2)
+
+Routes Cmd+click file paths to the right app: directories to Finder, HTML to Chrome, code files to VS Code (with line number support), images and PDFs to Preview.
+
+```bash
+cp smart-open ~/.local/bin/smart-open
+chmod +x ~/.local/bin/smart-open
+```
+
+Then in iTerm2: Settings → Profiles → Advanced → Semantic History → "Run command...":
+
+```
+/Users/YOU/.local/bin/smart-open \1 \2 \5
 ```
 
 ## What's Included
@@ -67,7 +75,21 @@ Two-line prompt using Delightful accent colors:
 
 All aliases clear the command line before launching.
 
+### Terminal Compatibility
+
+| Component | Any Terminal | Ghostty | iTerm2 |
+|-----------|-------------|---------|--------|
+| Starship prompt | Yes | Yes | Yes |
+| Zsh defaults | Yes | Yes | Yes |
+| Claude aliases | Yes | Yes | Yes |
+| Quick terminal hook | — | 1.3+ | — |
+| smart-open | — | — | Yes |
+
 Tip: `touch ~/.hushlogin` to suppress the macOS "Last login" message.
+
+## Design System
+
+This is part of the [Delightful Design System](https://github.com/kylesnav/delightful-design-system). Terminal color themes are available separately for [Ghostty](https://github.com/kylesnav/delightful-ghostty) and iTerm2.
 
 ## References
 
@@ -75,3 +97,7 @@ Tip: `touch ~/.hushlogin` to suppress the macOS "Last login" message.
 |------|------|------|
 | Starship | [starship/starship](https://github.com/starship/starship) | [starship.rs](https://starship.rs) |
 | Zsh | [zsh-users/zsh](https://github.com/zsh-users/zsh) | [zsh.sourceforge.io](https://zsh.sourceforge.io/Doc/) |
+
+## License
+
+MIT

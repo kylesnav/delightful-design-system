@@ -59,6 +59,7 @@ When asked to verify, check, or update distribution repos, diff these paths:
 - `claude-plugin/` vs `../delightful-claude-plugin/` (all contents)
 - `obsidian-theme/` vs `../obsidian-delightful/` (all contents)
 - `ghostty/` vs `../delightful-ghostty/` (all contents)
+- `shell/` vs `../delightful-shell/` (all contents)
 
 Report any files that differ. In sync mode, copy from source (this repo) to distribution and commit both.
 
@@ -66,9 +67,15 @@ Report any files that differ. In sync mode, copy from source (this repo) to dist
 
 The iTerm2 color profile lives only in this repo (`iterm2/`). There is no external sync repo. It contains the same hex color values as the Ghostty theme converted to RGB floats — if primitive token values change, the float values in `Delightful.itermcolors` must be recalculated.
 
-## Shell
+## Shell External Repo Sync
 
-The shared shell config (`shell/`) contains Starship prompt and zsh settings that work with any terminal. There is no external sync repo. The `starship.toml` contains hex color values derived from the OKLCH primitives — if accent hex values change, it must be updated.
+The shell config lives in two places:
+- `shell/` in this repo (development copy)
+- `delightful-shell` repo (distribution copy)
+
+When any file in `shell/` is updated, copy **all** its contents to the `delightful-shell` repo and commit/push both repos.
+
+The `starship.toml` contains hex color values derived from the OKLCH primitives — if accent hex values change, it must be updated.
 
 ## Motion System
 
@@ -105,7 +112,7 @@ When performing a release, spawn a 3-agent team:
 
 1. **Token-sync agent** — Validates all derivatives are in sync with `delightful-design-system.html` (the 8 files in Change Propagation)
 2. **Test agent** — Runs the full test suite and visual regression checks
-3. **Distribution-sync agent** — Diffs and syncs to all distribution repos (claude-plugin → delightful-claude-plugin, obsidian-theme → obsidian-delightful, ghostty → delightful-ghostty)
+3. **Distribution-sync agent** — Diffs and syncs to all distribution repos (claude-plugin → delightful-claude-plugin, obsidian-theme → obsidian-delightful, ghostty → delightful-ghostty, shell → delightful-shell)
 
 All three run in parallel. The release commit and tag happen only after all three pass.
 
