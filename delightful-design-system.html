@@ -5237,8 +5237,8 @@
           <div class="form-group"><label class="form-label" for="form-email">Email address</label><input class="input" id="form-email" type="email"
               placeholder="you@example.com"></div>
           <div class="form-group"><label class="form-label" for="error-input">Error state</label><input class="input input-error"
-              type="text" value="invalid@" id="error-input">
-            <div class="form-error-text">Please enter a valid email address</div>
+              type="text" value="invalid@" id="error-input" aria-invalid="true" aria-describedby="error-input-msg">
+            <div class="form-error-text" id="error-input-msg" role="alert">Please enter a valid email address</div>
           </div>
           <div class="form-group"><label class="form-label" for="form-disabled">Disabled</label><input class="input" id="form-disabled" type="text"
               value="Cannot edit" disabled></div>
@@ -5315,6 +5315,7 @@
           <label class="check-group"><input type="radio" name="option-group" class="sr-only"><span
               class="radio-circle" aria-hidden="true"></span> Option B</label>
           <label class="toggle-group" style="display:flex;align-items:center;gap:var(--space-2)"><button class="toggle toggle-bg-anim" role="switch" aria-checked="true"
+              aria-label="Auto-save"
               onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true')"><span class="toggle-knob toggle-knob-anim" aria-hidden="true"></span></button><span
               style="font-size:0.875rem">Auto-save</span></label>
         </div>
@@ -5496,21 +5497,21 @@
                 </svg> Settings</a>
             </div>
           </div>
-          <div class="subsection">
+          <div>
             <div class="subsection-label">Tabs</div>
             <div class="tabs">
               <button class="tab active">Overview</button><button class="tab">Components</button><button
                 class="tab">Tokens</button><button class="tab">Motion</button>
             </div>
           </div>
-          <div class="subsection">
+          <div>
             <div class="subsection-label">Breadcrumbs</div>
             <div class="breadcrumbs">
               <a href="#">Home</a><span class="sep">/</span><a href="#">Design System</a><span class="sep">/</span><span
                 class="current">Components</span>
             </div>
           </div>
-          <div class="subsection">
+          <div>
             <div class="subsection-label">Pagination</div>
             <div class="pagination">
               <button class="page-btn">&laquo;</button>
