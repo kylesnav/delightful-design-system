@@ -15,7 +15,6 @@
 <p align="center">
   <a href="https://github.com/kylesnav/delightful-design-system/releases"><img src="https://img.shields.io/github/v/tag/kylesnav/delightful-design-system?label=version&style=flat&color=f600a3&labelColor=fdf8f3" alt="Version" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/kylesnav/delightful-design-system?style=flat&color=00a6c0&labelColor=fdf8f3" alt="License" /></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=kylesnav.delightful-theme"><img src="https://img.shields.io/visual-studio-marketplace/v/kylesnav.delightful-theme?label=vscode&style=flat&color=22a448&labelColor=fdf8f3" alt="VS Code" /></a>
 </p>
 
 <p align="center">
@@ -183,16 +182,14 @@ Dark backgrounds use warm amber hue (65) instead of cold black. Accents are brig
 
 **VS Code**
 
-<a href="https://marketplace.visualstudio.com/items?itemName=kylesnav.delightful-theme">
+<a href="https://github.com/kylesnav/delightful-vscode">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="screenshots/VSCode-Dark.png" />
   <img src="screenshots/VSCode-Light.png" width="400" alt="VS Code — Delightful" />
 </picture>
 </a>
 
-`ext install kylesnav.delightful-theme`
-
-[Source](vscode-theme/) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=kylesnav.delightful-theme)
+[Source](vscode-theme/) · [Repo](https://github.com/kylesnav/delightful-vscode)
 
 </td>
 <td align="center" width="50%">
@@ -205,8 +202,6 @@ Dark backgrounds use warm amber hue (65) instead of cold black. Accents are brig
   <img src="screenshots/Obsidian-Light.png" width="400" alt="Obsidian — Delightful" />
 </picture>
 </a>
-
-Search "Delightful" in Obsidian appearance settings
 
 [Source](obsidian-theme/) · [Repo](https://github.com/kylesnav/obsidian-delightful)
 
