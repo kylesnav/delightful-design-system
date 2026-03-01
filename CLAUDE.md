@@ -39,9 +39,15 @@ The Obsidian theme lives in two places:
 
 When any file in `obsidian-theme/` is updated, copy **all** its contents to the `obsidian-delightful` repo and commit/push both repos.
 
-## VSCode Theme
+## VSCode External Repo Sync
 
-The VSCode theme lives only in this repo (`vscode-theme/`). Theme JSON files are generated from OKLCH tokens via `vscode-theme/scripts/generate-themes.mjs` (requires `culori`). If primitive or semantic token values change, regenerate the themes.
+The VSCode theme lives in two places:
+- `vscode-theme/` in this repo (development copy)
+- `delightful-vscode` repo (distribution copy — published to VS Code Marketplace as `kylesnav.delightful-theme`)
+
+Theme JSON files are generated from OKLCH tokens via `vscode-theme/scripts/generate-themes.mjs` (requires `culori`). If primitive or semantic token values change, regenerate the themes, then sync to the distribution repo.
+
+The distribution repo adds marketplace-specific files (`icon.png`, `galleryBanner` in package.json) that don't exist in the monorepo source. When syncing, preserve these additions.
 
 ## Ghostty External Repo Sync
 
@@ -59,16 +65,31 @@ When asked to verify, check, or update distribution repos, diff these paths:
 - `claude-plugin/` vs `../delightful-claude-plugin/` (all contents)
 - `obsidian-theme/` vs `../obsidian-delightful/` (all contents)
 - `ghostty/` vs `../delightful-ghostty/` (all contents)
+- `iterm2/` vs `../delightful-iterm2/` (all contents)
+- `shell/` vs `../delightful-shell/` (all contents)
+- `vscode-theme/` vs `../delightful-vscode/` (all contents, excluding marketplace-specific files)
 
 Report any files that differ. In sync mode, copy from source (this repo) to distribution and commit both.
 
-## iTerm2
+## iTerm2 External Repo Sync
 
-The iTerm2 color profile lives only in this repo (`iterm2/`). There is no external sync repo. It contains the same hex color values as the Ghostty theme converted to RGB floats — if primitive token values change, the float values in `Delightful.itermcolors` must be recalculated.
+The iTerm2 color profiles live in two places:
+- `iterm2/` in this repo (development copy)
+- `delightful-iterm2` repo (distribution copy)
 
-## Shell
+When any file in `iterm2/` is updated, copy **all** its contents to the `delightful-iterm2` repo and commit/push both repos.
 
-The shared shell config (`shell/`) contains Starship prompt and zsh settings that work with any terminal. There is no external sync repo. The `starship.toml` contains hex color values derived from the OKLCH primitives — if accent hex values change, it must be updated.
+The `.itermcolors` files contain the same hex color values as the Ghostty theme converted to RGB floats — if primitive token values change, regenerate via `cd iterm2/scripts && node generate-profiles.mjs`.
+
+## Shell External Repo Sync
+
+The shared shell config lives in two places:
+- `shell/` in this repo (development copy)
+- `delightful-shell` repo (distribution copy)
+
+When any file in `shell/` is updated, copy **all** its contents to the `delightful-shell` repo and commit/push both repos.
+
+The `starship.toml` contains hex color values derived from the OKLCH primitives — if accent hex values change, it must be updated manually.
 
 ## Motion System
 
@@ -105,7 +126,7 @@ When performing a release, spawn a 3-agent team:
 
 1. **Token-sync agent** — Validates all derivatives are in sync with `delightful-design-system.html` (the 8 files in Change Propagation)
 2. **Test agent** — Runs the full test suite and visual regression checks
-3. **Distribution-sync agent** — Diffs and syncs to all distribution repos (claude-plugin → delightful-claude-plugin, obsidian-theme → obsidian-delightful, ghostty → delightful-ghostty)
+3. **Distribution-sync agent** — Diffs and syncs to all distribution repos (claude-plugin → delightful-claude-plugin, obsidian-theme → obsidian-delightful, ghostty → delightful-ghostty, iterm2 → delightful-iterm2, shell → delightful-shell, vscode-theme → delightful-vscode)
 
 All three run in parallel. The release commit and tag happen only after all three pass.
 
