@@ -14,9 +14,11 @@
 
 ---
 
-## Install
+## Theme
 
-### 1. Import both presets
+The color profiles are portable — import them into any iTerm2 setup.
+
+### Install
 
 ```bash
 open colors/Delightful-Light.itermcolors
@@ -25,7 +27,7 @@ open colors/Delightful-Dark.itermcolors
 
 Or import manually: **Settings > Profiles > Colors > Color Presets... > Import...**
 
-### 2. Enable automatic light/dark switching
+### Automatic light/dark switching
 
 1. Go to **Settings > Profiles > Colors**
 2. Check **"Use separate colors for light and dark mode"**
@@ -36,9 +38,48 @@ Or import manually: **Settings > Profiles > Colors > Color Presets... > Import..
 
 iTerm2 will switch between light and dark colors automatically with macOS appearance.
 
-## Recommended Settings
+### Color Mapping
 
-These settings make iTerm2 look cleaner and closer to Ghostty's minimal chrome:
+All colors map to Delightful Design System tokens. The palette is identical to the [Ghostty theme](../ghostty/) — both are generated from the same OKLCH primitives.
+
+<details>
+<summary><strong>Full token mapping</strong></summary>
+
+<br>
+
+| Terminal Color | Design Token | Light | Dark |
+|----------------|--------------------------|-----------|-----------|
+| Background | bg-page | `#fdf8f3` | `#1e1a16` |
+| Foreground | text-primary | `#1b150f` | `#eee9e3` |
+| Cursor | accent-primary (pink) | `#f600a3` | `#ff4fa8` |
+| Selection BG | accent-primary-subtle | `#ffe6f4` | `#3d2235` |
+| Black | neutral-950 | `#16100c` | `#1e1a16` |
+| Red | red-400 | `#ed324b` | `#e8554c` |
+| Green | green-400 | `#22a448` | `#3aad5f` |
+| Yellow | gold-500 | `#c67e00` | `#f5c526` |
+| Blue | cyan-400 | `#00a6c0` | `#00a6c0` |
+| Magenta | pink-400 | `#f600a3` | `#ff4fa8` |
+| Cyan | cyan-300 | `#17c0d6` | `#5cb8d6` |
+| White | neutral-100 | `#f6f1eb` | `#eee9e3` |
+| Bright Black | neutral-600 | `#615d58` | `#615d58` |
+| Bright Red | red-300 | `#ff6e74` | `#ff6e74` |
+| Bright Green | green-300 | `#60c072` | `#60c072` |
+| Bright Yellow | gold-500 | `#c67e00` | `#ffcb3f` |
+| Bright Blue | cyan-200 | `#88ddec` | `#88ddec` |
+| Bright Magenta | pink-300 | `#ff5cb8` | `#ff7cc6` |
+| Bright Cyan | cyan-200 | `#88ddec` | `#88ddec` |
+| Bright White | white | `#ffffff` | `#ffffff` |
+
+Blue slots use the cyan hue at different lightness levels since Delightful has no dedicated blue.
+Bright yellow reuses normal yellow in light mode for legibility on the cream background.
+
+</details>
+
+## Full Experience
+
+Recommended settings that make iTerm2 feel more polished. These are opinionated preferences, not required for the theme.
+
+### Appearance
 
 | Setting | Path | Value |
 |---------|------|-------|
@@ -90,46 +131,9 @@ Restart iTerm2 after applying.
 
 </details>
 
-## With Claude Code
+### Claude Code
 
 After applying the theme, run `/config` in Claude Code and set the theme to **light-ansi**. Claude Code inherits the Delightful palette from your terminal.
-
-## Color Mapping
-
-All colors map to Delightful Design System tokens. The palette is identical to the [Ghostty theme](../ghostty/) — both are generated from the same OKLCH primitives.
-
-<details>
-<summary><strong>Full token mapping</strong></summary>
-
-<br>
-
-| Terminal Color | Design Token | Light | Dark |
-|----------------|--------------------------|-----------|-----------|
-| Background | bg-page | `#fdf8f3` | `#1e1a16` |
-| Foreground | text-primary | `#1b150f` | `#eee9e3` |
-| Cursor | accent-primary (pink) | `#f600a3` | `#ff4fa8` |
-| Selection BG | accent-primary-subtle | `#ffe6f4` | `#3d2235` |
-| Black | neutral-950 | `#16100c` | `#1e1a16` |
-| Red | red-400 | `#ed324b` | `#e8554c` |
-| Green | green-400 | `#22a448` | `#3aad5f` |
-| Yellow | gold-500 | `#c67e00` | `#f5c526` |
-| Blue | cyan-400 | `#00a6c0` | `#00a6c0` |
-| Magenta | pink-400 | `#f600a3` | `#ff4fa8` |
-| Cyan | cyan-300 | `#17c0d6` | `#5cb8d6` |
-| White | neutral-100 | `#f6f1eb` | `#eee9e3` |
-| Bright Black | neutral-600 | `#615d58` | `#615d58` |
-| Bright Red | red-300 | `#ff6e74` | `#ff6e74` |
-| Bright Green | green-300 | `#60c072` | `#60c072` |
-| Bright Yellow | gold-500 | `#c67e00` | `#ffcb3f` |
-| Bright Blue | cyan-200 | `#88ddec` | `#88ddec` |
-| Bright Magenta | pink-300 | `#ff5cb8` | `#ff7cc6` |
-| Bright Cyan | cyan-200 | `#88ddec` | `#88ddec` |
-| Bright White | white | `#ffffff` | `#ffffff` |
-
-Blue slots use the cyan hue at different lightness levels since Delightful has no dedicated blue.
-Bright yellow reuses normal yellow in light mode for legibility on the cream background.
-
-</details>
 
 ## Regenerating
 

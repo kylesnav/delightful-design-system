@@ -1,11 +1,17 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/Starship-Dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="screenshots/Starship-Light.png" />
+    <img src="screenshots/Starship-Light.png" width="600" alt="Starship prompt — Delightful" />
+  </picture>
+</p>
+
 <h1 align="center">Delightful for Shell</h1>
 
 <p align="center">
   Starship prompt, zsh config, and terminal utilities using <a href="https://github.com/kylesnav/delightful-design-system">Delightful Design System</a> colors.
-</p>
-
-<p align="center">
-  Works with any terminal — see the Starship prompt in the <a href="../ghostty/screenshots/">Ghostty</a> and <a href="../iterm2/screenshots/">iTerm2</a> screenshots.
+  <br>
+  Works with any terminal.
 </p>
 
 ---

@@ -14,7 +14,11 @@
 
 ---
 
-## Install
+## Theme
+
+The color theme is portable — install it on any Ghostty setup.
+
+### Install
 
 Copy the theme files into Ghostty's theme directory:
 
@@ -31,41 +35,7 @@ theme = delightful-light
 
 Or `delightful-dark` for dark mode.
 
-## Full Config (optional)
-
-The included `config` file sets up fonts (JetBrains Mono), keybinds, window chrome, and references the theme. To use it:
-
-```bash
-# macOS
-cp config ~/Library/Application\ Support/com.mitchellh.ghostty/config
-
-# Linux
-cp config ~/.config/ghostty/config
-```
-
-### Shaders
-
-Optional GLSL post-processing effects (vignette, bloom):
-
-```bash
-# macOS
-cp shaders/*.glsl ~/Library/Application\ Support/com.mitchellh.ghostty/shaders/
-
-# Linux
-cp shaders/*.glsl ~/.config/ghostty/shaders/
-```
-
-Uncomment the `custom-shader` lines in your config to enable.
-
-### Quick Terminal
-
-`Option+Space` opens a centered floating terminal from anywhere on macOS. The session persists between toggles — open it, type `cc` to start Claude Code, then toggle it away.
-
-## With Claude Code
-
-After applying the theme, run `/config` in Claude Code and set the theme to **light-ansi**. Claude Code inherits the Delightful palette from your terminal.
-
-## Color Mapping
+### Color Mapping
 
 All colors map to Delightful Design System tokens. Blue slots use the cyan hue at different lightness levels since Delightful has no dedicated blue. Bright yellow reuses normal yellow in light mode for legibility on the cream background.
 
@@ -90,6 +60,43 @@ All colors map to Delightful Design System tokens. Blue slots use the cyan hue a
 | White | neutral-100 | `#f6f1eb` | `#eee9e3` |
 
 </details>
+
+## Full Experience
+
+The included config file goes beyond colors — fonts, keybinds, window chrome, shaders, and a quick terminal for AI coding. This is opinionated and personal.
+
+### Config
+
+```bash
+# macOS
+cp config ~/Library/Application\ Support/com.mitchellh.ghostty/config
+
+# Linux
+cp config ~/.config/ghostty/config
+```
+
+Includes:
+- **JetBrains Mono** font at 13px
+- **Quick Terminal** — `Option+Space` opens a centered floating terminal from anywhere on macOS. The session persists between toggles — open it, type `cc` to start Claude Code, then toggle it away.
+- Minimal window chrome, no tabs, no title bar
+
+### Shaders
+
+Optional GLSL post-processing effects (vignette, bloom):
+
+```bash
+# macOS
+cp shaders/*.glsl ~/Library/Application\ Support/com.mitchellh.ghostty/shaders/
+
+# Linux
+cp shaders/*.glsl ~/.config/ghostty/shaders/
+```
+
+Uncomment the `custom-shader` lines in your config to enable.
+
+### Claude Code
+
+After applying the theme, run `/config` in Claude Code and set the theme to **light-ansi**. Claude Code inherits the Delightful palette from your terminal.
 
 ## Related
 
