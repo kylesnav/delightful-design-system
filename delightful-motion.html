@@ -93,8 +93,8 @@
       --text-on-accent: oklch(1.00 0.000 0);
       --text-on-gold: oklch(0.220 0.020 70);
 
-      --border-default: var(--text-primary);
-      --border-strong: var(--text-primary);
+      --border-default: oklch(0.340 0.025 60);
+      --border-strong: oklch(0.250 0.020 60);
       --border-subtle: oklch(0.820 0.015 70);
 
       /* Vibrant Accents — Warm Palette */
@@ -111,7 +111,7 @@
       --accent-danger-text: oklch(0.570 0.220 20);
 
       --accent-gold: oklch(0.840 0.175 85);
-      /* Warm gold */
+      /* Bright gold — highlight accent */
       --accent-gold-hover: oklch(0.820 0.165 84);
       --accent-gold-subtle: oklch(0.965 0.060 85);
       --accent-gold-text: oklch(0.560 0.170 85);
@@ -143,9 +143,9 @@
       --overlay-bg: oklch(0.200 0.015 60 / 0.30);
 
       /* Neo-Brutalist Solid Shadows */
-      --shadow-sm: 2px 2px 0 var(--text-primary);
-      --shadow-md: 4px 4px 0 var(--text-primary);
-      --shadow-lg: 8px 8px 0 var(--text-primary);
+      --shadow-sm: 2px 2px 0 var(--border-default);
+      --shadow-md: 4px 4px 0 var(--border-default);
+      --shadow-lg: 8px 8px 0 var(--border-default);
       --shadow-pink: 4px 4px 0 var(--accent-primary);
       --shadow-danger: 4px 4px 0 var(--accent-danger);
       --shadow-gold: 4px 4px 0 var(--accent-gold);
@@ -347,6 +347,14 @@
       --container-sm: 640px;
       --container-md: 960px;
       --container-lg: 1200px;
+
+      /* Data Visualization Palette — 6 distinct chart colors from accent families */
+      --chart-1: var(--accent-primary);
+      --chart-2: var(--accent-gold);
+      --chart-3: var(--accent-cyan);
+      --chart-4: var(--accent-green);
+      --chart-5: var(--accent-purple);
+      --chart-6: var(--accent-danger);
     }
     } /* end @layer component (tokens) */
 
@@ -388,7 +396,7 @@
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       overflow-x: clip;
     }
-    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 
     /* ==========================================================================
        SCROLL PROGRESS BAR
@@ -619,8 +627,7 @@
       display: flex; justify-content: center; gap: var(--space-3);
     }
     .hero-dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      border: 2px solid var(--border-default);
+      width: 12px; height: 12px; border-radius: var(--radius-full);
     }
     @media (prefers-reduced-motion: no-preference) {
       .hero-dot:nth-child(1) { animation: idle-bounce 2s var(--ease-bounce) infinite; }
@@ -641,6 +648,14 @@
     .hero-cta:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
     .hero-cta:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary); }
     .hero-cta svg { width: 16px; height: 16px; }
+    .hero-crosslink {
+      font-size: var(--ui-text-xs); color: var(--text-muted);
+      margin-bottom: 0;
+    }
+    .hero-crosslink a {
+      color: var(--accent-primary-text); text-decoration: underline;
+      text-underline-offset: 2px;
+    }
     .hero-preview-grid {
       display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-3);
       max-width: 640px; margin: var(--space-8) auto 0;
@@ -675,8 +690,6 @@
       margin-bottom: var(--space-16);
       padding-bottom: var(--space-16);
       border-bottom: 2px dashed var(--border-subtle);
-      content-visibility: auto;
-      contain-intrinsic-size: auto 500px;
     }
     .motion-section:last-of-type {
       border-bottom: none;
@@ -695,13 +708,15 @@
     }
     .section-title {
       font-size: var(--step-3); font-weight: 800;
-      letter-spacing: var(--tracking-tight);
+      letter-spacing: var(--tracking-tighter);
       line-height: var(--leading-tight);
-      margin-bottom: var(--space-2);
+      margin-bottom: var(--space-3);
+      text-wrap: balance;
     }
     .section-desc {
       font-size: var(--step-0); color: var(--text-secondary);
-      max-width: 640px; line-height: var(--leading-normal);
+      max-width: 640px; line-height: var(--leading-relaxed);
+      text-wrap: pretty;
     }
     .section-actions {
       margin-top: var(--space-4);
@@ -847,6 +862,121 @@
       padding: 2px 8px; color: var(--text-primary);
     }
     .copy-btn:hover { box-shadow: var(--shadow-sm); }
+
+    /* ==========================================================================
+       GUIDELINE CARDS
+       ========================================================================== */
+    .guideline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-4);
+    }
+    .guideline-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .guideline-card-demo {
+      padding: var(--space-6) var(--space-4);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg-subtle);
+      border-bottom: 2px solid var(--border-subtle);
+      min-height: 80px;
+    }
+    .guideline-demo-element {
+      width: 48px; height: 48px;
+      background: var(--accent-primary);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .guideline-demo-never {
+      background: var(--bg-muted);
+      border-color: var(--accent-danger);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-danger);
+    }
+    .guideline-demo-never svg { width: 20px; height: 20px; }
+    .guideline-card-body {
+      padding: var(--space-3) var(--space-4) var(--space-4);
+    }
+    .guideline-card-name {
+      font-size: var(--ui-text-md); font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+    .guideline-card-desc {
+      font-size: var(--ui-text-sm); color: var(--text-secondary);
+      line-height: var(--leading-normal); margin-bottom: var(--space-2);
+    }
+    .guideline-card-meta {
+      font-family: var(--font-mono); font-size: var(--ui-text-xs);
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       RECIPE TABLE
+       ========================================================================== */
+    .recipe-table {
+      width: 100%; border-collapse: collapse;
+      font-size: var(--ui-text-sm);
+    }
+    .recipe-table th {
+      text-align: left; font-weight: 700;
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 2px solid var(--border-default);
+      font-size: var(--ui-text-xs); text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--text-muted);
+    }
+    .recipe-table td {
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+    }
+    .recipe-table td:first-child {
+      font-weight: 700;
+    }
+    .recipe-table code {
+      font-family: var(--font-mono); font-size: var(--ui-text-xs);
+      background: var(--bg-muted); padding: 2px 6px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ==========================================================================
+       STAGGER DEMO
+       ========================================================================== */
+    .stagger-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-6);
+    }
+    .stagger-column {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-4);
+    }
+    .stagger-config-meta {
+      font-family: var(--font-mono); font-size: var(--ui-text-xs);
+      color: var(--text-muted); margin-bottom: var(--space-4);
+    }
+    .stagger-track {
+      display: flex; flex-direction: column; gap: var(--space-2);
+    }
+    .stagger-item {
+      background: var(--bg-subtle);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--ui-text-sm); font-weight: 600;
+      color: var(--text-primary);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .stagger-item { opacity: 0; transform: translateY(12px); }
+    }
 
     /* ==========================================================================
        TOKEN REFERENCE CARDS (from researcher)
@@ -2168,6 +2298,7 @@
       </a>
       <ul class="nav-links">
         <li><a href="#tokens">Tokens</a></li>
+        <li><a href="#guidelines">Guidelines</a></li>
         <li><a href="#entrances">Entrances</a></li>
         <li><a href="#exits">Exits</a></li>
         <li><a href="#attention">Attention</a></li>
@@ -2176,6 +2307,7 @@
         <li><a href="#looping">Looping</a></li>
         <li><a href="#text">Text</a></li>
         <li><a href="#physics">Physics</a></li>
+        <li><a href="#stagger">Stagger</a></li>
         <li><a href="#scroll-driven">Scroll</a></li>
         <li><a href="#transitions">Transitions</a></li>
         <li><a href="#combos">Combos</a></li>
@@ -2184,6 +2316,12 @@
         <kbd class="nav-kbd" id="cmd-k-trigger" title="Quick navigation">&#8984;K</kbd>
         <a href="delightful-design-system.html" class="nav-btn" aria-label="Design System" title="Design System">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </a>
+        <a href="delightful-animation.html" class="nav-btn" aria-label="Animation System" title="Animation System">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
+        </a>
+        <a href="delightful-color.html" class="nav-btn" aria-label="Color System" title="Color System">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><circle cx="8.5" cy="15.5" r="2.5"/></svg>
         </a>
         <button class="nav-btn" id="motion-toggle" aria-label="Toggle reduced motion">
           <svg class="icon-motion-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -2213,14 +2351,9 @@
     <section class="hero anim-in">
       <h1 class="hero-title" id="hero-title">Delightful Motion</h1>
       <p class="hero-subtitle anim-in anim-d3">Objects have weight. Shadows show depth. Movements are snappy and decisive.</p>
-      <p class="hero-crosslink anim-in anim-d4" style="margin-top:var(--space-2);font-size:var(--ui-text-sm);color:var(--text-muted)">Part of the <a href="delightful-design-system.html" style="color:var(--accent-primary-text);text-decoration:underline;text-underline-offset:2px">Delightful Design System</a> &middot; <a href="delightful-color.html" style="color:var(--accent-cyan-text);text-decoration:underline;text-underline-offset:2px">Color</a></p>
-      <div class="hero-dots anim-in anim-d5">
-        <span class="hero-dot" style="background:var(--accent-primary)"></span>
-        <span class="hero-dot" style="background:var(--accent-gold)"></span>
-        <span class="hero-dot" style="background:var(--accent-cyan)"></span>
-      </div>
-      <a href="#entrances" class="hero-cta anim-in anim-d6">Explore 59 animations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <div class="hero-preview-grid anim-in anim-d7">
+      <a href="#entrances" class="hero-cta anim-in anim-d4">Explore 59 animations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p class="hero-crosslink anim-in anim-d5">Part of the <a href="delightful-design-system.html">Delightful Design System</a> &middot; <a href="delightful-animation.html">Animation</a> &middot; <a href="delightful-color.html">Color</a></p>
+      <div class="hero-preview-grid anim-in anim-d6">
         <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-primary-subtle);border-color:var(--accent-primary)"></div></div>
         <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-gold-subtle);border-color:var(--accent-gold)"></div></div>
         <div class="hero-preview-cell"><div class="hero-preview-dot" style="background:var(--accent-cyan-subtle);border-color:var(--accent-cyan)"></div></div>
@@ -2350,6 +2483,107 @@
             </div>
             <div class="token-ref-easing-card-desc">Bouncy spring. Multiple oscillations, playful physics. Toggles, badges.</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         GUIDELINES
+         ================================================================ -->
+    <section id="guidelines" class="motion-section anim-in">
+      <div class="section-header">
+        <div class="section-overline"><span class="status-dot" style="background:var(--accent-gold)"></span> Guidelines</div>
+        <h2 class="section-title">When to use what</h2>
+        <p class="section-desc">Each easing has a purpose. Match the curve to the intent — the wrong easing makes even a good animation feel off.</p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-label">Easing Guidelines</div>
+        <div class="guideline-grid">
+          <div class="guideline-card" tabindex="0">
+            <div class="guideline-card-demo">
+              <div class="guideline-demo-element" data-guideline="ease-out"></div>
+            </div>
+            <div class="guideline-card-body">
+              <div class="guideline-card-name" style="color:var(--accent-primary)">Use ease-out for...</div>
+              <p class="guideline-card-desc">Color changes, opacity fades, border transitions. Anything that responds immediately and decelerates naturally.</p>
+              <div class="guideline-card-meta">100–160ms · CSS transitions</div>
+            </div>
+          </div>
+          <div class="guideline-card" tabindex="0">
+            <div class="guideline-card-demo">
+              <div class="guideline-demo-element" data-guideline="ease-bounce"></div>
+            </div>
+            <div class="guideline-card-body">
+              <div class="guideline-card-name" style="color:var(--accent-primary)">Use ease-bounce for...</div>
+              <p class="guideline-card-desc">Toggle switches, checkboxes, small interactive elements. Creates playful overshooting that adds personality.</p>
+              <div class="guideline-card-meta">160–240ms · Spring-like feel</div>
+            </div>
+          </div>
+          <div class="guideline-card" tabindex="0">
+            <div class="guideline-card-demo">
+              <div class="guideline-demo-element" data-guideline="ease-smooth"></div>
+            </div>
+            <div class="guideline-card-body">
+              <div class="guideline-card-name" style="color:var(--accent-primary)">Use ease-smooth for...</div>
+              <p class="guideline-card-desc">Entrance animations, page transitions, modal reveals. Smooth deceleration creates a natural, controlled feel.</p>
+              <div class="guideline-card-meta">240–360ms · Entrance/exit</div>
+            </div>
+          </div>
+          <div class="guideline-card" tabindex="0">
+            <div class="guideline-card-demo">
+              <div class="guideline-demo-element" data-guideline="ease-slam"></div>
+            </div>
+            <div class="guideline-card-body">
+              <div class="guideline-card-name" style="color:var(--accent-primary)">Use ease-slam for...</div>
+              <p class="guideline-card-desc">Hard stops, dismissals, and stamp-like impacts. Decelerates sharply for a weighty, definitive feel.</p>
+              <div class="guideline-card-meta">160–360ms · Exits and impacts</div>
+            </div>
+          </div>
+          <div class="guideline-card" tabindex="0">
+            <div class="guideline-card-demo">
+              <div class="guideline-demo-element" data-guideline="ease-elastic"></div>
+            </div>
+            <div class="guideline-card-body">
+              <div class="guideline-card-name" style="color:var(--accent-primary)">Use ease-elastic for...</div>
+              <p class="guideline-card-desc">Springy overshoots and playful entrances. Pulls back before springing forward for lively, energetic motion.</p>
+              <div class="guideline-card-meta">240–500ms · Entrances and emphasis</div>
+            </div>
+          </div>
+          <div class="guideline-card" tabindex="0">
+            <div class="guideline-card-demo">
+              <div class="guideline-demo-element guideline-demo-never" data-guideline="never">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+            </div>
+            <div class="guideline-card-body">
+              <div class="guideline-card-name" style="color:var(--accent-danger)">Never animate...</div>
+              <p class="guideline-card-desc">Layout shifts that cause content reflow, font-size changes, or anything that blocks user interaction. Keep the thread clear.</p>
+              <div class="guideline-card-meta">Avoid transform + layout simultaneously</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-label">Component Motion Recipes</div>
+        <div style="overflow-x:auto">
+          <table class="recipe-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Entrance</th>
+                <th>Exit</th>
+                <th>Feedback</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Toast</td><td><code>slide-slam</code></td><td><code>fling-right</code></td><td><code>confirm-thud</code></td></tr>
+              <tr><td>Modal</td><td><code>stamp-in</code></td><td><code>press-away</code></td><td>—</td></tr>
+              <tr><td>Card</td><td><code>brick-stack</code></td><td><code>trapdoor</code></td><td><code>spotlight</code></td></tr>
+              <tr><td>Alert</td><td><code>info-slide</code></td><td><code>press-away</code></td><td><code>error-jolt</code></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -3173,6 +3407,50 @@
     </section>
 
     <!-- ================================================================
+         STAGGERED ENTRY
+         ================================================================ -->
+    <section id="stagger" class="motion-section anim-in">
+      <div class="section-header">
+        <div class="section-overline"><span class="status-dot" style="background:var(--accent-green)"></span> Stagger</div>
+        <h2 class="section-title">Staggered entry</h2>
+        <p class="section-desc">Multiple items entering with sequential delays. Different spring configs produce different feels — snappy, standard, or gentle.</p>
+        <div class="section-actions"><button class="play-all-btn" id="stagger-replay-all">Replay All</button></div>
+      </div>
+      <div class="stagger-columns">
+        <div class="stagger-column" data-stagger-config="snappy">
+          <div class="subsection-label">Snappy</div>
+          <p class="stagger-config-meta">30ms delay · bounce · 200ms</p>
+          <div class="stagger-track">
+            <div class="stagger-item">Item 1</div>
+            <div class="stagger-item">Item 2</div>
+            <div class="stagger-item">Item 3</div>
+            <div class="stagger-item">Item 4</div>
+          </div>
+        </div>
+        <div class="stagger-column" data-stagger-config="standard">
+          <div class="subsection-label">Standard</div>
+          <p class="stagger-config-meta">50ms delay · smooth · 300ms</p>
+          <div class="stagger-track">
+            <div class="stagger-item">Item 1</div>
+            <div class="stagger-item">Item 2</div>
+            <div class="stagger-item">Item 3</div>
+            <div class="stagger-item">Item 4</div>
+          </div>
+        </div>
+        <div class="stagger-column" data-stagger-config="gentle">
+          <div class="subsection-label">Gentle</div>
+          <p class="stagger-config-meta">80ms delay · out · 400ms</p>
+          <div class="stagger-track">
+            <div class="stagger-item">Item 1</div>
+            <div class="stagger-item">Item 2</div>
+            <div class="stagger-item">Item 3</div>
+            <div class="stagger-item">Item 4</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
          CATEGORY 9: SCROLL-DRIVEN
          ================================================================ -->
     <section id="scroll-driven" class="motion-section anim-in">
@@ -3322,7 +3600,7 @@
         <span class="hero-dot" style="background:var(--accent-cyan);width:8px;height:8px"></span>
       </div>
       <p><strong>Delightful</strong> — Motion System</p>
-      <p style="margin-top:var(--space-2)">Part of the <a href="delightful-design-system.html">Delightful Design System</a></p>
+      <p style="margin-top:var(--space-2)">Part of the <a href="delightful-design-system.html">Delightful Design System</a> &middot; <a href="delightful-animation.html">Animation</a> &middot; <a href="delightful-color.html">Color</a></p>
     </footer>
 
   </div><!-- .page-wrap -->
@@ -3411,6 +3689,7 @@
     // --- Command palette ---
     const cmdSections = [
       { id: 'tokens', label: 'Tokens', color: 'var(--accent-gold)' },
+      { id: 'guidelines', label: 'Guidelines', color: 'var(--accent-gold)' },
       { id: 'entrances', label: 'Entrances', color: 'var(--accent-primary)' },
       { id: 'exits', label: 'Exits', color: 'var(--accent-primary)' },
       { id: 'attention', label: 'Attention', color: 'var(--accent-gold)' },
@@ -3419,6 +3698,7 @@
       { id: 'looping', label: 'Looping', color: 'var(--accent-primary)' },
       { id: 'text', label: 'Text Animations', color: 'var(--accent-gold)' },
       { id: 'physics', label: 'Physics', color: 'var(--accent-cyan)' },
+      { id: 'stagger', label: 'Staggered Entry', color: 'var(--accent-green)' },
       { id: 'scroll-driven', label: 'Scroll-driven', color: 'var(--accent-green)' },
       { id: 'transitions', label: 'Transitions', color: 'var(--accent-primary)' },
       { id: 'combos', label: 'Combos', color: 'var(--accent-gold)' },
@@ -3844,6 +4124,89 @@
           input.value = '';
         }, 2000);
       }
+    });
+
+    // --- Resolve CSS custom property for Web Animations API ---
+    function cssVar(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    // --- Stagger demo ---
+    const staggerConfigs = {
+      snappy:   { delay: 30,  easing: () => cssVar('--ease-bounce'), duration: 200 },
+      standard: { delay: 50,  easing: () => cssVar('--ease-smooth'), duration: 300 },
+      gentle:   { delay: 80,  easing: () => cssVar('--ease-out'),    duration: 400 },
+    };
+
+    function playStagger(column) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        column.querySelectorAll('.stagger-item').forEach(el => {
+          el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+        });
+        return;
+      }
+      const config = staggerConfigs[column.dataset.staggerConfig];
+      if (!config) return;
+      const items = column.querySelectorAll('.stagger-item');
+      items.forEach((item, i) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(12px)';
+        item.animate([
+          { opacity: 0, transform: 'translateY(12px)' },
+          { opacity: 1, transform: 'translateY(0)' },
+        ], {
+          duration: config.duration,
+          easing: config.easing(),
+          delay: i * config.delay,
+          fill: 'forwards',
+        });
+      });
+    }
+
+    // Auto-play on scroll into view
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('.stagger-column').forEach(playStagger);
+          staggerObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    const staggerSection = document.getElementById('stagger');
+    if (staggerSection) staggerObserver.observe(staggerSection);
+
+    // Replay All button
+    const replayAllBtn = document.getElementById('stagger-replay-all');
+    if (replayAllBtn) {
+      replayAllBtn.addEventListener('click', () => {
+        document.querySelectorAll('.stagger-column').forEach(playStagger);
+      });
+    }
+
+    // --- Guideline card hover animations ---
+    document.querySelectorAll('.guideline-demo-element').forEach(el => {
+      const type = el.dataset.guideline;
+      if (type === 'never') return;
+      const easings = {
+        'ease-out':     { token: '--ease-out',     dur: 160 },
+        'ease-bounce':  { token: '--ease-bounce',  dur: 240 },
+        'ease-smooth':  { token: '--ease-smooth',  dur: 300 },
+        'ease-slam':    { token: '--ease-slam',    dur: 280 },
+        'ease-elastic': { token: '--ease-elastic', dur: 400 },
+      };
+      const cfg = easings[type];
+      if (!cfg) return;
+      const card = el.closest('.guideline-card');
+      const play = () => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        el.animate([
+          { transform: 'scale(0.8) translateY(8px)', opacity: 0 },
+          { transform: 'scale(1) translateY(0)', opacity: 1 },
+        ], { duration: cfg.dur, easing: cssVar(cfg.token), fill: 'forwards' });
+      };
+      card.addEventListener('mouseenter', play);
+      card.addEventListener('focus', play);
+      card.addEventListener('click', play);
     });
 
     // --- Hero text-stamp on load ---

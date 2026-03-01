@@ -96,8 +96,8 @@
       --text-on-accent: oklch(1.00 0.000 0);
       --text-on-gold: oklch(0.220 0.020 70);
 
-      --border-default: var(--text-primary);
-      --border-strong: var(--text-primary);
+      --border-default: oklch(0.340 0.025 60);
+      --border-strong: oklch(0.250 0.020 60);
       --border-subtle: oklch(0.820 0.015 70);
 
       /* Vibrant Accents — Warm Palette */
@@ -114,7 +114,7 @@
       --accent-danger-text: oklch(0.570 0.220 20);
 
       --accent-gold: oklch(0.840 0.175 85);
-      /* Warm gold */
+      /* Bright gold — highlight accent */
       --accent-gold-hover: oklch(0.820 0.165 84);
       --accent-gold-subtle: oklch(0.965 0.060 85);
       --accent-gold-text: oklch(0.560 0.170 85);
@@ -146,9 +146,9 @@
       --overlay-bg: oklch(0.200 0.015 60 / 0.30);
 
       /* Neo-Brutalist Solid Shadows */
-      --shadow-sm: 2px 2px 0 var(--text-primary);
-      --shadow-md: 4px 4px 0 var(--text-primary);
-      --shadow-lg: 8px 8px 0 var(--text-primary);
+      --shadow-sm: 2px 2px 0 var(--border-default);
+      --shadow-md: 4px 4px 0 var(--border-default);
+      --shadow-lg: 8px 8px 0 var(--border-default);
       --shadow-pink: 4px 4px 0 var(--accent-primary);
       --shadow-danger: 4px 4px 0 var(--accent-danger);
       --shadow-gold: 4px 4px 0 var(--accent-gold);
@@ -350,6 +350,14 @@
       --container-sm: 640px;
       --container-md: 960px;
       --container-lg: 1200px;
+
+      /* Data Visualization Palette — 6 distinct chart colors from accent families */
+      --chart-1: var(--accent-primary);
+      --chart-2: var(--accent-gold);
+      --chart-3: var(--accent-cyan);
+      --chart-4: var(--accent-green);
+      --chart-5: var(--accent-purple);
+      --chart-6: var(--accent-danger);
     }
     } /* end @layer component (tokens) */
 
@@ -369,7 +377,7 @@
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       overflow-x: clip;
     }
-    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 
     /* ==========================================================================
        SCROLL PROGRESS BAR
@@ -508,8 +516,8 @@
       line-height: var(--leading-snug);
     }
     .hero-crosslink {
-      font-size: var(--ui-text-sm); color: var(--text-muted);
-      margin-bottom: var(--space-4);
+      font-size: var(--ui-text-xs); color: var(--text-muted);
+      margin-bottom: 0;
     }
     .hero-crosslink a {
       color: var(--accent-primary-text); text-decoration: underline;
@@ -519,8 +527,7 @@
       display: flex; justify-content: center; gap: var(--space-3);
     }
     .hero-dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      border: 2px solid var(--border-default);
+      width: 12px; height: 12px; border-radius: var(--radius-full);
     }
 
     /* ==========================================================================
@@ -530,8 +537,6 @@
       margin-bottom: var(--space-16);
       padding-bottom: var(--space-16);
       border-bottom: 2px dashed var(--border-subtle);
-      content-visibility: auto;
-      contain-intrinsic-size: auto 600px;
     }
     .anim-section:last-of-type { border-bottom: none; }
     .section-header { margin-bottom: var(--space-8); }
@@ -546,13 +551,15 @@
     }
     .section-title {
       font-size: var(--step-3); font-weight: 800;
-      letter-spacing: var(--tracking-tight);
+      letter-spacing: var(--tracking-tighter);
       line-height: var(--leading-tight);
-      margin-bottom: var(--space-2);
+      margin-bottom: var(--space-3);
+      text-wrap: balance;
     }
     .section-desc {
       font-size: var(--step-0); color: var(--text-secondary);
-      max-width: 640px; line-height: var(--leading-normal);
+      max-width: 640px; line-height: var(--leading-relaxed);
+      text-wrap: pretty;
     }
 
     /* ==========================================================================
@@ -657,6 +664,181 @@
       appearance: none; width: 16px; height: 16px;
       border-radius: 50%; background: var(--accent-primary);
       border: 2px solid var(--border-default); cursor: pointer;
+    }
+
+    /* ==========================================================================
+       SIGNATURE EFFECTS — BLUR FOCUS
+       ========================================================================== */
+    .blur-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);
+      width: 100%; max-width: 320px;
+    }
+    .blur-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-top: 4px solid var(--accent-primary);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3);
+      text-align: center;
+      transition: filter var(--motion-base) var(--ease-smooth),
+                  opacity var(--motion-base) var(--ease-smooth),
+                  transform var(--motion-fast) var(--ease-out);
+    }
+    .blur-card-label {
+      font-size: var(--ui-text-sm); font-weight: 700;
+      color: var(--text-primary);
+    }
+    .blur-grid:hover .blur-card {
+      filter: blur(3px); opacity: 0.5;
+    }
+    .blur-grid:hover .blur-card:hover {
+      filter: none; opacity: 1;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       SIGNATURE EFFECTS — 3D TILT
+       ========================================================================== */
+    .tilt-card {
+      width: 160px; height: 100px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-top: 4px solid var(--accent-primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .tilt-shine {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, oklch(1 0 0 / 0.15), transparent 60%);
+      pointer-events: none;
+      transition: opacity var(--motion-fast) var(--ease-out);
+    }
+
+    /* ==========================================================================
+       SIGNATURE EFFECTS — HUE SHIFT
+       ========================================================================== */
+    @property --sig-hue {
+      syntax: '<number>';
+      inherits: false;
+      initial-value: 350;
+    }
+    .hue-shift-demo {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hue-shift-text {
+      font-size: var(--step-3); font-weight: 900;
+      letter-spacing: var(--tracking-tighter);
+      color: oklch(0.64 0.27 var(--sig-hue));
+      animation: hue-cycle 4s linear infinite;
+    }
+    @keyframes hue-cycle {
+      from { --sig-hue: 350; }
+      to { --sig-hue: 710; }
+    }
+    .hue-shift-paused .hue-shift-text {
+      animation-play-state: paused;
+    }
+
+    /* ==========================================================================
+       LOADING — SKELETON
+       ========================================================================== */
+    .skel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3); width: 100%;
+    }
+    @media (max-width: 640px) {
+      .skel-grid { grid-template-columns: 1fr; }
+    }
+    .skel-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3);
+    }
+    .skel {
+      border-radius: var(--radius-sm);
+      background: var(--bg-muted);
+    }
+    .skel-heading {
+      height: 14px; width: 60%; margin-bottom: var(--space-2);
+    }
+    .skel-text {
+      height: 10px; width: 100%; margin-bottom: var(--space-1);
+    }
+    .skel-shimmer {
+      background: linear-gradient(90deg, var(--bg-muted) 25%, var(--bg-subtle) 50%, var(--bg-muted) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+    .skel-pulse {
+      animation: skel-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    @keyframes skel-pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    .skel-loaded .skel-card {
+      opacity: 0; transform: translateY(8px);
+    }
+    .skel-reveal .skel-card {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 300ms var(--ease-smooth), transform 300ms var(--ease-smooth);
+    }
+
+    /* ==========================================================================
+       LOADING — PAGE TRANSITIONS
+       ========================================================================== */
+    .pt-frame {
+      position: relative; width: 100%; height: 100%;
+      min-height: 200px;
+    }
+    .pt-page {
+      position: absolute; inset: 0;
+      padding: var(--space-4);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .pt-page-hidden {
+      opacity: 0; transform: translateX(100%);
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       LOADING — JS STAGGER
+       ========================================================================== */
+    .js-stagger-columns {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3); width: 100%;
+    }
+    @media (max-width: 640px) {
+      .js-stagger-columns { grid-template-columns: 1fr; }
+    }
+    .js-stagger-label {
+      font-size: var(--ui-text-2xs); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--text-muted); margin-bottom: var(--space-2);
+    }
+    .js-stagger-label span {
+      font-family: var(--font-mono); color: var(--accent-primary-text);
+    }
+    .js-stagger-item {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-1) var(--space-2);
+      font-size: var(--ui-text-xs); font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
     }
 
     /* ==========================================================================
@@ -802,6 +984,8 @@
         <li><a href="#gestures">Gestures</a></li>
         <li><a href="#cursor">Cursor</a></li>
         <li><a href="#generative">Generative</a></li>
+        <li><a href="#signatures">Signatures</a></li>
+        <li><a href="#loading">Loading</a></li>
         <li><a href="#components">Components</a></li>
         <li><a href="#combined">Combined</a></li>
       </ul>
@@ -812,6 +996,9 @@
         </a>
         <a href="delightful-motion.html" class="nav-btn" aria-label="Motion System" title="Motion System">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="delightful-color.html" class="nav-btn" aria-label="Color System" title="Color System">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><circle cx="8.5" cy="15.5" r="2.5"/></svg>
         </a>
         <button class="nav-btn" id="theme-toggle" aria-label="Toggle theme (light / dark / system)">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -842,11 +1029,6 @@
       <h1 class="hero-title">Delightful Animation</h1>
       <p class="hero-subtitle">Spring physics, particle systems, generative art, and interactive playgrounds — all vanilla JS, all token-driven.</p>
       <p class="hero-crosslink">Part of the <a href="delightful-design-system.html">Delightful Design System</a> &middot; <a href="delightful-motion.html">Motion</a> &middot; <a href="delightful-color.html">Color</a></p>
-      <div class="hero-dots">
-        <span class="hero-dot" style="background:var(--accent-primary)"></span>
-        <span class="hero-dot" style="background:var(--accent-gold)"></span>
-        <span class="hero-dot" style="background:var(--accent-cyan)"></span>
-      </div>
     </section>
 
     <!-- ================================================================
@@ -1459,11 +1641,212 @@
     </section>
 
     <!-- ================================================================
-         7. COMPONENT SHOWCASE
+         7. SIGNATURE EFFECTS
+         ================================================================ -->
+    <section id="signatures" class="anim-section">
+      <div class="section-header">
+        <div class="section-overline"><span class="status-dot" style="background:var(--accent-gold)"></span> Category 07</div>
+        <h2 class="section-title">Signature Effects</h2>
+        <p class="section-desc">Distinctive interactions that give the system its personality — blur, depth, and color shifting that make Delightful feel alive.</p>
+      </div>
+
+      <div class="demo-grid">
+        <!-- Blur Focus Grid -->
+        <div class="demo-card">
+          <div class="demo-card-stage" style="min-height:220px;padding:var(--space-4)">
+            <div class="blur-grid">
+              <div class="blur-card" style="border-top-color:var(--accent-primary)">
+                <div class="blur-card-label">Pink</div>
+              </div>
+              <div class="blur-card" style="border-top-color:var(--accent-gold)">
+                <div class="blur-card-label">Gold</div>
+              </div>
+              <div class="blur-card" style="border-top-color:var(--accent-cyan)">
+                <div class="blur-card-label">Cyan</div>
+              </div>
+              <div class="blur-card" style="border-top-color:var(--accent-green)">
+                <div class="blur-card-label">Green</div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-card-body">
+            <div class="demo-card-top">
+              <span class="demo-card-name">Blur Focus</span>
+              <div class="demo-card-tags"><span class="tag">css</span></div>
+            </div>
+            <p class="demo-card-desc">Pure CSS: hovering one card blurs and dims its siblings. Creates visual hierarchy through focus.</p>
+          </div>
+        </div>
+
+        <!-- 3D Perspective Tilt -->
+        <div class="demo-card">
+          <div class="demo-card-stage" style="min-height:220px;perspective:800px">
+            <div class="tilt-card" id="tilt-card-1" style="border-top-color:var(--accent-primary)">
+              <div class="tilt-shine"></div>
+              <span style="font-weight:700;font-size:var(--ui-text-md);position:relative;z-index:1">Tilt me</span>
+            </div>
+          </div>
+          <div class="demo-card-body">
+            <div class="demo-card-top">
+              <span class="demo-card-name">3D Tilt</span>
+              <div class="demo-card-tags"><span class="tag">js</span><span class="tag">spring</span></div>
+            </div>
+            <p class="demo-card-desc">Mouse-tracked perspective rotation with spring interpolation. Shine overlay follows cursor position.</p>
+          </div>
+        </div>
+
+        <!-- @property Color Shift -->
+        <div class="demo-card">
+          <div class="demo-card-stage" style="min-height:220px">
+            <div class="hue-shift-demo" id="hue-shift-demo">
+              <span class="hue-shift-text">Delightful</span>
+            </div>
+          </div>
+          <div class="demo-card-body">
+            <div class="demo-card-top">
+              <span class="demo-card-name">Color Shift</span>
+              <div class="demo-card-tags"><span class="tag">css</span><span class="tag">@property</span></div>
+            </div>
+            <p class="demo-card-desc">CSS <code style="font-family:var(--font-mono);font-size:var(--ui-text-xs);background:var(--bg-muted);padding:1px 4px;border-radius:4px">@property</code> hue cycling through all 6 accent families. Play/pause toggle.</p>
+            <div style="margin-top:auto;padding-top:var(--space-2)">
+              <button class="demo-btn" id="hue-shift-toggle">Pause</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         8. LOADING & TRANSITIONS
+         ================================================================ -->
+    <section id="loading" class="anim-section">
+      <div class="section-header">
+        <div class="section-overline"><span class="status-dot" style="background:var(--accent-purple)"></span> Category 08</div>
+        <h2 class="section-title">Loading &amp; Transitions</h2>
+        <p class="section-desc">Skeleton placeholders, page transitions, and staggered reveals — the patterns that make waiting feel purposeful.</p>
+      </div>
+
+      <div class="demo-grid">
+        <!-- Skeleton Loading -->
+        <div class="demo-card demo-card-wide">
+          <div class="demo-card-stage" style="min-height:180px;padding:var(--space-4);align-items:stretch">
+            <div class="skel-grid" id="skel-grid">
+              <div class="skel-card" id="skel-card-1">
+                <div class="skel skel-shimmer skel-heading"></div>
+                <div class="skel skel-shimmer skel-text"></div>
+                <div class="skel skel-shimmer skel-text" style="width:75%"></div>
+              </div>
+              <div class="skel-card" id="skel-card-2">
+                <div class="skel skel-shimmer skel-heading"></div>
+                <div class="skel skel-shimmer skel-text"></div>
+                <div class="skel skel-shimmer skel-text" style="width:85%"></div>
+              </div>
+              <div class="skel-card" id="skel-card-3">
+                <div class="skel skel-shimmer skel-heading"></div>
+                <div class="skel skel-shimmer skel-text"></div>
+                <div class="skel skel-shimmer skel-text" style="width:65%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-card-body">
+            <div class="demo-card-top">
+              <span class="demo-card-name">Skeleton Loading</span>
+              <div class="demo-card-tags"><span class="tag">css</span><span class="tag">transition</span></div>
+            </div>
+            <p class="demo-card-desc">Shimmer and pulse placeholder patterns. Toggle modes or load real content with staggered reveal.</p>
+            <div style="display:flex;gap:var(--space-2);margin-top:auto;padding-top:var(--space-2)">
+              <button class="demo-btn demo-btn-secondary" id="skel-toggle">Shimmer / Pulse</button>
+              <button class="demo-btn" id="skel-load">Load Content</button>
+              <button class="demo-btn demo-btn-secondary" id="skel-reset" hidden>Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page Transitions -->
+        <div class="demo-card">
+          <div class="demo-card-stage" style="min-height:220px;padding:0;overflow:hidden">
+            <div class="pt-frame" id="pt-frame">
+              <div class="pt-page" id="pt-page-a">
+                <div style="font-weight:700;font-size:var(--ui-text-md);margin-bottom:var(--space-2)">Dashboard</div>
+                <div style="font-size:var(--ui-text-sm);color:var(--text-secondary);margin-bottom:var(--space-3)">View metrics and activity.</div>
+                <div style="display:flex;gap:var(--space-2)">
+                  <div style="flex:1;height:28px;background:var(--accent-primary-subtle);border-radius:var(--radius-sm)"></div>
+                  <div style="flex:1;height:28px;background:var(--accent-gold-subtle);border-radius:var(--radius-sm)"></div>
+                  <div style="flex:1;height:28px;background:var(--accent-cyan-subtle);border-radius:var(--radius-sm)"></div>
+                </div>
+              </div>
+              <div class="pt-page pt-page-hidden" id="pt-page-b">
+                <div style="font-weight:700;font-size:var(--ui-text-md);margin-bottom:var(--space-2)">Settings</div>
+                <div style="font-size:var(--ui-text-sm);color:var(--text-secondary);margin-bottom:var(--space-3)">Manage your preferences.</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                  <div style="height:10px;background:var(--bg-muted);border-radius:var(--radius-sm);width:80%"></div>
+                  <div style="height:10px;background:var(--bg-muted);border-radius:var(--radius-sm);width:60%"></div>
+                  <div style="height:10px;background:var(--bg-muted);border-radius:var(--radius-sm);width:70%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-card-body">
+            <div class="demo-card-top">
+              <span class="demo-card-name">Page Transitions</span>
+              <div class="demo-card-tags"><span class="tag">js</span></div>
+            </div>
+            <p class="demo-card-desc">Crossfade and slide transitions in a contained frame. Production use: CSS View Transitions API.</p>
+            <div style="display:flex;gap:var(--space-2);margin-top:auto;padding-top:var(--space-2)">
+              <button class="demo-btn demo-btn-secondary" id="pt-crossfade">Crossfade</button>
+              <button class="demo-btn demo-btn-secondary" id="pt-slide-left">Slide L</button>
+              <button class="demo-btn demo-btn-secondary" id="pt-slide-right">Slide R</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Staggered Entry (JS spring solver) -->
+        <div class="demo-card">
+          <div class="demo-card-stage" style="min-height:220px;padding:var(--space-4);align-items:stretch">
+            <div class="js-stagger-columns" id="js-stagger-area">
+              <div class="js-stagger-col" data-spring="snappy">
+                <div class="js-stagger-label">Snappy <span>(500/30)</span></div>
+                <div class="js-stagger-item">Analytics</div>
+                <div class="js-stagger-item">Reports</div>
+                <div class="js-stagger-item">Settings</div>
+                <div class="js-stagger-item">Profile</div>
+              </div>
+              <div class="js-stagger-col" data-spring="standard">
+                <div class="js-stagger-label">Standard <span>(400/35)</span></div>
+                <div class="js-stagger-item">Analytics</div>
+                <div class="js-stagger-item">Reports</div>
+                <div class="js-stagger-item">Settings</div>
+                <div class="js-stagger-item">Profile</div>
+              </div>
+              <div class="js-stagger-col" data-spring="gentle">
+                <div class="js-stagger-label">Gentle <span>(300/28)</span></div>
+                <div class="js-stagger-item">Analytics</div>
+                <div class="js-stagger-item">Reports</div>
+                <div class="js-stagger-item">Settings</div>
+                <div class="js-stagger-item">Profile</div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-card-body">
+            <div class="demo-card-top">
+              <span class="demo-card-name">Spring Stagger</span>
+              <div class="demo-card-tags"><span class="tag">js</span><span class="tag">spring</span></div>
+            </div>
+            <p class="demo-card-desc">JS <code style="font-family:var(--font-mono);font-size:var(--ui-text-xs);background:var(--bg-muted);padding:1px 4px;border-radius:4px">springStep()</code> solver drives stagger — the physics complement to motion.html's CSS easing version.</p>
+            <div style="margin-top:auto;padding-top:var(--space-2)">
+              <button class="demo-btn" id="js-stagger-replay">Replay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         9. COMPONENT SHOWCASE
          ================================================================ -->
     <section id="components" class="anim-section">
       <div class="section-header">
-        <div class="section-overline"><span class="status-dot" style="background:var(--accent-cyan)"></span> Category 07</div>
+        <div class="section-overline"><span class="status-dot" style="background:var(--accent-cyan)"></span> Category 09</div>
         <h2 class="section-title">Component Showcase</h2>
         <p class="section-desc">Real design system components brought to life with spring physics. Toast notifications, badge counters, and more.</p>
       </div>
@@ -1516,11 +1899,11 @@
     </section>
 
     <!-- ================================================================
-         8. COMBINED & ADVANCED
+         10. COMBINED & ADVANCED
          ================================================================ -->
     <section id="combined" class="anim-section">
       <div class="section-header">
-        <div class="section-overline"><span class="status-dot" style="background:var(--accent-green)"></span> Category 08</div>
+        <div class="section-overline"><span class="status-dot" style="background:var(--accent-green)"></span> Category 10</div>
         <h2 class="section-title">Combined &amp; Advanced</h2>
         <p class="section-desc">Multiple animation systems working in concert. The grand finale that showcases what token-driven JS animation can do.</p>
       </div>
@@ -1753,6 +2136,8 @@
         { id: 'gestures', label: 'Gestures & Drag', color: 'var(--accent-primary)' },
         { id: 'cursor', label: 'Cursor & Interactive', color: 'var(--accent-gold)' },
         { id: 'generative', label: 'Generative Art', color: 'var(--accent-purple)' },
+        { id: 'signatures', label: 'Signature Effects', color: 'var(--accent-gold)' },
+        { id: 'loading', label: 'Loading & Transitions', color: 'var(--accent-purple)' },
         { id: 'components', label: 'Component Showcase', color: 'var(--accent-cyan)' },
         { id: 'combined', label: 'Combined & Advanced', color: 'var(--accent-green)' },
       ];
@@ -3814,6 +4199,270 @@
 
         observeCanvas(canvas.parentElement, 'combo', init);
         window.addEventListener('resize', () => { if (ctx) init(); });
+      })();
+
+      // ================================================================
+      //  8. LOADING — SKELETON
+      // ================================================================
+      (function() {
+        const grid = document.getElementById('skel-grid');
+        const toggleBtn = document.getElementById('skel-toggle');
+        const loadBtn = document.getElementById('skel-load');
+        const resetBtn = document.getElementById('skel-reset');
+        if (!grid || !toggleBtn || !loadBtn) return;
+
+        let isShimmer = true;
+        let loaded = false;
+
+        toggleBtn.addEventListener('click', () => {
+          if (loaded) return;
+          isShimmer = !isShimmer;
+          grid.querySelectorAll('.skel').forEach(el => {
+            el.classList.toggle('skel-shimmer', isShimmer);
+            el.classList.toggle('skel-pulse', !isShimmer);
+          });
+        });
+
+        loadBtn.addEventListener('click', () => {
+          if (loaded) return;
+          loaded = true;
+          grid.classList.add('skel-loaded');
+          // Replace skeleton content with real content
+          const cards = grid.querySelectorAll('.skel-card');
+          const content = [
+            { title: 'Analytics', desc: 'Real-time metrics and insights.' },
+            { title: 'Reports', desc: 'Weekly summaries and trends.' },
+            { title: 'Settings', desc: 'Customize your workspace.' },
+          ];
+          setTimeout(() => {
+            cards.forEach((card, i) => {
+              const c = content[i] || content[0];
+              card.innerHTML = `<div style="font-weight:700;font-size:var(--ui-text-sm);margin-bottom:var(--space-1)">${c.title}</div><div style="font-size:var(--ui-text-xs);color:var(--text-secondary)">${c.desc}</div>`;
+            });
+            grid.classList.add('skel-reveal');
+            cards.forEach((card, i) => {
+              card.style.transitionDelay = `${i * 80}ms`;
+            });
+            if (resetBtn) resetBtn.hidden = false;
+            loadBtn.hidden = true;
+          }, 300);
+        });
+
+        if (resetBtn) {
+          resetBtn.addEventListener('click', () => {
+            loaded = false;
+            grid.classList.remove('skel-loaded', 'skel-reveal');
+            const cards = grid.querySelectorAll('.skel-card');
+            cards.forEach((card, i) => {
+              card.style.transitionDelay = '';
+              const cls = isShimmer ? 'skel-shimmer' : 'skel-pulse';
+              card.innerHTML = `
+                <div class="skel ${cls} skel-heading"></div>
+                <div class="skel ${cls} skel-text"></div>
+                <div class="skel ${cls} skel-text" style="width:${[75,85,65][i]}%"></div>
+              `;
+            });
+            resetBtn.hidden = true;
+            loadBtn.hidden = false;
+          });
+        }
+      })();
+
+      // ================================================================
+      //  8. LOADING — PAGE TRANSITIONS
+      // ================================================================
+      (function() {
+        const pageA = document.getElementById('pt-page-a');
+        const pageB = document.getElementById('pt-page-b');
+        if (!pageA || !pageB) return;
+
+        let showingA = true;
+        let animating = false;
+
+        function pageTransition(type) {
+          if (animating) return;
+          animating = true;
+          const from = showingA ? pageA : pageB;
+          const to = showingA ? pageB : pageA;
+
+          const dur = reducedMotion ? 1 : 400;
+          const easing = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+          if (type === 'crossfade') {
+            to.style.transform = 'none';
+            to.style.pointerEvents = 'auto';
+            from.animate([{ opacity: 1 }, { opacity: 0 }], { duration: dur, easing, fill: 'forwards' });
+            to.animate([{ opacity: 0 }, { opacity: 1 }], { duration: dur, easing, fill: 'forwards' });
+          } else {
+            const dir = type === 'slide-left' ? -1 : 1;
+            to.style.pointerEvents = 'auto';
+            from.animate([
+              { transform: 'translateX(0)', opacity: 1 },
+              { transform: `translateX(${-dir * 100}%)`, opacity: 0 },
+            ], { duration: dur, easing, fill: 'forwards' });
+            to.animate([
+              { transform: `translateX(${dir * 100}%)`, opacity: 0 },
+              { transform: 'translateX(0)', opacity: 1 },
+            ], { duration: dur, easing, fill: 'forwards' });
+          }
+
+          from.style.pointerEvents = 'none';
+          showingA = !showingA;
+          setTimeout(() => { animating = false; }, dur);
+        }
+
+        document.getElementById('pt-crossfade')?.addEventListener('click', () => pageTransition('crossfade'));
+        document.getElementById('pt-slide-left')?.addEventListener('click', () => pageTransition('slide-left'));
+        document.getElementById('pt-slide-right')?.addEventListener('click', () => pageTransition('slide-right'));
+      })();
+
+      // ================================================================
+      //  8. LOADING — JS SPRING STAGGER
+      // ================================================================
+      (function() {
+        const area = document.getElementById('js-stagger-area');
+        const replayBtn = document.getElementById('js-stagger-replay');
+        if (!area) return;
+
+        const configs = {
+          snappy:   { stiffness: 500, damping: 30, mass: 1, delay: 30 },
+          standard: { stiffness: 400, damping: 35, mass: 1, delay: 50 },
+          gentle:   { stiffness: 300, damping: 28, mass: 1, delay: 80 },
+        };
+
+        let activeTimeouts = [];
+        let activeRafs = [];
+
+        function playSpringStagger() {
+          // Cancel any in-flight animations
+          activeTimeouts.forEach(id => clearTimeout(id));
+          activeRafs.forEach(id => cancelAnimationFrame(id));
+          activeTimeouts = [];
+          activeRafs = [];
+
+          if (reducedMotion) {
+            area.querySelectorAll('.js-stagger-item').forEach(el => {
+              el.style.opacity = '1'; el.style.transform = 'none';
+            });
+            return;
+          }
+
+          area.querySelectorAll('.js-stagger-col').forEach(col => {
+            const cfg = configs[col.dataset.spring];
+            if (!cfg) return;
+            const items = col.querySelectorAll('.js-stagger-item');
+
+            items.forEach((item, i) => {
+              item.style.opacity = '0';
+              item.style.transform = 'translateY(16px)';
+
+              const tid = setTimeout(() => {
+                const state = { value: 0, velocity: 0, target: 1 };
+                const opState = { value: 0, velocity: 0, target: 1 };
+                let last = performance.now();
+
+                function tick(now) {
+                  const dt = Math.min((now - last) / 1000, 0.05);
+                  last = now;
+                  springStep(state, cfg, dt);
+                  springStep(opState, { stiffness: cfg.stiffness * 1.5, damping: cfg.damping * 2, mass: 1 }, dt);
+
+                  item.style.transform = `translateY(${(1 - state.value) * 16}px)`;
+                  item.style.opacity = Math.min(1, opState.value);
+
+                  if (Math.abs(state.value - 1) > 0.001 || Math.abs(state.velocity) > 0.01) {
+                    const rid = requestAnimationFrame(tick);
+                    activeRafs.push(rid);
+                  } else {
+                    item.style.transform = 'none';
+                    item.style.opacity = '1';
+                  }
+                }
+                const rid = requestAnimationFrame(tick);
+                activeRafs.push(rid);
+              }, i * cfg.delay);
+              activeTimeouts.push(tid);
+            });
+          });
+        }
+
+        // Auto-play on scroll
+        const obs = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) {
+            playSpringStagger();
+            obs.disconnect();
+          }
+        }, { threshold: 0.3 });
+        obs.observe(area);
+
+        if (replayBtn) {
+          replayBtn.addEventListener('click', playSpringStagger);
+        }
+      })();
+
+      // ================================================================
+      //  7. SIGNATURE EFFECTS — 3D TILT
+      // ================================================================
+      (function() {
+        const card = document.getElementById('tilt-card-1');
+        if (!card) return;
+        const shine = card.querySelector('.tilt-shine');
+
+        const rotX = { value: 0, velocity: 0, target: 0 };
+        const rotY = { value: 0, velocity: 0, target: 0 };
+        const tiltCfg = { stiffness: 200, damping: 20, mass: 1 };
+
+        card.addEventListener('mousemove', (e) => {
+          if (reducedMotion) return;
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          rotY.target = x * 30;
+          rotX.target = -y * 30;
+          if (shine) {
+            shine.style.background = `linear-gradient(${135 + x * 60}deg, oklch(1 0 0 / ${0.1 + Math.abs(x) * 0.15}), transparent 60%)`;
+          }
+          activateAnimation('tilt');
+        });
+
+        card.addEventListener('mouseleave', () => {
+          rotX.target = 0;
+          rotY.target = 0;
+          activateAnimation('tilt');
+        });
+
+        registerAnimation('tilt', (dt) => {
+          springStep(rotX, tiltCfg, dt);
+          springStep(rotY, tiltCfg, dt);
+          card.style.transform = `rotateX(${rotX.value}deg) rotateY(${rotY.value}deg)`;
+          if (Math.abs(rotX.value - rotX.target) < 0.1 &&
+              Math.abs(rotY.value - rotY.target) < 0.1 &&
+              Math.abs(rotX.velocity) < 0.1 &&
+              Math.abs(rotY.velocity) < 0.1) {
+            deactivateAnimation('tilt');
+          }
+        });
+      })();
+
+      // ================================================================
+      //  7. SIGNATURE EFFECTS — HUE SHIFT TOGGLE
+      // ================================================================
+      (function() {
+        const demo = document.getElementById('hue-shift-demo');
+        const btn = document.getElementById('hue-shift-toggle');
+        if (!demo || !btn) return;
+
+        let paused = false;
+        btn.addEventListener('click', () => {
+          paused = !paused;
+          demo.classList.toggle('hue-shift-paused', paused);
+          btn.textContent = paused ? 'Play' : 'Pause';
+        });
+
+        if (reducedMotion) {
+          demo.classList.add('hue-shift-paused');
+          btn.textContent = 'Play';
+        }
       })();
 
     })();
