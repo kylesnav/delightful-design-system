@@ -1,0 +1,42 @@
+{
+  "version": "0.6.0",
+  "branch": "facelift/design-system-v2",
+  "baseCommit": "45a5e23",
+  "timestamp": "2026-03-01",
+  "sourceOfTruth": {
+    "file": "delightful-design-system.html",
+    "lineCount": 7402
+  },
+  "syncExitCode": 0,
+  "syncOutput": "Starting token sync...\nSource: delightful-design-system.html\n\n--- CSS Tokens ---\n  Updated claude-plugin/themes/css/delightful-tokens.css\n\n--- Obsidian Theme ---\n  Updated obsidian-theme/theme.css\n  0 primitive value(s) updated in Obsidian theme\n\n--- delightful-motion.html ---\n  Updated delightful-motion.html\n  4 token tier(s) synced\n\n--- delightful-animation.html ---\n  Updated delightful-animation.html\n  4 token tier(s) synced\n\n--- delightful-color.html ---\n  Updated delightful-color.html\n  4 token tier(s) synced\n\nToken sync complete!",
+  "syncDirty": false,
+  "checksums": {
+    "delightful-color.html": "929f7a8d82b7ca31b9f0cf4a2d0472cb",
+    "delightful-motion.html": "1ff84326d3771ee6e1d029f0166631aa",
+    "delightful-animation.html": "304c7ce0ff5af9f60b34550a303d0d4e",
+    "claude-plugin/themes/css/delightful-tokens.css": "ede782113c07f830512e63d2daf60464",
+    "obsidian-theme/theme.css": "e8584a29600d052b572dd260b5111440"
+  },
+  "playwrightResults": {
+    "total": 35,
+    "passed": 32,
+    "failed": 3,
+    "preExistingFailures": [
+      {
+        "test": "tests/color-audit.spec.ts:4:5",
+        "name": "screenshot color audit - light mode",
+        "reason": "color-audit.html file not found"
+      },
+      {
+        "test": "tests/color-audit.spec.ts:15:5",
+        "name": "screenshot color audit - dark mode",
+        "reason": "color-audit.html file not found"
+      },
+      {
+        "test": "tests/terminal-theme-consistency.spec.ts:126:5",
+        "name": "Light theme yellows keep at least 3:1 contrast against the background",
+        "reason": "Contrast ratio 1.57 < 3.0 threshold for palette[3] vs background"
+      }
+    ]
+  }
+}
