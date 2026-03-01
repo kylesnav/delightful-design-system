@@ -93,8 +93,8 @@
       --text-on-accent: oklch(1.00 0.000 0);
       --text-on-gold: oklch(0.220 0.020 70);
 
-      --border-default: var(--text-primary);
-      --border-strong: var(--text-primary);
+      --border-default: oklch(0.340 0.025 60);
+      --border-strong: oklch(0.250 0.020 60);
       --border-subtle: oklch(0.820 0.015 70);
 
       /* Vibrant Accents — Warm Palette */
@@ -111,7 +111,7 @@
       --accent-danger-text: oklch(0.570 0.220 20);
 
       --accent-gold: oklch(0.840 0.175 85);
-      /* Warm gold */
+      /* Bright gold — highlight accent */
       --accent-gold-hover: oklch(0.820 0.165 84);
       --accent-gold-subtle: oklch(0.965 0.060 85);
       --accent-gold-text: oklch(0.560 0.170 85);
@@ -143,9 +143,9 @@
       --overlay-bg: oklch(0.200 0.015 60 / 0.30);
 
       /* Neo-Brutalist Solid Shadows */
-      --shadow-sm: 2px 2px 0 var(--text-primary);
-      --shadow-md: 4px 4px 0 var(--text-primary);
-      --shadow-lg: 8px 8px 0 var(--text-primary);
+      --shadow-sm: 2px 2px 0 var(--border-default);
+      --shadow-md: 4px 4px 0 var(--border-default);
+      --shadow-lg: 8px 8px 0 var(--border-default);
       --shadow-pink: 4px 4px 0 var(--accent-primary);
       --shadow-danger: 4px 4px 0 var(--accent-danger);
       --shadow-gold: 4px 4px 0 var(--accent-gold);
@@ -347,6 +347,14 @@
       --container-sm: 640px;
       --container-md: 960px;
       --container-lg: 1200px;
+
+      /* Data Visualization Palette — 6 distinct chart colors from accent families */
+      --chart-1: var(--accent-primary);
+      --chart-2: var(--accent-gold);
+      --chart-3: var(--accent-cyan);
+      --chart-4: var(--accent-green);
+      --chart-5: var(--accent-purple);
+      --chart-6: var(--accent-danger);
     }
     } /* end @layer component (tokens) */
 
@@ -366,7 +374,7 @@
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       overflow-x: clip;
     }
-    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
 
     /* ==========================================================================
        SCROLL PROGRESS BAR
@@ -614,7 +622,8 @@
       line-height: var(--leading-snug);
     }
     .hero-crosslink {
-      margin-top: var(--space-2); font-size: var(--ui-text-sm); color: var(--text-muted);
+      font-size: var(--ui-text-xs); color: var(--text-muted);
+      margin-bottom: 0;
     }
     .hero-crosslink a {
       color: var(--accent-primary-text); text-decoration: underline; text-underline-offset: 2px;
@@ -624,8 +633,7 @@
       margin-top: var(--space-4);
     }
     .hero-dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      border: 2px solid var(--border-default);
+      width: 12px; height: 12px; border-radius: var(--radius-full);
     }
     .hero-cta {
       display: inline-flex; align-items: center; gap: var(--space-2);
@@ -662,8 +670,6 @@
       margin-bottom: var(--space-16);
       padding-bottom: var(--space-16);
       border-bottom: 2px dashed var(--border-subtle);
-      content-visibility: auto;
-      contain-intrinsic-size: auto 500px;
     }
     .color-section:last-of-type {
       border-bottom: none;
@@ -682,13 +688,15 @@
     }
     .section-title {
       font-size: var(--step-3); font-weight: 800;
-      letter-spacing: var(--tracking-tight);
+      letter-spacing: var(--tracking-tighter);
       line-height: var(--leading-tight);
+      margin-bottom: var(--space-3);
+      text-wrap: balance;
     }
     .section-desc {
-      font-size: var(--step--1); color: var(--text-secondary);
-      margin-top: var(--space-2); max-width: 640px;
-      line-height: var(--leading-normal);
+      font-size: var(--step-0); color: var(--text-secondary);
+      max-width: 640px; line-height: var(--leading-relaxed);
+      text-wrap: pretty;
     }
     .subsection {
       margin-top: var(--space-8);
@@ -729,7 +737,7 @@
       font-family: var(--font-mono); font-size: var(--ui-text-xs);
     }
     .swatch {
-      border: 2px solid var(--border-subtle);
+      border: 2px solid var(--text-primary);
       border-radius: var(--radius-md);
       overflow: hidden; cursor: pointer;
       transition: transform var(--motion-fast) var(--ease-out),
@@ -739,7 +747,7 @@
     .swatch:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-sm);
-      border-color: var(--border-default);
+      border-color: var(--text-primary);
     }
     .swatch:active { transform: translateY(0); box-shadow: none; }
     .swatch-color {
@@ -769,7 +777,7 @@
       display: flex;
       border-radius: var(--radius-md);
       overflow: hidden;
-      border: 2px solid var(--border-subtle);
+      border: 2px solid var(--text-primary);
     }
     .swatch-row-cell {
       flex: 1; height: 56px;
@@ -824,22 +832,21 @@
     }
     .arch-family-btn {
       width: 44px; height: 44px; border-radius: var(--radius-sm);
-      border: 2px solid var(--border-subtle); cursor: pointer;
+      border: 2px solid transparent; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: var(--ui-text-2xs); font-family: var(--font-mono); font-weight: 600;
       color: var(--text-on-accent);
       transition: transform var(--motion-fast) var(--ease-out),
-                  box-shadow var(--motion-fast) var(--ease-out),
-                  border-color var(--motion-fast) var(--ease-out);
+                  box-shadow var(--motion-fast) var(--ease-out);
     }
     .arch-family-btn:hover {
       transform: translateY(-2px); box-shadow: var(--shadow-sm);
     }
     .arch-family-btn:active { transform: translateY(0); box-shadow: none; }
     .arch-family-btn[aria-pressed="true"] {
-      border-color: var(--border-strong);
       box-shadow: var(--shadow-md);
       transform: translateY(-2px);
+      border: 3px solid var(--border-default);
     }
 
     /* Connector between tiers */
@@ -849,7 +856,7 @@
     }
     .arch-connector-line {
       width: 2px; height: 100%;
-      border-left: 2px dashed var(--border-subtle);
+      border-left: 2px solid var(--border-subtle);
     }
     .arch-connector-label {
       position: absolute; left: 50%; transform: translateX(-50%);
@@ -1047,6 +1054,12 @@
         <a href="delightful-design-system.html" class="nav-btn" aria-label="Design System" title="Design System">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         </a>
+        <a href="delightful-motion.html" class="nav-btn" aria-label="Motion System" title="Motion System">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="delightful-animation.html" class="nav-btn" aria-label="Animation System" title="Animation System">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
+        </a>
         <button class="nav-btn" id="theme-toggle" aria-label="Toggle theme (light / dark / system)">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -1071,14 +1084,9 @@
     <section class="hero anim-in">
       <h1 class="hero-title">Delightful Color</h1>
       <p class="hero-subtitle anim-in anim-d3">Every value in OKLCH. Perceptually uniform, wide-gamut, designed not eyeballed.</p>
-      <p class="hero-crosslink anim-in anim-d4">Part of the <a href="delightful-design-system.html">Delightful Design System</a> &middot; <a href="delightful-motion.html">Motion</a></p>
-      <div class="hero-dots anim-in anim-d5">
-        <span class="hero-dot" style="background:var(--accent-primary)"></span>
-        <span class="hero-dot" style="background:var(--accent-gold)"></span>
-        <span class="hero-dot" style="background:var(--accent-cyan)"></span>
-      </div>
-      <a href="#palette" class="hero-cta anim-in anim-d6">Explore 44 colors <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <div class="hero-color-strip anim-in anim-d7">
+      <a href="#palette" class="hero-cta anim-in anim-d4">Explore 44 colors <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p class="hero-crosslink anim-in anim-d5">Part of the <a href="delightful-design-system.html">Delightful Design System</a> &middot; <a href="delightful-motion.html">Motion</a> &middot; <a href="delightful-animation.html">Animation</a></p>
+      <div class="hero-color-strip anim-in anim-d6">
         <div class="hero-color-dot" style="background:var(--primitive-pink-400)"></div>
         <div class="hero-color-dot" style="background:var(--primitive-red-400)"></div>
         <div class="hero-color-dot" style="background:var(--primitive-gold-400)"></div>
@@ -1211,7 +1219,7 @@
         <span class="hero-dot" style="background:var(--accent-cyan);width:8px;height:8px"></span>
       </div>
       <p><strong>Delightful</strong> — Color System</p>
-      <p style="margin-top:var(--space-2)">Part of the <a href="delightful-design-system.html">Delightful Design System</a></p>
+      <p style="margin-top:var(--space-2)">Part of the <a href="delightful-design-system.html">Delightful Design System</a> &middot; <a href="delightful-motion.html">Motion</a> &middot; <a href="delightful-animation.html">Animation</a></p>
     </footer>
 
   </div><!-- .page-wrap -->
@@ -1422,7 +1430,7 @@
           { name: '--text-secondary', light: 'oklch(0.420 0.015 60)', dark: 'oklch(0.690 0.012 70)' },
           { name: '--text-muted', light: 'oklch(0.560 0.012 60)', dark: 'oklch(0.540 0.010 70)' },
           { name: '--text-on-accent', light: 'oklch(1.00 0.000 0)', dark: 'oklch(1.00 0.000 0)' },
-          { name: '--text-on-gold', light: 'oklch(0.220 0.020 70)', dark: 'oklch(0.140 0.014 65)' },
+          { name: '--text-on-gold', light: 'oklch(0.220 0.020 70)', dark: 'oklch(0.160 0.014 65)' },
         ]
       },
       {

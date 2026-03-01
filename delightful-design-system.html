@@ -96,8 +96,8 @@
       --text-on-accent: oklch(1.00 0.000 0);
       --text-on-gold: oklch(0.220 0.020 70);
 
-      --border-default: var(--text-primary);
-      --border-strong: var(--text-primary);
+      --border-default: oklch(0.340 0.025 60);
+      --border-strong: oklch(0.250 0.020 60);
       --border-subtle: oklch(0.820 0.015 70);
 
       /* Vibrant Accents — Warm Palette */
@@ -114,7 +114,7 @@
       --accent-danger-text: oklch(0.570 0.220 20);
 
       --accent-gold: oklch(0.840 0.175 85);
-      /* Warm gold */
+      /* Bright gold — highlight accent */
       --accent-gold-hover: oklch(0.820 0.165 84);
       --accent-gold-subtle: oklch(0.965 0.060 85);
       --accent-gold-text: oklch(0.560 0.170 85);
@@ -146,9 +146,9 @@
       --overlay-bg: oklch(0.200 0.015 60 / 0.30);
 
       /* Neo-Brutalist Solid Shadows */
-      --shadow-sm: 2px 2px 0 var(--text-primary);
-      --shadow-md: 4px 4px 0 var(--text-primary);
-      --shadow-lg: 8px 8px 0 var(--text-primary);
+      --shadow-sm: 2px 2px 0 var(--border-default);
+      --shadow-md: 4px 4px 0 var(--border-default);
+      --shadow-lg: 8px 8px 0 var(--border-default);
       --shadow-pink: 4px 4px 0 var(--accent-primary);
       --shadow-danger: 4px 4px 0 var(--accent-danger);
       --shadow-gold: 4px 4px 0 var(--accent-gold);
@@ -350,6 +350,14 @@
       --container-sm: 640px;
       --container-md: 960px;
       --container-lg: 1200px;
+
+      /* Data Visualization Palette — 6 distinct chart colors from accent families */
+      --chart-1: var(--accent-primary);
+      --chart-2: var(--accent-gold);
+      --chart-3: var(--accent-cyan);
+      --chart-4: var(--accent-green);
+      --chart-5: var(--accent-purple);
+      --chart-6: var(--accent-danger);
     }
     } /* end @layer component (tokens) */
 
@@ -383,7 +391,7 @@
 
     :focus-visible {
       outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
+      outline-offset: -2px;
     }
     } /* end @layer reset */
 
@@ -725,8 +733,6 @@
 
     .ds-section {
       padding: var(--space-20) 0;
-      content-visibility: auto;
-      contain-intrinsic-size: auto 500px; /* fallback; browser uses actual size after first render */
     }
 
     .section-header {
@@ -770,6 +776,7 @@
       letter-spacing: var(--tracking-tighter);
       line-height: var(--leading-tight);
       margin-bottom: var(--space-3);
+      text-wrap: balance;
     }
 
     .section-desc {
@@ -777,6 +784,7 @@
       color: var(--text-secondary);
       max-width: 640px;
       line-height: var(--leading-relaxed);
+      text-wrap: pretty;
     }
 
     .subsection {
@@ -818,6 +826,8 @@
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-6);
       container-type: inline-size;
+      padding-right: 10px;
+      padding-bottom: 10px;
     }
 
     .grid-4 {
@@ -825,6 +835,8 @@
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-4);
       container-type: inline-size;
+      padding-right: 10px;
+      padding-bottom: 10px;
     }
 
     /* Container query responsive grids — adapt to container, not viewport */
@@ -849,7 +861,7 @@
     .grid-4:has(.card-interactive:hover) .card:not(:hover) {
       opacity: 0.7;
       transform: translate(2px, 2px);
-      box-shadow: 0 0 0 var(--text-primary);
+      box-shadow: 0 0 0 var(--border-default);
       filter: grayscale(0.8);
     }
 
@@ -912,23 +924,6 @@
         padding: var(--space-3) var(--space-4);
       }
 
-      .tilt-container {
-        perspective: none;
-      }
-
-      .tilt-card {
-        transform: none !important;
-      }
-
-      .tilt-title,
-      .tilt-desc,
-      .tilt-badge {
-        transform: none;
-      }
-
-      .spotlight-panel {
-        height: 220px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -966,9 +961,6 @@
         justify-content: center;
       }
 
-      .spotlight-panel {
-        height: 180px;
-      }
 
       .section-header {
         margin-bottom: var(--space-6);
@@ -1241,17 +1233,13 @@
       justify-content: center;
     }
 
-    .hero-divider {
-      width: 80px; height: 3px; margin: var(--space-8) auto var(--space-4);
-      background: var(--accent-primary); border-radius: 2px;
-    }
-
     .hero-title-text {
       font-size: var(--step-5);
       font-weight: 800;
       letter-spacing: var(--tracking-tightest);
       line-height: var(--leading-none);
       margin-bottom: var(--space-6);
+      text-wrap: balance;
 
       & .word {
         display: inline-block;
@@ -1265,8 +1253,9 @@
       font-size: var(--step-1);
       color: var(--text-secondary);
       max-width: 560px;
-      margin: 0 auto var(--space-4);
+      margin: 0 auto var(--space-10);
       line-height: var(--leading-normal);
+      text-wrap: pretty;
     }
 
     .hero-dots {
@@ -1293,7 +1282,7 @@
     .tile-grid:has(.tile:hover) .tile:not(:hover) {
       opacity: 0.7;
       transform: translate(2px, 2px);
-      box-shadow: 0 0 0 var(--text-primary);
+      box-shadow: 0 0 0 var(--border-default);
       filter: grayscale(0.8);
     }
 
@@ -1332,7 +1321,7 @@
 
       &:active {
         transform: translate(2px, 2px);
-        box-shadow: 0 0 0 var(--text-primary);
+        box-shadow: 0 0 0 var(--border-default);
       }
     }
 
@@ -1421,7 +1410,7 @@
     }
 
     .swatch {
-      border: 2px solid var(--border-subtle);
+      border: 2px solid var(--text-primary);
       border-radius: var(--radius-md);
       overflow: hidden;
       background: var(--bg-surface);
@@ -1431,14 +1420,14 @@
                   border-color var(--motion-fast) var(--ease-out);
 
       &:hover {
-        border-color: var(--border-strong);
+        border-color: var(--text-primary);
         transform: translate(-2px, -2px);
         box-shadow: var(--shadow-md);
       }
 
       &:active {
         transform: translate(2px, 2px);
-        box-shadow: 0 0 0 var(--text-primary);
+        box-shadow: 0 0 0 var(--border-default);
       }
     }
 
@@ -1469,7 +1458,7 @@
       display: flex;
       border-radius: var(--radius-md);
       overflow: hidden;
-      border: 2px solid var(--border-subtle);
+      border: 2px solid var(--text-primary);
     }
 
     .swatch-row-cell {
@@ -1565,7 +1554,7 @@
       gap: var(--btn-gap);
       font-family: var(--font-sans);
       font-weight: 700;
-      border: 2px solid var(--text-primary);
+      border: 2px solid var(--border-default);
       cursor: pointer;
       border-radius: var(--radius-md);
       white-space: nowrap;
@@ -1580,7 +1569,7 @@
 
       &:active {
         transform: translate(2px, 2px);
-        box-shadow: 0 0 0 var(--text-primary);
+        box-shadow: 0 0 0 var(--border-default);
       }
 
       &:disabled {
@@ -1653,7 +1642,7 @@
 
     .btn-secondary.btn-loading::after,
     .btn-ghost.btn-loading::after {
-      border-color: var(--text-primary);
+      border-color: var(--border-default);
       border-right-color: transparent;
     }
 
@@ -1678,12 +1667,12 @@
 
     .btn.force-active {
       transform: translate(2px, 2px);
-      box-shadow: 0 0 0 var(--text-primary);
+      box-shadow: 0 0 0 var(--border-default);
     }
 
     .btn.force-focus {
       outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
+      outline-offset: -2px;
     }
 
     .state-label {
@@ -1734,10 +1723,10 @@
       font-size: var(--ui-text-md);
       color: var(--text-primary);
       background: var(--bg-surface);
-      border: 2px solid var(--text-primary);
+      border: 2px solid var(--border-default);
       border-radius: var(--radius-sm);
       transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-instant) linear;
-      box-shadow: 2px 2px 0 var(--text-primary);
+      box-shadow: var(--shadow-sm);
 
       &::placeholder {
         color: var(--text-muted);
@@ -1756,7 +1745,8 @@
       }
     }
 
-    .input-error {
+    .input-error,
+    .input:user-invalid {
       border-color: var(--accent-danger);
 
       &:focus {
@@ -1770,15 +1760,16 @@
       min-height: 80px;
       padding: var(--space-3);
       resize: vertical;
+      field-sizing: content;
       font-family: var(--font-sans);
       font-size: 0.875rem;
       color: var(--text-primary);
       background: var(--bg-surface);
-      border: 2px solid var(--text-primary);
+      border: 2px solid var(--border-default);
       border-radius: var(--radius-sm);
       line-height: 1.5;
       transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-instant) linear;
-      box-shadow: 2px 2px 0 var(--text-primary);
+      box-shadow: var(--shadow-sm);
 
       &:focus {
         outline: none;
@@ -1800,11 +1791,11 @@
       font-size: var(--ui-text-md);
       color: var(--text-primary);
       background: var(--bg-surface);
-      border: 2px solid var(--text-primary);
+      border: 2px solid var(--border-default);
       border-radius: var(--radius-sm);
       cursor: pointer;
       transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-instant) linear;
-      box-shadow: 2px 2px 0 var(--text-primary);
+      box-shadow: var(--shadow-sm);
 
       &:focus {
         outline: none;
@@ -1837,11 +1828,11 @@
       min-height: var(--control-md);
       padding: var(--space-1-5) var(--space-3);
       background: var(--bg-surface);
-      border: 2px solid var(--text-primary);
+      border: 2px solid var(--border-default);
       border-radius: var(--radius-sm);
       align-items: center;
       transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-instant) linear;
-      box-shadow: 2px 2px 0 var(--text-primary);
+      box-shadow: var(--shadow-sm);
 
       &:focus-within {
         border-color: var(--accent-primary);
@@ -1923,7 +1914,7 @@
     .radio-circle {
       width: 18px;
       height: 18px;
-      border: 1.5px solid var(--border-strong);
+      border: 2px solid var(--border-strong);
       background: var(--bg-surface);
       display: flex;
       align-items: center;
@@ -1968,7 +1959,7 @@
       &:focus-visible + .check-box,
       &:focus-visible + .radio-circle {
         outline: 2px solid var(--accent-primary);
-        outline-offset: 2px;
+        outline-offset: -2px;
       }
     }
 
@@ -2055,6 +2046,22 @@
         border: 2px solid var(--bg-surface);
         box-shadow: 0 1px 4px oklch(0 0 0 / 0.15);
       }
+
+      &::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--accent-primary);
+        cursor: pointer;
+        border: 2px solid var(--bg-surface);
+        box-shadow: 0 1px 4px oklch(0 0 0 / 0.15);
+      }
+
+      &::-moz-range-track {
+        height: 4px;
+        border-radius: var(--radius-full);
+        background: var(--border-default);
+      }
     }
 
     .slider-group {
@@ -2115,7 +2122,7 @@
 
       &:active {
         transform: translate(2px, 2px);
-        box-shadow: 0 0 0 var(--text-primary);
+        box-shadow: 0 0 0 var(--border-default);
       }
     }
 
@@ -2304,7 +2311,7 @@
 
     .table-header-gold th {
       background: var(--accent-gold-subtle);
-      color: var(--accent-gold);
+      color: var(--accent-gold-text);
       border-bottom-color: var(--accent-gold);
     }
 
@@ -2345,7 +2352,7 @@
 
     .badge-gold {
       background: var(--accent-gold-subtle);
-      color: var(--accent-gold);
+      color: var(--accent-gold-text);
     }
 
     .badge-cyan {
@@ -2361,6 +2368,167 @@
     .badge-purple {
       background: var(--accent-purple-subtle);
       color: var(--accent-purple);
+    }
+
+    /* Notification badge — overlay count on avatars/icons */
+    .notification-badge {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .notification-badge-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: var(--radius-full);
+      background: var(--accent-danger);
+      color: var(--text-on-accent);
+      font-size: 0.625rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg-surface);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       DIVIDER / SEPARATOR
+       ========================================================================== */
+    .divider {
+      border: none;
+      border-top: 2px solid var(--border-subtle);
+      margin: var(--space-6) 0;
+    }
+
+    .divider-strong {
+      border-top-color: var(--border-default);
+    }
+
+    .divider-with-text {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      color: var(--text-muted);
+      font-size: var(--ui-text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+
+      &::before,
+      &::after {
+        content: '';
+        flex: 1;
+        border-top: 2px solid var(--border-subtle);
+      }
+    }
+
+    /* ==========================================================================
+       SEGMENTED CONTROL
+       ========================================================================== */
+    .segmented-control {
+      display: inline-flex;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-full);
+      padding: 3px;
+      gap: 0;
+      width: fit-content;
+    }
+
+    .segmented-control-item {
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: var(--ui-text-sm);
+      font-weight: 600;
+      font-family: var(--font-sans);
+      color: var(--text-muted);
+      background: transparent;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: color var(--motion-fast) var(--ease-out),
+                  background var(--motion-fast) var(--ease-out),
+                  border-color var(--motion-fast) var(--ease-out);
+
+      &:hover {
+        color: var(--text-primary);
+        background: var(--bg-subtle);
+      }
+
+      &[aria-pressed="true"],
+      &.active {
+        background: var(--text-primary);
+        color: var(--bg-surface);
+        border-color: var(--text-primary);
+        font-weight: 700;
+      }
+    }
+
+    /* ==========================================================================
+       DROPDOWN MENU
+       ========================================================================== */
+    .dropdown-menu {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-1);
+      min-width: 200px;
+      position: absolute;
+      z-index: var(--z-overlay);
+    }
+
+    .dropdown-menu[popover] {
+      margin: 0;
+      inset: unset;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      border-radius: calc(var(--radius-md) - 4px);
+      font-size: var(--ui-text-sm);
+      color: var(--text-primary);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--motion-fast) var(--ease-out);
+
+      &:hover,
+      &[data-active="true"] {
+        background: var(--bg-subtle);
+      }
+
+      &[data-danger="true"] {
+        color: var(--accent-danger);
+
+        &:hover {
+          background: var(--accent-danger-subtle);
+        }
+      }
+    }
+
+    .dropdown-separator {
+      border: none;
+      border-top: 2px solid var(--border-subtle);
+      margin: var(--space-1) 0;
+    }
+
+    .dropdown-label {
+      padding: var(--space-2) var(--space-3) var(--space-1);
+      font-size: var(--ui-text-2xs);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
     /* ==========================================================================
@@ -2792,7 +2960,7 @@
 
     .alert-gold {
       background: var(--accent-gold-subtle);
-      color: var(--accent-gold);
+      color: var(--accent-gold-text);
       border-color: var(--accent-gold);
       box-shadow: var(--shadow-gold);
     }
@@ -2911,7 +3079,7 @@
 
       & .avatar {
         margin-left: -8px;
-        box-shadow: 0 0 0 2px var(--bg-surface);
+        border-width: 3px;
 
         &:first-child {
           margin-left: 0;
@@ -3427,170 +3595,6 @@
     /* ==========================================================================
        SIGNATURE EFFECTS
        ========================================================================== */
-    .tilt-container {
-      perspective: 800px;
-    }
-
-    .tilt-card {
-      padding: var(--space-8);
-      background: var(--bg-surface);
-      border: 2px solid var(--border-default);
-      border-radius: var(--radius-lg);
-      transform-style: preserve-3d;
-      will-change: transform;
-      cursor: default;
-    }
-
-    .tilt-title {
-      font-size: 1.5rem;
-      font-weight: 650;
-      letter-spacing: var(--tracking-tighter);
-      transform: translateZ(40px);
-      margin-bottom: var(--space-2);
-    }
-
-    .tilt-desc {
-      font-size: 0.9375rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      transform: translateZ(20px);
-      margin-bottom: var(--space-4);
-    }
-
-    .tilt-badge {
-      display: inline-block;
-      padding: var(--space-1) var(--space-3);
-      font-size: 0.75rem;
-      font-weight: 600;
-      background: var(--accent-primary);
-      color: var(--text-on-accent);
-      border-radius: var(--radius-full);
-      transform: translateZ(60px);
-    }
-
-    @property --hue-1 {
-      syntax: "<number>";
-      inherits: false;
-      initial-value: 350;
-    }
-
-    @property --hue-2 {
-      syntax: "<number>";
-      inherits: false;
-      initial-value: 350;
-    }
-
-    @property --hue-3 {
-      syntax: "<number>";
-      inherits: false;
-      initial-value: 350;
-    }
-
-    .color-pills {
-      display: flex;
-      gap: var(--space-3);
-      flex-wrap: wrap;
-    }
-
-    .color-pill {
-      padding: var(--space-2) var(--space-6);
-      font-family: var(--font-sans);
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: oklch(0.995 0.002 70);
-      border: none;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      transition: transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-      }
-
-      &:active {
-        transform: translate(2px, 2px);
-        box-shadow: 0 0 0 var(--text-primary);
-      }
-    }
-
-    @supports (background: oklch(0.6 0.24 var(--hue-1))) {
-      @media (prefers-reduced-motion: no-preference) {
-        .color-pill-1 {
-          background: oklch(0.60 0.24 var(--hue-1));
-          transition: --hue-1 var(--motion-slow) var(--ease-out);
-        }
-
-        .color-pill-1:hover {
-          --hue-1: 80;
-        }
-
-        .color-pill-2 {
-          background: oklch(0.60 0.24 var(--hue-2));
-          transition: --hue-2 var(--motion-slow) var(--ease-out);
-        }
-
-        .color-pill-2:hover {
-          --hue-2: 20;
-        }
-
-        .color-pill-3 {
-          background: oklch(0.60 0.24 var(--hue-3));
-          transition: --hue-3 var(--motion-slow) var(--ease-out);
-        }
-
-        .color-pill-3:hover {
-          --hue-3: 210;
-        }
-      }
-    }
-
-    @supports not (background: oklch(0.6 0.24 var(--hue-1))) {
-      .color-pill {
-        background: var(--accent-primary);
-      }
-
-      .color-pill:hover {
-        background: var(--accent-primary-hover);
-      }
-    }
-
-    .spotlight-panel {
-      position: relative;
-      overflow: hidden;
-      background: oklch(0.140 0.012 60);
-      border-radius: var(--radius-lg);
-      height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: crosshair;
-    }
-
-    .spotlight-text {
-      position: relative;
-      z-index: 1;
-      font-size: 1.125rem;
-      font-weight: 500;
-      color: oklch(0.45 0.006 60);
-      text-align: center;
-    }
-
-    .spotlight-dots {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, oklch(0.25 0.005 350) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.5;
-    }
-
-    .spotlight-gradient {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(600px circle at 50% 50%, oklch(0.35 0.06 350), oklch(0.140 0.012 60));
-    }
-
     .magnetic-zone {
       display: inline-block;
       position: relative;
@@ -3858,7 +3862,7 @@
       height: 20px;
       margin-left: -10px;
       margin-top: -10px;
-      border: 3px solid var(--text-primary);
+      border: 3px solid var(--border-strong);
       border-radius: 50%;
       pointer-events: none;
       animation: ripple-anim 0.5s var(--ease-out) forwards;
@@ -3959,22 +3963,21 @@
     }
     .arch-family-btn {
       width: 44px; height: 44px; border-radius: var(--radius-sm);
-      border: 2px solid var(--border-subtle); cursor: pointer;
+      border: 2px solid transparent; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: var(--ui-text-2xs); font-family: var(--font-mono); font-weight: 600;
       color: var(--text-on-accent);
       transition: transform var(--motion-fast) var(--ease-out),
-                  box-shadow var(--motion-fast) var(--ease-out),
-                  border-color var(--motion-fast) var(--ease-out);
+                  box-shadow var(--motion-fast) var(--ease-out);
     }
     .arch-family-btn:hover {
       transform: translateY(-2px); box-shadow: var(--shadow-sm);
     }
     .arch-family-btn:active { transform: translateY(0); box-shadow: none; }
     .arch-family-btn[aria-pressed="true"] {
-      border-color: var(--border-strong);
       box-shadow: var(--shadow-md);
       transform: translateY(-2px);
+      border: 3px solid var(--border-default);
     }
 
     /* Connector between tiers */
@@ -4063,7 +4066,7 @@
        ========================================================================== */
     .state-toggle-bar { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
     .input.force-hover { border-color: var(--border-strong); }
-    .input.force-focus { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    .input.force-focus { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
     .input.force-active { border-color: var(--accent-primary); }
     .card-interactive.force-hover { transform: translate(-4px, -4px); box-shadow: var(--shadow-lg); }
 
@@ -4108,7 +4111,7 @@
 <body>
 
   <!-- Skip Navigation -->
-  <a href="#color" class="skip-link">Skip to content</a>
+  <a href="#landing" class="skip-link">Skip to content</a>
 
   <!-- Scroll Progress Bar -->
   <div class="scroll-progress" aria-hidden="true"></div>
@@ -4190,6 +4193,7 @@
   </nav>
 
   <style>
+    @layer component {
     .icon-sun { display: none; }
     .icon-moon { display: none; }
     .icon-monitor { display: none; }
@@ -4229,6 +4233,7 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+    } /* end @layer component */
   </style>
 
   <div class="page-wrap">
@@ -4244,9 +4249,16 @@
         <span class="hero-dot" style="background:var(--accent-cyan)"></span>
       </div>
       <p class="hero-subtitle anim-in anim-d6">Bold warmth. Confident color. Playful precision. Every token,
-        component, and interaction — built to delight.</p>
-      <div class="hero-divider anim-in anim-d8"></div>
-
+        component, and interaction — built to delight.
+        <a href="https://github.com/kylesnav/delightful-design-system" target="_blank" rel="noopener noreferrer"
+           style="display: inline-flex; align-items: center; vertical-align: baseline; margin-left: 0.35em; color: oklch(0.640 0.270 350); transition: color 0.2s ease, transform 0.2s ease;"
+           onmouseover="this.style.color='oklch(0.560 0.280 350)'; this.style.transform='scale(1.15)'"
+           onmouseout="this.style.color='oklch(0.640 0.270 350)'; this.style.transform='scale(1)'">
+          <svg height="1.1em" width="1.1em" viewBox="0 0 16 16" fill="currentColor" aria-label="View on GitHub" role="img" style="vertical-align: -0.15em;">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+        </a>
+      </p>
       <div class="tile-grid">
         <a href="#philosophy" class="tile tile-pink anim-in anim-d1"><span class="tile-num">01</span>
           <div class="tile-name">Philosophy</div>
@@ -4353,7 +4365,7 @@
         </a>
         <a href="#signature" class="tile tile-cyan anim-in anim-d11"><span class="tile-num">11</span>
           <div class="tile-name">Signature Effects</div>
-          <div class="tile-desc">Magnetic, tilt, spotlight, color shift</div>
+          <div class="tile-desc">Blur focus, magnetic button</div>
           <div class="tile-anim">
             <div
               style="width:10px;height:10px;border-radius:50%;background:var(--accent-primary);opacity:0.6;filter:blur(2px)">
@@ -4580,7 +4592,7 @@
             </div>
           </div>
           <div>
-            <div class="subsection-label" style="margin-bottom:var(--space-2)">Gold — Highlight (80°)</div>
+            <div class="subsection-label" style="margin-bottom:var(--space-2)">Gold — Highlight (85°)</div>
             <div class="swatch" data-copy="oklch(0.960 0.050 85)">
               <div class="swatch-color" style="background:var(--primitive-gold-100)"></div>
               <div class="swatch-info">
@@ -5757,7 +5769,80 @@
         </details>
       </div>
 
-      <!-- 5f. Navigation -->
+      <!-- 5f. Divider / Separator -->
+      <div class="subsection">
+        <div class="subsection-label">Divider</div>
+        <p class="subsection-desc">Horizontal rules for separating content sections. Strong and subtle variants, plus a text-inset option for labeled breaks.</p>
+        <div style="max-width:480px">
+          <p style="font-size:var(--ui-text-sm);color:var(--text-secondary)">Content above the divider</p>
+          <hr class="divider">
+          <p style="font-size:var(--ui-text-sm);color:var(--text-secondary)">Subtle divider (default)</p>
+          <hr class="divider divider-strong">
+          <p style="font-size:var(--ui-text-sm);color:var(--text-secondary)">Strong divider</p>
+          <div class="divider-with-text">or continue with</div>
+          <p style="font-size:var(--ui-text-sm);color:var(--text-secondary)">Divider with inline text</p>
+        </div>
+      </div>
+
+      <!-- 5g. Segmented Control -->
+      <div class="subsection">
+        <div class="subsection-label">Segmented Control</div>
+        <p class="subsection-desc">Mode-switching control for toggling between mutually exclusive views. Distinct from tabs — used for filtering or display mode, not navigating between content panels.</p>
+        <div style="display:flex;flex-direction:column;gap:var(--space-6)">
+          <div class="segmented-control" role="group" aria-label="View mode">
+            <button class="segmented-control-item" aria-pressed="true" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">Grid</button>
+            <button class="segmented-control-item" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">List</button>
+            <button class="segmented-control-item" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">Table</button>
+          </div>
+          <div class="segmented-control" role="group" aria-label="Time range">
+            <button class="segmented-control-item" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">Day</button>
+            <button class="segmented-control-item" aria-pressed="true" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">Week</button>
+            <button class="segmented-control-item" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">Month</button>
+            <button class="segmented-control-item" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(b=>b.setAttribute('aria-pressed','false'));this.setAttribute('aria-pressed','true')">Year</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5h. Notification Badge -->
+      <div class="subsection">
+        <div class="subsection-label">Notification Badge</div>
+        <p class="subsection-desc">Count overlay for avatars and icon buttons. Uses danger red for urgency, tabular-nums for stable width as counts change.</p>
+        <div style="display:flex;gap:var(--space-8);align-items:center;flex-wrap:wrap">
+          <div class="notification-badge">
+            <div class="avatar avatar-md avatar-pink">AM</div>
+            <span class="notification-badge-count">3</span>
+          </div>
+          <div class="notification-badge">
+            <div class="avatar avatar-md avatar-cyan">JD</div>
+            <span class="notification-badge-count">12</span>
+          </div>
+          <div class="notification-badge">
+            <button class="btn btn-sm btn-icon btn-secondary" style="width:var(--control-md);height:var(--control-md)" aria-label="Notifications">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </button>
+            <span class="notification-badge-count">5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5i. Dropdown Menu -->
+      <div class="subsection">
+        <div class="subsection-label">Dropdown Menu</div>
+        <p class="subsection-desc">Contextual action menus using the Popover API. Supports keyboard navigation (arrow keys), grouping with labels, separators, and danger items.</p>
+        <div style="position:relative;display:inline-block">
+          <button class="btn btn-secondary btn-sm" id="dropdown-trigger" popovertarget="dropdown-demo">Actions <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div id="dropdown-demo" popover class="dropdown-menu" style="position:absolute;top:calc(100% + var(--space-2));left:0">
+            <div class="dropdown-label">Actions</div>
+            <button class="dropdown-item" onclick="document.getElementById('dropdown-demo').hidePopover()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit</button>
+            <button class="dropdown-item" onclick="document.getElementById('dropdown-demo').hidePopover()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Duplicate</button>
+            <button class="dropdown-item" onclick="document.getElementById('dropdown-demo').hidePopover()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Export</button>
+            <hr class="dropdown-separator">
+            <button class="dropdown-item" data-danger="true" onclick="document.getElementById('dropdown-demo').hidePopover()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5j. Navigation -->
       <div class="subsection">
         <h3 class="subsection-title">Navigation</h3>
         <p class="subsection-desc">Sidebar with icon items, horizontal tabs, breadcrumb trails, and numeric pagination. All patterns use active-state highlighting.</p>
@@ -5817,7 +5902,7 @@
         <div class="subsection-desc">Lightweight menus and contextual content using the native Popover API. No JS needed for basic show/hide — just <code>popovertarget</code>.</div>
         <div class="flex-wrap-gap" style="gap:var(--space-4)">
           <div style="position:relative">
-            <button class="btn btn-primary" popovertarget="popover-menu">Actions Menu</button>
+            <button class="btn btn-primary btn-md" popovertarget="popover-menu">Actions Menu</button>
             <div id="popover-menu" popover class="popover-panel" style="position:absolute;top:calc(100% + var(--space-2));left:0">
               <button class="popover-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit</button>
               <button class="popover-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Duplicate</button>
@@ -5826,7 +5911,7 @@
             </div>
           </div>
           <div style="position:relative">
-            <button class="btn btn-secondary" popovertarget="popover-info">More Info</button>
+            <button class="btn btn-secondary btn-md" popovertarget="popover-info">More Info</button>
             <div id="popover-info" popover class="popover-panel" style="position:absolute;top:calc(100% + var(--space-2));left:0;padding:var(--space-4);min-width:240px">
               <div style="font-weight:700;font-size:var(--ui-text-sm);margin-bottom:var(--space-2)">Design Tokens</div>
               <div style="font-size:var(--ui-text-xs);color:var(--text-secondary);line-height:var(--leading-normal)">Tokens are the atomic building blocks of the design system. They encode color, spacing, typography, and motion decisions as reusable variables.</div>
@@ -6365,23 +6450,17 @@
           <div class="card" id="skel-card-1">
             <div class="skel skel-shimmer skel-heading" style="margin-bottom:var(--space-3)"></div>
             <div class="skel skel-shimmer skel-text" style="margin-bottom:var(--space-2)"></div>
-            <div class="skel skel-shimmer skel-text" style="width:80%"></div>
+            <div class="skel skel-shimmer skel-text" style="width:75%"></div>
           </div>
           <div class="card" id="skel-card-2">
-            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">
-              <div class="skel skel-shimmer skel-circle"></div>
-              <div style="flex:1">
-                <div class="skel skel-shimmer skel-text" style="width:60%;margin-bottom:var(--space-2)"></div>
-                <div class="skel skel-shimmer skel-text" style="width:40%"></div>
-              </div>
-            </div>
+            <div class="skel skel-shimmer skel-heading" style="margin-bottom:var(--space-3)"></div>
             <div class="skel skel-shimmer skel-text" style="margin-bottom:var(--space-2)"></div>
-            <div class="skel skel-shimmer skel-text" style="width:70%"></div>
+            <div class="skel skel-shimmer skel-text" style="width:85%"></div>
           </div>
           <div class="card" id="skel-card-3">
-            <div class="skel skel-shimmer" style="height:80px;border-radius:var(--radius-md);margin-bottom:var(--space-3)"></div>
-            <div class="skel skel-shimmer skel-heading" style="margin-bottom:var(--space-2)"></div>
-            <div class="skel skel-shimmer skel-text"></div>
+            <div class="skel skel-shimmer skel-heading" style="margin-bottom:var(--space-3)"></div>
+            <div class="skel skel-shimmer skel-text" style="margin-bottom:var(--space-2)"></div>
+            <div class="skel skel-shimmer skel-text" style="width:65%"></div>
           </div>
         </div>
       </div>
@@ -6659,7 +6738,7 @@
         <div class="subsection-desc">Centered placeholder for zero-data screens with icon, title, description, and optional CTA.</div>
         <div class="card" style="max-width:560px">
           <div class="empty-state">
-            <div class="empty-state-icon">&#128269;</div>
+            <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
             <div class="empty-state-title">No results found</div>
             <div class="empty-state-desc">Try adjusting your search or filter criteria to find what you're looking for.</div>
             <button class="btn btn-sm btn-primary">Clear filters</button>
@@ -6729,42 +6808,6 @@
             <div class="card-desc">Brand-forward landing pages with scroll-driven narratives and view transitions.</div>
             <span class="badge badge-gold badge-pop">Planning</span>
           </div>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <div class="subsection-label">3D Perspective Tilt</div>
-        <div class="subsection-desc">Card tilts toward your cursor position. Inner elements at different translateZ
-          depths create parallax. Max 12 degrees.</div>
-        <div class="tilt-container" style="max-width:400px">
-          <div class="tilt-card" id="tilt-card">
-            <div class="tilt-title">Delightful</div>
-            <div class="tilt-desc">A design system built with warm boldness, confident color, and neo-brutalist motion.
-            </div>
-            <span class="tilt-badge">v3.0 · Stable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <div class="subsection-label">@property Color Shift</div>
-        <div class="subsection-desc">CSS @property enables smooth hue interpolation on hover. Watch the colors shift.
-        </div>
-        <div class="color-pills">
-          <button class="color-pill color-pill-1">Pink → Gold</button>
-          <button class="color-pill color-pill-2">Pink → Red</button>
-          <button class="color-pill color-pill-3">Pink → Cyan</button>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <div class="subsection-label">Cursor Spotlight</div>
-        <div class="subsection-desc">Move your cursor over the dark panel. A radial gradient follows your position.
-        </div>
-        <div class="spotlight-panel" id="spotlight-panel">
-          <div class="spotlight-dots"></div>
-          <div class="spotlight-gradient" id="spotlight-gradient"></div>
-          <div class="spotlight-text">Move your cursor here</div>
         </div>
       </div>
 
@@ -6992,16 +7035,16 @@
             <div class="card">
               <div class="card-title">Appearance</div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-4)"><span
-                  style="font-size:0.875rem">Dark mode</span><button class="toggle toggle-bg-anim on"
-                  onclick="this.classList.toggle('on')"><span class="toggle-knob toggle-knob-anim"></span></button>
+                  style="font-size:0.875rem">Dark mode</span><button class="toggle toggle-bg-anim" role="switch" aria-checked="true" aria-label="Dark mode"
+                  onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true')"><span class="toggle-knob toggle-knob-anim" aria-hidden="true"></span></button>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-3)"><span
-                  style="font-size:0.875rem">Reduce motion</span><button class="toggle toggle-bg-anim"
-                  onclick="this.classList.toggle('on')"><span class="toggle-knob toggle-knob-anim"></span></button>
+                  style="font-size:0.875rem">Reduce motion</span><button class="toggle toggle-bg-anim" role="switch" aria-checked="false" aria-label="Reduce motion"
+                  onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true')"><span class="toggle-knob toggle-knob-anim" aria-hidden="true"></span></button>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-3)"><span
-                  style="font-size:0.875rem">High contrast</span><button class="toggle toggle-bg-anim"
-                  onclick="this.classList.toggle('on')"><span class="toggle-knob toggle-knob-anim"></span></button>
+                  style="font-size:0.875rem">High contrast</span><button class="toggle toggle-bg-anim" role="switch" aria-checked="false" aria-label="High contrast"
+                  onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true')"><span class="toggle-knob toggle-knob-anim" aria-hidden="true"></span></button>
               </div>
             </div>
             <div class="card">
@@ -7548,38 +7591,93 @@
         });
       });
       const skelLoadBtn = document.getElementById('skel-load');
-      if (skelLoadBtn) skelLoadBtn.addEventListener('click', () => {
-        const btn = skelLoadBtn;
-        if (btn.hasAttribute('disabled')) return;
+      let skelLoaded = false;
+      const skelOriginalHTML = {};
+      if (skelLoadBtn) {
+        // Cache original skeleton HTML for reset
+        for (let i = 1; i <= 3; i++) {
+          const card = document.getElementById(`skel-card-${i}`);
+          if (card) skelOriginalHTML[i] = card.innerHTML;
+        }
 
-        btn.setAttribute('disabled', 'true');
-        const originalText = btn.textContent;
-        btn.textContent = 'Loading...';
+        skelLoadBtn.addEventListener('click', () => {
+          const btn = skelLoadBtn;
+          if (btn.hasAttribute('disabled')) return;
 
-        const cards = [
-          { title: 'Design Tokens', desc: 'Centralized design decisions as data' },
-          { title: 'Component Library', desc: 'Production-ready building blocks' },
-          { title: 'Animation System', desc: 'Spring-based motion patterns' }
-        ];
-
-        setTimeout(() => {
-          btn.removeAttribute('disabled');
-          btn.textContent = originalText;
-
-          cards.forEach((c, i) => {
-            const card = document.getElementById(`skel-card-${i + 1}`);
+          if (skelLoaded) {
+            // Reset to skeleton state with fade
+            btn.setAttribute('disabled', 'true');
+            for (let i = 1; i <= 3; i++) {
+              const card = document.getElementById(`skel-card-${i}`);
+              card.style.transition = 'opacity var(--motion-fast) ease-out';
+              card.style.opacity = '0';
+            }
             setTimeout(() => {
-              card.innerHTML = `<div class="card-title">${c.title}</div><div class="card-desc" style="color:var(--text-secondary);font-size:0.875rem;margin-top:var(--space-2)">${c.desc}</div>`;
-              card.style.opacity = '0'; card.style.transform = 'translateY(8px)';
-              requestAnimationFrame(() => {
-                card.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.22,1,0.36,1)';
+              for (let i = 1; i <= 3; i++) {
+                const card = document.getElementById(`skel-card-${i}`);
+                card.innerHTML = skelOriginalHTML[i];
+                // Re-apply current skeleton mode
+                card.querySelectorAll('.skel').forEach(s => {
+                  s.className = skelMode === 'shimmer' ? 'skel skel-shimmer' : 'skel skel-pulse';
+                });
                 card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
+              }
+              btn.textContent = 'Load Content';
+              btn.removeAttribute('disabled');
+              skelLoaded = false;
+            }, 200);
+            return;
+          }
+
+          btn.setAttribute('disabled', 'true');
+          btn.textContent = 'Loading...';
+
+          const cards = [
+            { title: 'Design Tokens', desc: 'Centralized design decisions as data' },
+            { title: 'Component Library', desc: 'Production-ready building blocks' },
+            { title: 'Animation System', desc: 'Spring-based motion patterns' }
+          ];
+
+          // Phase 1: fade out skeletons
+          setTimeout(() => {
+            const cardEls = [1, 2, 3].map(i => document.getElementById(`skel-card-${i}`));
+            cardEls.forEach(card => {
+              card.style.transition = 'opacity var(--motion-fast) var(--ease-out)';
+              card.style.opacity = '0';
+            });
+
+            // Phase 2: swap content + animate in with stagger
+            setTimeout(() => {
+              cards.forEach((c, i) => {
+                const card = cardEls[i];
+                setTimeout(() => {
+                  card.innerHTML = `<div class="card-title">${c.title}</div><div class="card-desc" style="color:var(--text-secondary);font-size:0.875rem;margin-top:var(--space-2)">${c.desc}</div>`;
+                  card.style.transition = 'none';
+                  card.style.opacity = '0';
+                  card.style.transform = 'translateY(12px)';
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                      card.style.transition = `opacity var(--motion-base) var(--ease-out), transform var(--motion-base) var(--ease-smooth)`;
+                      card.style.opacity = '1';
+                      card.style.transform = 'translateY(0)';
+                    });
+                  });
+                }, i * 120);
               });
-            }, i * 120);
-          });
-        }, 800);
-      });
+
+              setTimeout(() => {
+                btn.removeAttribute('disabled');
+                btn.textContent = 'Reset';
+                skelLoaded = true;
+                cardEls.forEach(card => {
+                  card.style.transition = '';
+                  card.style.transform = '';
+                });
+              }, cards.length * 120 + 300);
+            }, 200);
+          }, 600);
+        });
+      }
 
       // === Staggered Reveal (3 spring configs) ===
       function staggerRevealGroup(selector, delay, easing, duration) {
@@ -7633,30 +7731,6 @@
           }, 50);
         });
       });
-
-      // === 3D Perspective Tilt ===
-      const tiltCard = document.getElementById('tilt-card');
-      if (tiltCard && !prefersReduced) {
-        tiltCard.addEventListener('mousemove', e => {
-          const rect = tiltCard.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          tiltCard.style.transform = `rotateX(${y * -12}deg) rotateY(${x * 12}deg)`;
-        });
-        tiltCard.addEventListener('mouseleave', () => { tiltCard.style.transition = 'transform 500ms ease-out'; tiltCard.style.transform = 'rotateX(0) rotateY(0)'; });
-        tiltCard.addEventListener('mouseenter', () => { tiltCard.style.transition = 'none'; });
-      }
-
-      // === Cursor Spotlight ===
-      const spotlightPanel = document.getElementById('spotlight-panel');
-      const spotlightGrad = document.getElementById('spotlight-gradient');
-      if (spotlightPanel && spotlightGrad) {
-        spotlightPanel.addEventListener('mousemove', e => {
-          const rect = spotlightPanel.getBoundingClientRect();
-          const x = e.clientX - rect.left, y = e.clientY - rect.top;
-          spotlightGrad.style.background = `radial-gradient(600px circle at ${x}px ${y}px, oklch(0.35 0.06 350), oklch(0.135 0.010 60))`;
-        });
-      }
 
       // === Magnetic Button ===
       const magneticZone = document.getElementById('magnetic-zone');
