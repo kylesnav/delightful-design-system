@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/Delightful-Dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="screenshots/Delightful-Light.png" />
+    <img src="screenshots/Delightful-Light.png" width="600" alt="Delightful Design System" />
+  </picture>
+</p>
+
 <h1 align="center">Delightful — Claude Code Plugin</h1>
 
 <p align="center">
