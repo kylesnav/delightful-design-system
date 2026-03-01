@@ -720,7 +720,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 2px;
+      height: 3px;
       background: var(--accent-primary);
       transform-origin: left;
       transform: scaleX(0);
@@ -730,17 +730,23 @@
     @supports (animation-timeline: scroll()) {
       @media (prefers-reduced-motion: no-preference) {
         .scroll-progress {
-          animation: grow-bar linear;
+          animation: scroll-progress-fill linear both;
           animation-timeline: scroll();
         }
 
-        @keyframes grow-bar {
-          from {
+        @keyframes scroll-progress-fill {
+          0% {
             transform: scaleX(0);
+            background-color: var(--accent-primary);
           }
 
-          to {
+          99% {
+            background-color: var(--accent-primary);
+          }
+
+          100% {
             transform: scaleX(1);
+            background-color: var(--accent-green);
           }
         }
 
@@ -764,6 +770,7 @@
     .ds-section {
       padding: var(--space-20) 0;
       border-bottom: 2px dashed var(--border-subtle);
+      scroll-margin-top: var(--space-16);
 
       &:last-of-type {
         border-bottom: none;
@@ -927,7 +934,7 @@
 
       .hero {
         min-height: auto;
-        padding: var(--space-12) 0 var(--space-10);
+        padding: var(--space-12) var(--space-4) var(--space-10);
       }
 
       .table-wrap {
@@ -987,7 +994,7 @@
 
       .hero {
         min-height: auto;
-        padding: var(--space-8) 0 var(--space-6);
+        padding: var(--space-8) var(--space-3) var(--space-6);
       }
 
       .swatch-row {
@@ -1164,6 +1171,38 @@
       flex-shrink: 0;
     }
 
+    .nav-kbd {
+      appearance: none;
+      -webkit-appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--ui-text-xs);
+      font-family: var(--font-sans);
+      line-height: 1;
+      padding: 2px var(--space-1);
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform var(--motion-instant) linear, border-color var(--motion-fast) var(--ease-out);
+    }
+
+    .nav-kbd:hover {
+      border-color: var(--border-default);
+    }
+
+    .nav-kbd:focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    .nav-kbd:active {
+      transform: translateY(1px);
+    }
+
     .theme-btn {
       width: 34px;
       height: 34px;
@@ -1262,14 +1301,21 @@
        HERO & TILES
        ========================================================================== */
     .hero {
-      padding: var(--space-20) 0 var(--space-16);
+      padding: var(--space-20) var(--space-6) var(--space-16);
       text-align: center;
       position: relative;
-      overflow: hidden;
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    .hero-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
     }
 
     .hero-title-text {
@@ -1277,7 +1323,7 @@
       font-weight: 800;
       letter-spacing: var(--tracking-tightest);
       line-height: var(--leading-none);
-      margin-bottom: var(--space-6);
+      text-wrap: balance;
 
       & .word {
         display: inline-block;
@@ -1287,24 +1333,33 @@
       }
     }
 
+    .hero-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .hero-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+    }
+
     .hero-subtitle {
       font-size: var(--step-1);
       color: var(--text-secondary);
       max-width: 560px;
-      margin: 0 auto var(--space-4);
+      margin: 0 auto var(--space-6);
       line-height: var(--leading-normal);
+      text-wrap: balance;
     }
 
-    .hero-dots {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-3);
-      margin-bottom: var(--space-16);
-    }
-
-    .hero-dot {
-      width: 12px;
-      height: 12px;
+    .hero-toc-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent-primary);
+      margin: var(--space-12) auto var(--space-10);
       border-radius: var(--radius-full);
     }
 
@@ -2686,6 +2741,126 @@
       }
     }
 
+    /* ==========================================================================
+       COMMAND PALETTE
+       ========================================================================== */
+    .cmd-palette-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-modal);
+      background: var(--overlay-bg);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 20vh;
+      opacity: 0;
+      transition: opacity 200ms var(--ease-out),
+                  display 200ms var(--ease-out) allow-discrete;
+    }
+
+    .cmd-palette-overlay.active {
+      display: flex;
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    .cmd-palette {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 var(--space-4);
+      background: var(--bg-elevated);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transform: scale(0.95) translateY(-10px);
+      opacity: 0;
+      transition: transform 240ms var(--ease-smooth),
+                  opacity 240ms var(--ease-smooth);
+    }
+
+    .cmd-palette-overlay.active .cmd-palette {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+
+      @starting-style {
+        transform: scale(0.95) translateY(-10px);
+        opacity: 0;
+      }
+    }
+
+    .cmd-palette-input {
+      width: 100%;
+      padding: var(--space-4) var(--space-6);
+      font-family: var(--font-sans);
+      font-size: var(--step-0);
+      border: none;
+      border-bottom: 2px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .cmd-palette-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .cmd-palette-list {
+      list-style: none;
+      max-height: 320px;
+      overflow-y: auto;
+      padding: var(--space-2) 0;
+    }
+
+    .cmd-palette-group {
+      padding: var(--space-1) var(--space-6);
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .cmd-palette-item {
+      padding: var(--space-2) var(--space-6);
+      font-size: var(--ui-text-md);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      transition: transform var(--motion-instant) linear,
+                  background var(--motion-fast) var(--ease-out),
+                  color var(--motion-fast) var(--ease-out);
+    }
+
+    .cmd-palette-item:hover,
+    .cmd-palette-item.active {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .cmd-palette-item:active {
+      transform: translateY(1px);
+    }
+
+    .cmd-palette-item .cmd-section-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cmd-palette-empty {
+      padding: var(--space-4) var(--space-6);
+      color: var(--text-muted);
+      font-size: var(--ui-text-sm);
+      text-align: center;
+    }
+
     .modal-header {
       display: flex;
       align-items: center;
@@ -3952,6 +4127,9 @@
         <li><a href="delightful-color.html" style="color:var(--accent-cyan)">Color ↗</a></li>
       </ul>
       <div class="topnav-right">
+        <button type="button" class="nav-kbd" id="cmd-k-trigger" title="Quick navigation"
+          aria-label="Open quick navigation" aria-haspopup="dialog" aria-controls="cmd-palette"
+          aria-expanded="false"><span aria-hidden="true">⌘K</span></button>
         <button class="nav-toggle-btn" id="nav-toggle" aria-label="Toggle navigation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="6" x2="21" y2="6" />
@@ -4046,14 +4224,18 @@
      SECTION 0 — LANDING HERO
      ======================================================================== -->
     <section id="landing" class="hero">
-      <h1 class="hero-title-text" id="hero-headline">A design system that sparks joy</h1>
+      <div class="hero-title-wrap">
+        <h1 class="hero-title-text" id="hero-headline">A design system that sparks joy</h1>
+        <div class="hero-dots anim-in anim-d8" aria-hidden="true">
+          <span class="hero-dot" style="background:var(--accent-primary)"></span>
+          <span class="hero-dot" style="background:var(--accent-gold)"></span>
+          <span class="hero-dot" style="background:var(--accent-cyan)"></span>
+        </div>
+      </div>
       <p class="hero-subtitle anim-in anim-d6">Bold warmth. Confident color. Playful precision. Every token,
         component, and interaction — built to delight.</p>
-      <div class="hero-dots anim-in anim-d8">
-        <span class="hero-dot" style="background:var(--accent-primary)"></span>
-        <span class="hero-dot" style="background:var(--accent-gold)"></span>
-        <span class="hero-dot" style="background:var(--accent-cyan)"></span>
-      </div>
+
+      <div class="hero-toc-divider anim-in anim-d10" aria-hidden="true"></div>
 
       <div class="tile-grid">
         <a href="#philosophy" class="tile tile-pink anim-in anim-d1"><span class="tile-num">01</span>
@@ -6671,116 +6853,14 @@
         Token</button><button class="btn btn-md btn-ghost" onclick="closeDrawer()">Cancel</button></div>
   </dialog>
 
-  <!-- Command Palette -->
-  <div class="modal-panel" id="cmdpal-panel" popover="auto"
-    style="max-width:520px;padding:0;margin-top:min(20vh,160px)">
-    <div
-      style="padding:var(--space-3) var(--space-4);border-bottom:2px solid var(--border-subtle);display:flex;align-items:center;gap:var(--space-2)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"
-        stroke-linecap="round">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-      <input type="text" id="cmdpal-input" placeholder="Search components, tokens, sections..."
-        style="flex:1;border:none;background:none;font-family:var(--font-sans);font-size:0.9375rem;color:var(--text-primary);outline:none"
-        autocomplete="off">
-      <kbd
-        style="padding:2px 6px;background:var(--bg-subtle);border:2px solid var(--border-default);border-radius:3px;font-family:var(--font-mono);font-size:0.625rem;color:var(--text-muted)">ESC</kbd>
-    </div>
-    <div style="padding:var(--space-2);max-height:320px;overflow-y:auto" id="cmdpal-results">
-      <div
-        style="padding:var(--space-1) var(--space-3);font-size:0.625rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">
-        Sections</div>
-      <div class="cmdpal-item" data-href="#philosophy"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <polygon
-            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
-        <span>Philosophy</span><span
-          style="margin-left:auto;font-size:0.6875rem;color:var(--text-muted);font-family:var(--font-mono)">01</span>
-      </div>
-      <div class="cmdpal-item" data-href="#color"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <circle cx="13.5" cy="6.5" r="0.5" />
-          <circle cx="17.5" cy="10.5" r="0.5" />
-          <circle cx="8.5" cy="7.5" r="0.5" />
-          <circle cx="6.5" cy="12.5" r="0.5" />
-          <path
-            d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-        </svg>
-        <span>Color System</span><span
-          style="margin-left:auto;font-size:0.6875rem;color:var(--text-muted);font-family:var(--font-mono)">02</span>
-      </div>
-      <div class="cmdpal-item" data-href="#typography"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <polyline points="4 7 4 4 20 4 20 7" />
-          <line x1="9" y1="20" x2="15" y2="20" />
-          <line x1="12" y1="4" x2="12" y2="20" />
-        </svg>
-        <span>Typography</span><span
-          style="margin-left:auto;font-size:0.6875rem;color:var(--text-muted);font-family:var(--font-mono)">03</span>
-      </div>
-      <div class="cmdpal-item" data-href="#components"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <rect x="3" y="3" width="7" height="7" />
-          <rect x="14" y="3" width="7" height="7" />
-          <rect x="3" y="14" width="7" height="7" />
-          <rect x="14" y="14" width="7" height="7" />
-        </svg>
-        <span>Components</span><span
-          style="margin-left:auto;font-size:0.6875rem;color:var(--text-muted);font-family:var(--font-mono)">05</span>
-      </div>
-      <div class="cmdpal-item" data-href="#signature"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-        </svg>
-        <span>Signature Effects</span><span
-          style="margin-left:auto;font-size:0.6875rem;color:var(--text-muted);font-family:var(--font-mono)">12</span>
-      </div>
-      <div
-        style="padding:var(--space-1) var(--space-3);font-size:0.625rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-top:var(--space-2)">
-        Actions</div>
-      <div class="cmdpal-item" data-action="toggle-theme"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-        <span>Toggle Dark Mode</span>
-      </div>
-      <div class="cmdpal-item" data-action="scroll-top"
-        style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:var(--space-3);font-size:0.875rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <polyline points="18 15 12 9 6 15" />
-        </svg>
-        <span>Back to Top</span>
-      </div>
+  <!-- Command Palette (overlay-based) -->
+  <div class="cmd-palette-overlay" id="cmd-palette-overlay" aria-hidden="true">
+    <div class="cmd-palette" id="cmd-palette" role="dialog" aria-modal="true" aria-label="Quick navigation">
+      <input class="cmd-palette-input" id="cmd-palette-input"
+             type="text" placeholder="Jump to section…" autocomplete="off" aria-controls="cmd-palette-list" />
+      <ul class="cmd-palette-list" id="cmd-palette-list" role="listbox"></ul>
     </div>
   </div>
-
-  <style>
-    .cmdpal-item {
-      transition: transform var(--motion-instant) linear, background var(--motion-fast) var(--ease-out);
-    }
-    .cmdpal-item:hover,
-    .cmdpal-item.focused {
-      background: var(--bg-subtle);
-    }
-    .cmdpal-item:active {
-      transform: translateY(1px);
-    }
-  </style>
 
   <!-- Back to Top -->
   <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -6891,10 +6971,16 @@
       }, { rootMargin: '-20% 0px -70% 0px' });
       sections.forEach(s => observer.observe(s));
 
-      // === Back to Top ===
+      // === Back to Top (IntersectionObserver) ===
       const btt = document.getElementById('back-to-top');
-      window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > window.innerHeight); }, { passive: true });
-      btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      const heroSection = document.querySelector('.hero');
+      if (btt && heroSection) {
+        const bttObserver = new IntersectionObserver(([entry]) => {
+          btt.classList.toggle('visible', !entry.isIntersecting);
+        }, { threshold: 0 });
+        bttObserver.observe(heroSection);
+        btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      }
 
       // === Click to Copy ===
       document.querySelectorAll('[data-copy]').forEach(el => {
@@ -7203,44 +7289,210 @@
         ptCurrentPage = ptCurrentPage === 'a' ? 'b' : 'a';
       };
 
-      // === Command Palette ===
-      const cmdpalPanel = document.getElementById('cmdpal-panel');
-      const cmdpalInput = document.getElementById('cmdpal-input');
-      const cmdpalItems = document.querySelectorAll('.cmdpal-item');
+      // === Command Palette (overlay-based) ===
+      const cmdSections = [
+        { id: 'philosophy',   label: 'Philosophy',            color: 'var(--accent-primary)' },
+        { id: 'color',        label: 'Color System',           color: 'var(--accent-gold)' },
+        { id: 'typography',   label: 'Typography',             color: 'var(--accent-cyan)' },
+        { id: 'spacing',      label: 'Spacing & Layout',       color: 'var(--accent-primary)' },
+        { id: 'components',   label: 'Components',             color: 'var(--accent-gold)' },
+        { id: 'icons',        label: 'Iconography',            color: 'var(--accent-cyan)' },
+        { id: 'motion',       label: 'Motion & Easing',        color: 'var(--accent-gold)' },
+        { id: 'micro',        label: 'Micro-Interactions',     color: 'var(--accent-cyan)' },
+        { id: 'loading',      label: 'Loading & Transitions',  color: 'var(--accent-primary)' },
+        { id: 'overlays',     label: 'Overlays & Feedback',    color: 'var(--accent-gold)' },
+        { id: 'signature',    label: 'Signature Effects',      color: 'var(--accent-cyan)' },
+        { id: 'compositions', label: 'Compositions',           color: 'var(--accent-primary)' },
+      ];
+      const cmdActions = [
+        { action: 'toggle-theme', label: 'Toggle Dark Mode' },
+        { action: 'scroll-top',   label: 'Back to Top' },
+      ];
 
-      function openCmdPal() {
-        cmdpalPanel.showPopover();
-        setTimeout(() => cmdpalInput.focus(), 50);
+      const cmdOverlay = document.getElementById('cmd-palette-overlay');
+      const cmdTrigger = document.getElementById('cmd-k-trigger');
+      const cmdInput   = document.getElementById('cmd-palette-input');
+      const cmdList    = document.getElementById('cmd-palette-list');
+      let cmdActiveIdx = 0;
+      let cmdPreviousFocus = null;
+
+      function getCmdItems() {
+        return Array.from(cmdList.querySelectorAll('.cmd-palette-item'));
       }
-      function closeCmdPal() {
-        cmdpalPanel.hidePopover();
-        cmdpalInput.value = '';
-        cmdpalItems.forEach(item => item.style.display = '');
+
+      function syncCmdActiveState() {
+        const items = getCmdItems();
+        const active = items[cmdActiveIdx];
+
+        items.forEach((el, i) => {
+          const isActive = i === cmdActiveIdx;
+          el.classList.toggle('active', isActive);
+          el.setAttribute('aria-selected', String(isActive));
+        });
+
+        if (active) cmdInput.setAttribute('aria-activedescendant', active.id);
+        else cmdInput.removeAttribute('aria-activedescendant');
       }
 
-      document.getElementById('open-cmdpal').addEventListener('click', openCmdPal);
-      document.addEventListener('keydown', e => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openCmdPal(); }
-        // Native popover="auto" handles light dismiss via Escape and backdrop click automatically.
+      function renderCmdList(filter) {
+        const q = (filter || '').toLowerCase();
+        const filteredSections = cmdSections.filter(s =>
+          s.label.toLowerCase().includes(q) || s.id.toLowerCase().includes(q)
+        );
+        const filteredActions = cmdActions.filter(a =>
+          a.label.toLowerCase().includes(q) || a.action.toLowerCase().includes(q)
+        );
+
+        cmdList.innerHTML = '';
+
+        if (filteredSections.length === 0 && filteredActions.length === 0) {
+          cmdInput.removeAttribute('aria-activedescendant');
+          cmdList.innerHTML = '<li class="cmd-palette-empty">No results found</li>';
+          return;
+        }
+
+        if (filteredSections.length > 0) {
+          const groupHeader = document.createElement('li');
+          groupHeader.className = 'cmd-palette-group';
+          groupHeader.textContent = 'Sections';
+          groupHeader.setAttribute('role', 'presentation');
+          cmdList.appendChild(groupHeader);
+
+          filteredSections.forEach((s) => {
+            const li = document.createElement('li');
+            li.className = 'cmd-palette-item';
+            li.id = 'cmd-option-section-' + s.id;
+            li.setAttribute('role', 'option');
+            li.dataset.sectionId = s.id;
+            li.innerHTML = '<span class="cmd-section-dot" style="background:' + s.color + '"></span>' + s.label;
+            li.addEventListener('click', () => navigateCmdSection(s.id));
+            li.addEventListener('mouseenter', () => setCmdActive(li));
+            cmdList.appendChild(li);
+          });
+        }
+
+        if (filteredActions.length > 0) {
+          const groupHeader = document.createElement('li');
+          groupHeader.className = 'cmd-palette-group';
+          groupHeader.textContent = 'Actions';
+          groupHeader.setAttribute('role', 'presentation');
+          cmdList.appendChild(groupHeader);
+
+          filteredActions.forEach((a) => {
+            const li = document.createElement('li');
+            li.className = 'cmd-palette-item';
+            li.id = 'cmd-option-action-' + a.action;
+            li.setAttribute('role', 'option');
+            li.dataset.action = a.action;
+            li.innerHTML = '<span class="cmd-section-dot" style="background:var(--text-muted)"></span>' + a.label;
+            li.addEventListener('click', () => executeCmdAction(a.action));
+            li.addEventListener('mouseenter', () => setCmdActive(li));
+            cmdList.appendChild(li);
+          });
+        }
+
+        cmdActiveIdx = 0;
+        syncCmdActiveState();
+      }
+
+      function setCmdActive(li) {
+        const nextIdx = getCmdItems().indexOf(li);
+        if (nextIdx === -1) return;
+        cmdActiveIdx = nextIdx;
+        syncCmdActiveState();
+      }
+
+      function openCmdPalette() {
+        if (cmdOverlay.classList.contains('active')) return;
+        cmdPreviousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        cmdOverlay.classList.add('active');
+        cmdOverlay.setAttribute('aria-hidden', 'false');
+        cmdTrigger.setAttribute('aria-expanded', 'true');
+        cmdInput.value = '';
+        renderCmdList('');
+        requestAnimationFrame(() => requestAnimationFrame(() => cmdInput.focus()));
+      }
+
+      function closeCmdPalette() {
+        if (!cmdOverlay.classList.contains('active')) return;
+        cmdOverlay.classList.remove('active');
+        cmdOverlay.setAttribute('aria-hidden', 'true');
+        cmdTrigger.setAttribute('aria-expanded', 'false');
+        cmdInput.value = '';
+        cmdInput.removeAttribute('aria-activedescendant');
+        if (cmdPreviousFocus && cmdPreviousFocus.isConnected) cmdPreviousFocus.focus();
+        cmdPreviousFocus = null;
+      }
+
+      function navigateCmdSection(id) {
+        closeCmdPalette();
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function executeCmdAction(action) {
+        closeCmdPalette();
+        if (action === 'toggle-theme') themeBtn.click();
+        if (action === 'scroll-top') window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Input filtering
+      cmdInput.addEventListener('input', () => renderCmdList(cmdInput.value));
+
+      // Keyboard navigation
+      cmdInput.addEventListener('keydown', (e) => {
+        const items = getCmdItems();
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          cmdActiveIdx = Math.min(cmdActiveIdx + 1, items.length - 1);
+          syncCmdActiveState();
+          items[cmdActiveIdx]?.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          cmdActiveIdx = Math.max(cmdActiveIdx - 1, 0);
+          syncCmdActiveState();
+          items[cmdActiveIdx]?.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const active = items[cmdActiveIdx];
+          if (active) {
+            const sectionId = active.dataset.sectionId;
+            const action = active.dataset.action;
+            if (sectionId) navigateCmdSection(sectionId);
+            else if (action) executeCmdAction(action);
+          }
+        }
       });
 
-      cmdpalInput.addEventListener('input', () => {
-        const q = cmdpalInput.value.toLowerCase();
-        cmdpalItems.forEach(item => {
-          const text = item.textContent.toLowerCase();
-          item.style.display = text.includes(q) ? '' : 'none';
-        });
+      cmdOverlay.addEventListener('keydown', (e) => {
+        if (!cmdOverlay.classList.contains('active')) return;
+
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          cmdInput.focus();
+        }
       });
 
-      cmdpalItems.forEach(item => {
-        item.addEventListener('click', () => {
-          const href = item.getAttribute('data-href');
-          if (href) { window.location.href = href; closeCmdPal(); }
-          const action = item.getAttribute('data-action');
-          if (action === 'toggle-theme') { themeBtn.click(); closeCmdPal(); }
-          if (action === 'scroll-top') { btt.click(); closeCmdPal(); }
-        });
+      // Backdrop click to close
+      cmdOverlay.addEventListener('click', (e) => {
+        if (e.target === cmdOverlay) closeCmdPalette();
       });
+
+      // Global Cmd+K / Ctrl+K toggle
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (cmdOverlay.classList.contains('active')) closeCmdPalette();
+          else openCmdPalette();
+        } else if (e.key === 'Escape' && cmdOverlay.classList.contains('active')) {
+          e.preventDefault();
+          closeCmdPalette();
+        }
+      });
+
+      // Nav badge click + demo button
+      cmdTrigger.addEventListener('click', openCmdPalette);
+      document.getElementById('open-cmdpal').addEventListener('click', openCmdPalette);
 
       // === Interactive Data Table ===
       window.sortTable = function (tableId, colIndex) {
