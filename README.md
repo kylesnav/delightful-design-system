@@ -245,11 +245,11 @@ Search "Delightful" in Obsidian appearance settings
 <tr>
 <td align="center">
 
-**Claude Code**
+**Claude Code Plugin**
 
 `claude plugin install kylesnav/delightful-claude-plugin`
 
-Skills, agents, CSS tokens, Tailwind preset, Figma tokens.
+Build with Delightful in your own projects. Includes `/build` and `/refactor` skills, auditor and builder agents, plus exportable CSS tokens, a Tailwind preset, and Figma tokens.
 
 [Source](claude-plugin/) · [Repo](https://github.com/kylesnav/delightful-claude-plugin)
 
