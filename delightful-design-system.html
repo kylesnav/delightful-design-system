@@ -4061,8 +4061,10 @@
     /* ==========================================================================
        FORCE STATE CLASSES — Inputs & Cards
        ========================================================================== */
+    .state-toggle-bar { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
     .input.force-hover { border-color: var(--border-strong); }
     .input.force-focus { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    .input.force-active { border-color: var(--accent-primary); }
     .card-interactive.force-hover { transform: translate(-4px, -4px); box-shadow: var(--shadow-lg); }
 
     } /* end @layer component */
@@ -5459,6 +5461,7 @@
         <div class="state-toggle-bar" data-target="state-demo-input">
           <button class="btn btn-sm btn-secondary" data-state="default" aria-pressed="true">Default</button>
           <button class="btn btn-sm btn-secondary" data-state="hover">Hover</button>
+          <button class="btn btn-sm btn-secondary" data-state="active">Active</button>
           <button class="btn btn-sm btn-secondary" data-state="focus">Focus</button>
           <button class="btn btn-sm btn-secondary" data-state="disabled">Disabled</button>
         </div>
@@ -5597,8 +5600,12 @@
       <div class="subsection">
         <h3 class="subsection-title">Cards</h3>
         <p class="subsection-desc">Three card variants: default, featured (pink accent), and featured-cyan. Interactive cards lift on hover with shadow escalation.</p>
+        <div class="state-toggle-bar" data-target="state-demo-card">
+          <button class="btn btn-sm btn-secondary" data-state="default" aria-pressed="true">Default</button>
+          <button class="btn btn-sm btn-secondary" data-state="hover">Hover</button>
+        </div>
         <div class="grid-3">
-          <div class="card card-interactive">
+          <div class="card card-interactive" id="state-demo-card">
             <div class="card-title">Design Tokens</div>
             <div class="card-desc">Centralized design decisions expressed as data — colors, typography, spacing, motion.
             </div>
