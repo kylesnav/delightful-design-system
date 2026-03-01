@@ -55,6 +55,22 @@ These settings make iTerm2 look cleaner and closer to Ghostty's minimal chrome:
 | Theme | Appearance > General > Theme | **Minimal** |
 | Pane title bars | Appearance > Panes > "Show per-pane title bar with split panes" | **Off** |
 | Scroll bars | System Settings > Appearance > "Show scroll bars" | **When scrolling** |
+| Font | Profiles > Text > Font | **Monaco 12** |
+
+## tmux Integration
+
+Settings under **General > tmux**:
+
+| Setting | Value |
+|---------|-------|
+| Attaching: restore windows as | **Tabs in the attaching window** |
+| Automatically bury tmux client session after connecting | **On** |
+| Use "tmux" profile rather than profile of the connecting session | **Off** |
+| Status bar shows tmux status bar content, not native components | **On** |
+| Pause a pane if it would take more than N seconds to catch up | **120** |
+| Warn before pausing | **On** |
+| Unpause automatically | **Off** |
+| Mirror tmux paste buffer to local clipboard | **Off** |
 
 ## Key Mappings
 
