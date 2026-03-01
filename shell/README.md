@@ -136,7 +136,7 @@ iTerm2 Semantic History handler for Cmd+click file paths:
 
 ## With Claude Code
 
-After applying the terminal theme and Starship prompt, run `/config` in Claude Code and set the theme to **light-ansi**. Claude Code inherits the Delightful palette from your terminal.
+After applying the terminal theme and Starship prompt, run `/config` in Claude Code and set the theme to **light-ansi** or **dark-ansi** (matching your terminal theme). Claude Code inherits the Delightful palette from your terminal.
 
 ## Related
 

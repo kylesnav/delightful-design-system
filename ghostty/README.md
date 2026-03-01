@@ -96,7 +96,7 @@ Uncomment the `custom-shader` lines in your config to enable.
 
 ### Claude Code
 
-After applying the theme, run `/config` in Claude Code and set the theme to **light-ansi**. Claude Code inherits the Delightful palette from your terminal.
+After applying the theme, run `/config` in Claude Code and set the theme to **light-ansi** or **dark-ansi** (matching your terminal theme). Claude Code inherits the Delightful palette from your terminal.
 
 ## Related
 
