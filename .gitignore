@@ -1,14 +1,4 @@
 .DS_Store
-archive/
-.playwright-mcp/
-vscode-theme/scripts/node_modules/
-.worktrees/
+**/.DS_Store
 node_modules/
-test-results/
-playwright-report/
-playwright/.cache/
-color-audit.html
-verify-*.png
-version-history/
-sample.html
-.claude/settings.local.json
+dist/
