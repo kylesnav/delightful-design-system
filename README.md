@@ -16,6 +16,25 @@ Delightful is a **neo-brutalist CSS design system** built on OKLCH color science
 
 **As installable packages** *(post-MVP):* `@delightful/tokens`, `@delightful/css`, `@delightful/tailwind`, `@delightful/react`.
 
+<details>
+<summary><strong>All 43 components</strong></summary>
+
+**Form Controls** — Button, Input, Textarea, Select, Multi-Select, Checkbox, Radio, Toggle, Range
+
+**Layout** — Card, Tile, Bento Grid, Sidebar, Sidebar Layout, Divider, Accordion
+
+**Feedback** — Toast, Alert, Modal, Drawer, Progress, Skeleton, Tooltip, Empty State
+
+**Navigation** — Topnav, Tabs, Breadcrumbs, Pagination, Segmented Control, Command Palette, Skip Link, Back to Top, Scroll Progress
+
+**Data Display** — Table, Badge, Avatar, Notification Badge, Code Block, Stepper
+
+**Overlay** — Popover, Dropdown
+
+**Motion** — Staggered Reveal, Page Transitions
+
+</details>
+
 ---
 
 ## Aesthetic
@@ -73,11 +92,11 @@ The full build specification is complete across three packages:
 
 | Package | Phases | Status | Scope |
 |---------|--------|--------|-------|
-| **MVP** | 0–7 | Ready to execute | Scaffold → color data → emitters → foundation → motion → 43 components → docs |
+| **MVP** | 0-6 | Ready to execute | Scaffold, color data, emitters, foundation, motion, 43 components, docs |
 | **Launch** | 8 | Planning shell | npm packages, platform distribution, Claude Code plugin |
 | **Roadmap** | Post-v1.0 | Deferred briefs | Batch H components (blur-grid, tilt-card, spotlight, magnetic-button), Animation JS system |
 
-The documentation is precise enough for AI agents to execute each phase from scratch. The execution order is strict: MVP → Launch → Roadmap. Launch specs are intentionally left as planning shells pending decisions that will only be possible after the MVP build.
+The documentation is precise enough for AI agents to execute each phase from scratch. The execution order is strict: MVP, then Launch, then Roadmap. Launch specs are intentionally left as planning shells pending decisions that will only be possible after the MVP build.
 
 ---
 
@@ -85,10 +104,10 @@ The documentation is precise enough for AI agents to execute each phase from scr
 
 | Goal | Start here |
 |------|-----------|
-| Understand the system architecture | [`Documentation/Refactor/MVP/Architecture/mvp-architecture.md`](Documentation/Refactor/MVP/Architecture/mvp-architecture.md) |
-| Execute the build | [`Documentation/Refactor/how-to-execute.md`](Documentation/Refactor/how-to-execute.md) |
-| Navigate all documentation | [`Documentation/Refactor/README.md`](Documentation/Refactor/README.md) |
-| See what the finished system looks like | [`Documentation/design-reference.html`](Documentation/design-reference.html) |
+| Understand the system architecture | [`Documentation/architecture.md`](Documentation/architecture.md) |
+| Execute the build | [`Documentation/how-to-execute.md`](Documentation/how-to-execute.md) |
+| Navigate all documentation | [`Documentation/README.md`](Documentation/README.md) |
+| See what the finished system looks like | [`Documentation/reference/design-reference.html`](Documentation/reference/design-reference.html) |
 
 ---
 
@@ -96,23 +115,43 @@ The documentation is precise enough for AI agents to execute each phase from scr
 
 ```
 Documentation/
-  Refactor/
-    how-to-execute.md        # Operator's guide — start here to run the build
-    README.md                # Documentation package index
-    MVP/                     # Phases 0–7 (85 files — full build spec)
-      Architecture/
-      Prompts/               # Executable phase prompts (feed to Claude Code)
-      QA/                    # Acceptance checklists
-      Specs/                 # Component, emitter, token, motion specs
-    Launch/                  # Phase 8 (17 files — planning shell)
-    Roadmap/                 # Post-v1.0 (16 files — deferred briefs)
-  QA/
-    sonnet-quality-audit.md  # Pre-build documentation quality audit
-  design-reference.html      # Visual/behavioral reference (previous version, read-only)
+  README.md                  # Documentation index
+  how-to-execute.md          # Operator build guide — start here
+  agent-workflow.md          # Agent SOP
+  architecture.md            # System architecture
+  reference/                 # v0.6.5 HTML demos (read-only visual reference)
+    design-reference.html
+    animation-reference.html
+    color-reference.html
+    motion-reference.html
+  phases/                    # Phase execution prompts (feed to Claude Code)
+    phase-0-scaffold.md
+    phase-1-color-data.md
+    phase-2-emitters.md
+    phase-3-foundation.md
+    phase-4-motion.md
+    phase-5-components.md
+    phase-6-showcase.md
+  specs/                     # Token, component, emitter, motion specs
+    tokens/
+    emitters/
+    foundation/
+    motion/
+    components/
+    testing/
+    integration/
+  qa/                        # Acceptance and validation checklists
+    build-validation.md
+    component-checklist.md
+    accessibility-review.md
+    phase-cohesion.md
+  future/                    # Post-MVP planning (not yet actionable)
+    launch/                  # Phase 7 — React wrappers, npm packaging
+    roadmap/                 # Post-v1.0 — advanced components
 ```
 
 ---
 
 ## Design Reference
 
-[`Documentation/design-reference.html`](Documentation/design-reference.html) is a snapshot of the previous version of Delightful — an ~8,000-line monolithic HTML file that served as both source of truth and showcase. It is the visual and behavioral reference for every token value, component design, interaction pattern, and animation. The entire build specification was derived from it. **Do not edit it.**
+[`Documentation/reference/design-reference.html`](Documentation/reference/design-reference.html) is a snapshot of the previous version of Delightful — an ~8,000-line monolithic HTML file that served as both source of truth and showcase. It is the visual and behavioral reference for every token value, component design, interaction pattern, and animation. The entire build specification was derived from it. **Do not edit it.**
