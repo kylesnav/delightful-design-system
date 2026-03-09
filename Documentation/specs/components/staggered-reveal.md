@@ -6,6 +6,8 @@ scope: mvp
 status: active
 ---
 
+> **Build phases:** Phase 5 builds the CSS (containers, layout, static states). Phase 6 adds the JavaScript animation behavior (the `staggerRevealGroup` function, replay button, and page-load triggers).
+
 # Staggered Reveal
 
 > Spring-physics entrance animation where child elements animate in sequentially with configurable delay, duration, and easing. Three spring presets are defined in the reference: Snappy (30ms delay, 200ms duration, bouncy easing), Standard (50ms delay, 300ms duration, smooth easing), and Gentle (80ms delay, 400ms duration, soft easing). Each element transitions from `opacity: 0; translateY(16px) scale(0.95)` to `opacity: 1; translateY(0) scale(1)`. Triggered by JavaScript on page load and via a replay button.

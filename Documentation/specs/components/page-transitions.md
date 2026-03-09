@@ -6,6 +6,8 @@ scope: mvp
 status: active
 ---
 
+> **Build phases:** Phase 5 builds the CSS (frame container, page panel layout, static states, view-transition duration rule). Phase 6 adds the JavaScript animation behavior (the `pageTransition` function, state tracking, and View Transitions API integration).
+
 # Page Transitions
 
 > Simulated page transition demo with three transition types: crossfade, slide-left, and slide-right. The reference implements these as CSS transitions applied via JavaScript within a contained frame, alternating between two page panels. The reference also uses the native View Transitions API (`document.startViewTransition`) for the theme toggle crossfade. All transitions are disabled when `prefers-reduced-motion: reduce`.

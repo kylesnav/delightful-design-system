@@ -79,7 +79,9 @@ Create `.github/workflows/test.yml`:
 - Triggers on push and PR to main
 - Node 20
 - Install dependencies
+- Run `npx playwright install chromium` (required before Playwright tests can run)
 - Run `npm run lint`
+- Run `npm run build` (generates `src/tokens.css` and other files that tests depend on)
 - Run `npm test`
 
 ### 0.5 -- CLAUDE.md

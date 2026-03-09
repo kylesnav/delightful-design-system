@@ -36,7 +36,7 @@ Create the complete palette file containing every color value from the existing 
 **Color authority rules**:
 - OKLCH is authoritative for `primitives` and `semantic` sections
 - Hex is authoritative for `terminal` section (hand-tuned, not derived)
-- Extract all values from the existing `design-reference.html` (the ground truth)
+- Extract OKLCH values from the existing `design-reference.html` (the ground truth) and `../specs/tokens/palette-schema.md` (complete token inventory). Terminal hex values come exclusively from `palette-schema.md` Section 7 — those are the authoritative hand-tuned values, not examples.
 
 **Key token counts**:
 - Neutral family: 14 stops (0 through 950)

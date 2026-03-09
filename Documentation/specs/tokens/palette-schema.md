@@ -38,7 +38,6 @@ This file is the **color authority** for the entire system. All CSS custom prope
     "light": { /* Tier 2 — light theme mappings */ },
     "dark":  { /* Tier 2 — dark theme mappings */ }
   },
-  "component": { /* Tier 3 — component-level color aliases */ },
   "terminal": {
     "light": { /* Hex-authoritative terminal values */ },
     "dark":  { /* Hex-authoritative terminal values */ }
@@ -58,7 +57,6 @@ This file is the **color authority** for the entire system. All CSS custom prope
 | `primitives` | `object` | Yes | Keyed by family, each containing numbered stops. OKLCH format. |
 | `semantic.light` | `object` | Yes | Every semantic token must appear here. OKLCH format. |
 | `semantic.dark` | `object` | Yes | Must contain the same keys as `semantic.light`. OKLCH format. |
-| `component` | `object` | Yes | Component-level color aliases (theme-independent) |
 | `terminal.light` | `object` | Yes | Hand-tuned hex values: `foreground`, `background`, `cursor`, `ansi` (16-element array) |
 | `terminal.dark` | `object` | Yes | Hand-tuned hex values: same keys as `terminal.light` |
 
@@ -325,33 +323,9 @@ Shadows are composite values (not single colors). They combine offset + color.
 
 ---
 
-## 6. Component Color Tokens
+## 6. Component Color Tokens (Tier 3)
 
-These live in the `component` key. They reference semantic tokens by name (not OKLCH values).
-
-| Token | Value | Purpose |
-|---|---|---|
-| `btn-primary-bg` | `var(--accent-primary)` | Primary button background |
-| `btn-primary-text` | `var(--text-on-accent)` | Primary button text |
-| `btn-danger-bg` | `var(--accent-danger)` | Danger button background |
-| `btn-danger-text` | `var(--text-on-accent)` | Danger button text |
-| `btn-gold-bg` | `var(--accent-gold)` | Gold button background |
-| `btn-gold-text` | `var(--text-on-gold)` | Gold button text |
-| `btn-cyan-bg` | `var(--accent-cyan)` | Cyan button background |
-| `btn-cyan-text` | `var(--text-on-accent)` | Cyan button text |
-| `btn-green-bg` | `var(--accent-green)` | Green button background |
-| `btn-green-text` | `var(--text-on-accent)` | Green button text |
-| `btn-purple-bg` | `var(--accent-purple)` | Purple button background |
-| `btn-purple-text` | `var(--text-on-accent)` | Purple button text |
-| `toggle-off-bg` | `var(--primitive-neutral-300)` | Toggle switch off state |
-| `toggle-on-bg` | `var(--accent-primary)` | Toggle switch on state |
-| `toggle-knob` | `var(--primitive-neutral-0)` | Toggle switch knob |
-| `chart-1` | `var(--accent-primary)` | Chart color 1 (pink) |
-| `chart-2` | `var(--accent-gold)` | Chart color 2 (gold) |
-| `chart-3` | `var(--accent-cyan)` | Chart color 3 (cyan) |
-| `chart-4` | `var(--accent-green)` | Chart color 4 (green) |
-| `chart-5` | `var(--accent-purple)` | Chart color 5 (purple) |
-| `chart-6` | `var(--accent-danger)` | Chart color 6 (red) |
+> **Note:** Component-level color aliases (Tier 3) are authored in `src/foundation.css` as `var()` references to semantic tokens, not in the palette JSON. They do not flow through the emitter pipeline. See `phase-3-foundation.md` for the full list.
 
 ---
 
@@ -505,29 +479,6 @@ These live in the `component` key. They reference semantic tokens by name (not O
       "overlay-bg": "oklch(0 0 0 / 0.60)"
     }
   },
-  "component": {
-    "btn-primary-bg": "{accent-primary}",
-    "btn-primary-text": "{text-on-accent}",
-    "btn-danger-bg": "{accent-danger}",
-    "btn-danger-text": "{text-on-accent}",
-    "btn-gold-bg": "{accent-gold}",
-    "btn-gold-text": "{text-on-gold}",
-    "btn-cyan-bg": "{accent-cyan}",
-    "btn-cyan-text": "{text-on-accent}",
-    "btn-green-bg": "{accent-green}",
-    "btn-green-text": "{text-on-accent}",
-    "btn-purple-bg": "{accent-purple}",
-    "btn-purple-text": "{text-on-accent}",
-    "toggle-off-bg": "{primitive.neutral.300}",
-    "toggle-on-bg": "{accent-primary}",
-    "toggle-knob": "{primitive.neutral.0}",
-    "chart-1": "{accent-primary}",
-    "chart-2": "{accent-gold}",
-    "chart-3": "{accent-cyan}",
-    "chart-4": "{accent-green}",
-    "chart-5": "{accent-purple}",
-    "chart-6": "{accent-danger}"
-  }
 }
 ```
 

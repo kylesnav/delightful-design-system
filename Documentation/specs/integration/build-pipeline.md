@@ -152,7 +152,9 @@ Generates `var()` references to token custom properties. 1:1 token coverage: eve
 
 ---
 
-### Step 9: Bundle Components
+### Step 9: Bundle Components *(Phase 7 — Launch)*
+
+> **Note:** Step 9 is a Phase 7 (Launch) concern. The MVP uses `src/components/index.css` via `@import` for bundling. The `npm run build:components` script and `dist/` output are not created during Phases 0–6.
 
 Not handled by orchestrator — separate script:
 

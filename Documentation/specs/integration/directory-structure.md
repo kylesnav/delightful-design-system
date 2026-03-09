@@ -31,7 +31,7 @@ delightful/
 ├── playwright.config.ts    ← Test runner config
 ├── CLAUDE.md               ← Repo conventions for agents
 ├── README.md
-├── CHANGELOG.md
+├── CHANGELOG.md            ← Phase 7 (Launch) — not created during MVP
 └── LICENSE
 ```
 
@@ -188,7 +188,7 @@ ports/
 ├── starship/
 │   └── starship.toml                           ← GENERATED
 │
-└── claude-plugin/
+└── claude-plugin/                              ← Phase 7 (Launch) — not created during MVP
     ├── tokens.css                              ← GENERATED (copy of src/tokens.css)
     ├── skills/                                 ← AUTHORED
     └── agents/                                 ← AUTHORED
@@ -226,7 +226,7 @@ tests/
 ## 8. `scripts/` — Utility Scripts
 
 ```
-scripts/
+scripts/                        ← Phase 7 (Launch) — not created during MVP
 └── bump-version.mjs        ← AUTHORED · Atomic version bump across all packages
 ```
 

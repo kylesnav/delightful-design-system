@@ -80,7 +80,7 @@ All scroll-driven animations additionally wrapped in `@media (prefers-reduced-mo
 
 - **Reduced-motion compliance**: With `prefers-reduced-motion: reduce`, all animations are disabled (duration forced to 0.01ms by reset.css gate)
 - **Keyframe existence**: Spot-check that key animations exist in computed styles
-- **Spring easing tokens**: `--spring-snappy` and `--spring-gentle` resolve to `linear()` values
+- **Spring easing tokens**: `--ease-spring-bouncy` and `--ease-spring-gentle` resolve to `linear()` values
 - **Stagger delays**: `.anim-d1` through `.anim-d12` increment by 50ms
 - **Scroll-driven gating**: Scroll animations are wrapped in `@supports`
 

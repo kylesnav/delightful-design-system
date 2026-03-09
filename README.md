@@ -93,7 +93,7 @@ The full build specification is complete across three packages:
 | Package | Phases | Status | Scope |
 |---------|--------|--------|-------|
 | **MVP** | 0-6 | Ready to execute | Scaffold, color data, emitters, foundation, motion, 43 components, docs |
-| **Launch** | 8 | Planning shell | npm packages, platform distribution, Claude Code plugin |
+| **Launch** | 7 | Planning shell | npm packages, platform distribution, Claude Code plugin |
 | **Roadmap** | Post-v1.0 | Deferred briefs | Batch H components (blur-grid, tilt-card, spotlight, magnetic-button), Animation JS system |
 
 The documentation is precise enough for AI agents to execute each phase from scratch. The execution order is strict: MVP, then Launch, then Roadmap. Launch specs are intentionally left as planning shells pending decisions that will only be possible after the MVP build.
