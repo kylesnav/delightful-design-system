@@ -166,6 +166,8 @@ Last row: `border-bottom: none`.
 | State | CSS Changes |
 |---|---|
 | Hover | `background: var(--bg-subtle); transform: scale(1.01) translateY(-1px); box-shadow: var(--shadow-sm); border-radius: var(--radius-sm)` + td border-bottom becomes transparent |
+
+> **Design note:** Row hover uses a hybrid of `scale(1.01)` and `translateY(-1px)` rather than the standard micro lift/press pattern (`translateY(-1px)` only). The subtle scale amplifies the lift effect across the full row width, making it feel more substantial in a dense data layout. This is an intentional deviation — pure `translateY` on a wide row reads as too subtle.
 | Selected (`.selected`) | `background: var(--accent-primary-subtle)` + td border-bottom-color: `var(--accent-primary-subtle)` |
 
 ### 2.10 `.mono`

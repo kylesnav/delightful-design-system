@@ -439,8 +439,8 @@ Fixed heights for interactive controls (buttons, inputs, selects).
 
 | CSS Custom Property | Value | Purpose |
 |---|---|---|
-| `--badge-py` | `2px` | Badge vertical padding |
-| `--badge-px` | `10px` | Badge horizontal padding |
+| `--badge-py` | `var(--space-1)` | Badge vertical padding (4px) |
+| `--badge-px` | `var(--space-3)` | Badge horizontal padding (12px) |
 
 ### 5.15 Toggle Tokens (3)
 
@@ -535,7 +535,7 @@ The reference HTML includes code snippets (inside `<pre>` blocks) that show **su
 --badge-gold-text: var(--accent-gold-text);
 ```
 
-Note: The `--badge-py` and `--badge-px` tokens in section 5.14 above ARE defined as CSS custom properties in the component layer (with values `2px` and `10px`). The documentation snippets show different values (`var(--space-1)` = 4px and `var(--space-3)` = 12px). This is a discrepancy — the actual CSS custom properties take precedence.
+Note: The `--badge-py` and `--badge-px` tokens in section 5.14 use `var(--space-1)` (4px) and `var(--space-3)` (12px), matching the documented snippets above.
 
 ---
 

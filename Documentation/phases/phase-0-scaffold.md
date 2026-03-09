@@ -110,6 +110,9 @@ ports/obsidian/
 ports/ghostty/
 ports/iterm2/
 ports/starship/
+packages/
+packages/tailwind/
+packages/tailwind/dist/
 tests/
 tests/components/
 scripts/
