@@ -1,0 +1,109 @@
+# Delightful Starship
+# Based on the Gruvbox Rainbow preset (https://starship.rs/presets/gruvbox-rainbow)
+# Re-themed with the Delightful color system
+# Uses high-saturation accents for segment contrast on dark terminals
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = 'delightful_dark'
+
+format = """
+[](color_pink)\
+$directory\
+[](fg:color_pink bg:color_gold)\
+$git_branch\
+$git_status\
+[](fg:color_gold bg:color_green)\
+$nodejs\
+$python\
+$rust\
+[](fg:color_green bg:color_cyan)\
+$docker_context\
+[](fg:color_cyan bg:color_neutral)\
+$time\
+[ ](fg:color_neutral)\
+$line_break$character"""
+
+[directory]
+style = "fg:color_fg bg:color_pink"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "fg:color_fg bg:color_gold"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "fg:color_fg bg:color_gold"
+format = '[$all_status$ahead_behind ]($style)'
+
+[nodejs]
+symbol = ""
+style = "fg:color_fg bg:color_green"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = ""
+style = "fg:color_fg bg:color_green"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "fg:color_fg bg:color_green"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = ""
+style = "fg:color_fg bg:color_cyan"
+format = '[ $symbol $context ]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "fg:color_fg bg:color_neutral"
+format = '[  $time ]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[❯](bold color_green)'
+error_symbol = '[❯](bold color_red)'
+vimcmd_symbol = '[❮](bold color_green)'
+vimcmd_replace_one_symbol = '[❮](bold color_gold)'
+vimcmd_replace_symbol = '[❮](bold color_gold)'
+vimcmd_visual_symbol = '[❮](bold color_cyan)'
+
+[palettes.delightful_dark]
+color_pink = '#f600a3'
+color_gold = '#febf00'
+color_cyan = '#00a6c0'
+color_green = '#22a448'
+color_red = '#ed324b'
+color_neutral = '#3c3632'
+color_fg = '#fdf8f3'
+
+# ==========================================================================
+# LIGHT MODE PALETTE
+# To switch to light mode, change the palette line at the top to:
+#   palette = 'delightful_light'
+# Then uncomment the block below.
+# ==========================================================================
+# [palettes.delightful_light]
+# color_pink = '#ff4fa8'
+# color_gold = '#f5c526'
+# color_cyan = '#5cb8d6'
+# color_green = '#3aad5f'
+# color_red = '#e8554c'
+# color_neutral = '#d4cfc9'
+# color_fg = '#1b150f'
