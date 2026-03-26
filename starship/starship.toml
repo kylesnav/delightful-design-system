@@ -1,109 +1,185 @@
 # Delightful Starship
 # Based on the Gruvbox Rainbow preset (https://starship.rs/presets/gruvbox-rainbow)
 # Re-themed with the Delightful color system
-# Uses high-saturation accents for segment contrast on dark terminals
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
-palette = 'delightful_dark'
-
 format = """
-[](color_pink)\
+[](color_orange)\
+$os\
+$username\
+[](bg:color_yellow fg:color_orange)\
 $directory\
-[](fg:color_pink bg:color_gold)\
+[](fg:color_yellow bg:color_aqua)\
 $git_branch\
 $git_status\
-[](fg:color_gold bg:color_green)\
-$nodejs\
-$python\
+[](fg:color_aqua bg:color_blue)\
+$c\
+$cpp\
 $rust\
-[](fg:color_green bg:color_cyan)\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:color_blue bg:color_bg3)\
 $docker_context\
-[](fg:color_cyan bg:color_neutral)\
+$conda\
+$pixi\
+[](fg:color_bg3 bg:color_bg1)\
 $time\
-[ ](fg:color_neutral)\
+[ ](fg:color_bg1)\
 $line_break$character"""
 
+palette = 'delightful_dark'
+
+[palettes.delightful_dark]
+color_fg0 = '#fdf8f3'
+color_bg1 = '#3c3632'
+color_bg3 = '#615d58'
+color_blue = '#00a6c0'
+color_aqua = '#22a448'
+color_green = '#22a448'
+color_orange = '#f600a3'
+color_purple = '#f600a3'
+color_red = '#ed324b'
+color_yellow = '#febf00'
+
+[os]
+disabled = false
+style = "bg:color_orange fg:color_fg0"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[username]
+show_always = true
+style_user = "bg:color_orange fg:color_fg0"
+style_root = "bg:color_orange fg:color_fg0"
+format = '[ $user ]($style)'
+
 [directory]
-style = "fg:color_fg bg:color_pink"
+style = "fg:color_fg0 bg:color_yellow"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
-"Downloads" = " "
+"Downloads" = " "
 "Music" = "󰝚 "
-"Pictures" = " "
+"Pictures" = " "
 "Developer" = "󰲋 "
 
 [git_branch]
-symbol = ""
-style = "fg:color_fg bg:color_gold"
-format = '[ $symbol $branch ]($style)'
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol $branch ](fg:color_fg0 bg:color_aqua)]($style)'
 
 [git_status]
-style = "fg:color_fg bg:color_gold"
-format = '[$all_status$ahead_behind ]($style)'
+style = "bg:color_aqua"
+format = '[[($all_status$ahead_behind )](fg:color_fg0 bg:color_aqua)]($style)'
 
 [nodejs]
-symbol = ""
-style = "fg:color_fg bg:color_green"
-format = '[ $symbol ($version) ]($style)'
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
-[python]
-symbol = ""
-style = "fg:color_fg bg:color_green"
-format = '[ $symbol ($version) ]($style)'
+[c]
+symbol = " "
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [rust]
-symbol = ""
-style = "fg:color_fg bg:color_green"
-format = '[ $symbol ($version) ]($style)'
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[php]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[java]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[python]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [docker_context]
-symbol = ""
-style = "fg:color_fg bg:color_cyan"
-format = '[ $symbol $context ]($style)'
+symbol = ""
+style = "bg:color_bg3"
+format = '[[ $symbol( $context) ](fg:#83a598 bg:color_bg3)]($style)'
+
+[conda]
+style = "bg:color_bg3"
+format = '[[ $symbol( $environment) ](fg:#83a598 bg:color_bg3)]($style)'
+
+[pixi]
+style = "bg:color_bg3"
+format = '[[ $symbol( $version)( $environment) ](fg:color_fg0 bg:color_bg3)]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
-style = "fg:color_fg bg:color_neutral"
-format = '[  $time ]($style)'
+style = "bg:color_bg1"
+format = '[[  $time ](fg:color_fg0 bg:color_bg1)]($style)'
 
 [line_break]
 disabled = false
 
 [character]
 disabled = false
-success_symbol = '[❯](bold color_green)'
-error_symbol = '[❯](bold color_red)'
-vimcmd_symbol = '[❮](bold color_green)'
-vimcmd_replace_one_symbol = '[❮](bold color_gold)'
-vimcmd_replace_symbol = '[❮](bold color_gold)'
-vimcmd_visual_symbol = '[❮](bold color_cyan)'
-
-[palettes.delightful_dark]
-color_pink = '#f600a3'
-color_gold = '#febf00'
-color_cyan = '#00a6c0'
-color_green = '#22a448'
-color_red = '#ed324b'
-color_neutral = '#3c3632'
-color_fg = '#fdf8f3'
-
-# ==========================================================================
-# LIGHT MODE PALETTE
-# To switch to light mode, change the palette line at the top to:
-#   palette = 'delightful_light'
-# Then uncomment the block below.
-# ==========================================================================
-# [palettes.delightful_light]
-# color_pink = '#ff4fa8'
-# color_gold = '#f5c526'
-# color_cyan = '#5cb8d6'
-# color_green = '#3aad5f'
-# color_red = '#e8554c'
-# color_neutral = '#d4cfc9'
-# color_fg = '#1b150f'
+success_symbol = '[](bold fg:color_green)'
+error_symbol = '[](bold fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'
