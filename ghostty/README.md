@@ -23,6 +23,20 @@
 | [`shell/`](../shell/) | Session — tmux status bar, persistence, zsh config |
 | [`iterm2/`](../iterm2/) | iTerm2 color profiles (standalone alternative) |
 
+## Prerequisites
+
+**Nerd Font** — the Starship prompt and tmux status bar use powerline glyphs and language icons. Ghostty's embedded JetBrains Mono handles normal text; the Nerd Font variant provides icon fallback.
+
+```sh
+brew install --cask font-jetbrains-mono-nerd-font
+```
+
+**Suppress "Last login"** — stop macOS from printing `Last login: ...` on every new terminal:
+
+```sh
+touch ~/.hushlogin
+```
+
 ## Theme
 
 The color theme is portable — install it on any Ghostty setup.

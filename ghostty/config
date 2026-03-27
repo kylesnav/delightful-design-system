@@ -4,13 +4,10 @@ theme = delightful-light
 # Ghostty embeds JetBrains Mono, matching --font-mono.
 # cv02–cv04, cv11 match the design system's font-feature-settings.
 font-size = 14
-font-thicken = true
 font-feature = cv02
 font-feature = cv03
 font-feature = cv04
 font-feature = cv11
-font-style-bold = bold
-font-style-bold-italic = bold italic
 # adjust-cell-height = 20%
 
 

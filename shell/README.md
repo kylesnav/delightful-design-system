@@ -28,6 +28,12 @@ This package is the session and config layer of a cohesive terminal experience:
 brew install --cask font-jetbrains-mono-nerd-font
 ```
 
+**Suppress "Last login"** — stop macOS from printing `Last login: ...` on every new terminal:
+
+```sh
+touch ~/.hushlogin
+```
+
 ## Install
 
 The setup script installs everything at once:
@@ -162,8 +168,6 @@ All aliases clear the visible screen (preserving scrollback) before launching.
 | `gg` | `gemini --yolo` |
 | `gr` | `gemini --resume latest` |
 | `ggr` | `gemini --yolo --resume latest` |
-
-Tip: `touch ~/.hushlogin` to suppress the macOS "Last login" message.
 
 </details>
 
