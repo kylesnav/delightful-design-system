@@ -1,8 +1,6 @@
 # Delightful Starship
 
-Starship prompt theme using the Delightful color system, based on the Gruvbox Rainbow preset.
-
-Based on the [Gruvbox Rainbow](https://starship.rs/presets/gruvbox-rainbow) Starship preset, re-themed with the Delightful color system.
+Starship prompt theme using the Delightful color system. Based on the [Gruvbox Rainbow](https://starship.rs/presets/gruvbox-rainbow) Starship preset, re-themed with the Delightful color system.
 
 ## Install
 
