@@ -12,20 +12,13 @@ import { formatHex, parse, clampChroma } from 'culori';
 import { writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getTokens, toHex } from '../../scripts/tokens.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const THEMES_DIR = join(__dirname, '..', 'themes');
 
-// ---------------------------------------------------------------------------
-// OKLCH → Hex conversion
-// ---------------------------------------------------------------------------
-
-function toHex(oklchStr) {
-  const color = parse(oklchStr);
-  if (!color) throw new Error(`Failed to parse color: ${oklchStr}`);
-  // Clamp to sRGB gamut before formatting
-  return formatHex(clampChroma(color, 'oklch'));
-}
+// Fetch tokens from the source of truth
+const dsTokens = getTokens();
 
 function toHexAlpha(oklchStr, alpha) {
   const hex = toHex(oklchStr);
@@ -33,70 +26,88 @@ function toHexAlpha(oklchStr, alpha) {
   return hex + a;
 }
 
+// Helper to get hex from token name
+function tokenToHex(tier, theme, name) {
+  let token;
+  if (tier === 'primitives') {
+    token = dsTokens.primitives[name];
+  } else if (tier === 'semantic') {
+    token = dsTokens.semantic[theme][name];
+  }
+  
+  if (!token) {
+    console.warn(`Token not found: ${tier}.${theme}.${name}`);
+    return '#ff00ff'; // Debug pink
+  }
+  
+  return token.hex;
+}
+
 // ---------------------------------------------------------------------------
-// TIER 1 — Primitives (OKLCH strings, never used directly in themes)
+// TIER 1 — Primitives
 // ---------------------------------------------------------------------------
 
 const primitives = {
   neutral: {
-    0:   'oklch(1.00 0.000 0)',
-    25:  'oklch(0.988 0.006 70)',
-    50:  'oklch(0.980 0.008 70)',
-    100: 'oklch(0.960 0.010 70)',
-    150: 'oklch(0.940 0.012 70)',
-    200: 'oklch(0.920 0.012 70)',
-    300: 'oklch(0.860 0.014 70)',
-    400: 'oklch(0.750 0.014 70)',
-    500: 'oklch(0.600 0.012 70)',
-    600: 'oklch(0.480 0.010 70)',
-    700: 'oklch(0.350 0.010 70)',
-    800: 'oklch(0.250 0.012 60)',
-    900: 'oklch(0.180 0.012 60)',
-    950: 'oklch(0.140 0.012 60)',
+    0:   tokenToHex('primitives', null, 'neutral-0'),
+    25:  tokenToHex('primitives', null, 'neutral-25'),
+    50:  tokenToHex('primitives', null, 'neutral-50'),
+    100: tokenToHex('primitives', null, 'neutral-100'),
+    150: tokenToHex('primitives', null, 'neutral-150'),
+    200: tokenToHex('primitives', null, 'neutral-200'),
+    300: tokenToHex('primitives', null, 'neutral-300'),
+    400: tokenToHex('primitives', null, 'neutral-400'),
+    500: tokenToHex('primitives', null, 'neutral-500'),
+    600: tokenToHex('primitives', null, 'neutral-600'),
+    700: tokenToHex('primitives', null, 'neutral-700'),
+    800: tokenToHex('primitives', null, 'neutral-800'),
+    900: tokenToHex('primitives', null, 'neutral-900'),
+    950: tokenToHex('primitives', null, 'neutral-950'),
   },
   pink: {
-    100: 'oklch(0.920 0.060 350)',
-    200: 'oklch(0.840 0.140 350)',
-    300: 'oklch(0.720 0.220 350)',
-    400: 'oklch(0.640 0.270 350)',
-    500: 'oklch(0.560 0.280 350)',
+    100: tokenToHex('primitives', null, 'pink-100'),
+    200: tokenToHex('primitives', null, 'pink-200'),
+    300: tokenToHex('primitives', null, 'pink-300'),
+    400: tokenToHex('primitives', null, 'pink-400'),
+    500: tokenToHex('primitives', null, 'pink-500'),
   },
   red: {
-    100: 'oklch(0.930 0.050 20)',
-    200: 'oklch(0.850 0.110 20)',
-    300: 'oklch(0.720 0.180 20)',
-    400: 'oklch(0.620 0.220 20)',
-    500: 'oklch(0.540 0.230 20)',
+    100: tokenToHex('primitives', null, 'red-100'),
+    200: tokenToHex('primitives', null, 'red-200'),
+    300: tokenToHex('primitives', null, 'red-300'),
+    400: tokenToHex('primitives', null, 'red-400'),
+    500: tokenToHex('primitives', null, 'red-500'),
   },
   gold: {
-    100: 'oklch(0.960 0.050 85)',
-    200: 'oklch(0.920 0.110 85)',
-    300: 'oklch(0.870 0.160 85)',
-    400: 'oklch(0.840 0.175 85)',
-    500: 'oklch(0.820 0.165 84)',
+    100: tokenToHex('primitives', null, 'gold-100'),
+    200: tokenToHex('primitives', null, 'gold-200'),
+    300: tokenToHex('primitives', null, 'gold-300'),
+    400: tokenToHex('primitives', null, 'gold-400'),
+    500: tokenToHex('primitives', null, 'gold-500'),
   },
   cyan: {
-    100: 'oklch(0.930 0.038 210)',
-    200: 'oklch(0.850 0.085 210)',
-    300: 'oklch(0.740 0.125 210)',
-    400: 'oklch(0.650 0.148 210)',
-    500: 'oklch(0.570 0.155 210)',
+    100: tokenToHex('primitives', null, 'cyan-100'),
+    200: tokenToHex('primitives', null, 'cyan-200'),
+    300: tokenToHex('primitives', null, 'cyan-300'),
+    400: tokenToHex('primitives', null, 'cyan-400'),
+    500: tokenToHex('primitives', null, 'cyan-500'),
   },
   green: {
-    100: 'oklch(0.930 0.042 148)',
-    200: 'oklch(0.840 0.095 148)',
-    300: 'oklch(0.730 0.145 148)',
-    400: 'oklch(0.630 0.170 148)',
-    500: 'oklch(0.540 0.165 148)',
+    100: tokenToHex('primitives', null, 'green-100'),
+    200: tokenToHex('primitives', null, 'green-200'),
+    300: tokenToHex('primitives', null, 'green-300'),
+    400: tokenToHex('primitives', null, 'green-400'),
+    500: tokenToHex('primitives', null, 'green-500'),
   },
   purple: {
-    100: 'oklch(0.940 0.040 300)',
-    200: 'oklch(0.860 0.080 300)',
-    300: 'oklch(0.720 0.160 300)',
-    400: 'oklch(0.640 0.220 300)',
-    500: 'oklch(0.560 0.260 300)',
+    100: tokenToHex('primitives', null, 'purple-100'),
+    200: tokenToHex('primitives', null, 'purple-200'),
+    300: tokenToHex('primitives', null, 'purple-300'),
+    400: tokenToHex('primitives', null, 'purple-400'),
+    500: tokenToHex('primitives', null, 'purple-500'),
   },
 };
+
 
 // ---------------------------------------------------------------------------
 // TIER 2 — Semantic Tokens (OKLCH strings)
@@ -159,49 +170,49 @@ const light = {
 };
 
 const dark = {
-  bgPage:       'oklch(0.140 0.014 65)',
-  bgSurface:    'oklch(0.165 0.015 65)',
-  bgElevated:   'oklch(0.190 0.015 65)',
-  bgSubtle:     'oklch(0.210 0.015 65)',
-  bgMuted:      'oklch(0.180 0.013 65)',
+  bgPage:       tokenToHex('semantic', 'dark', 'bg-page'),
+  bgSurface:    tokenToHex('semantic', 'dark', 'bg-surface'),
+  bgElevated:   tokenToHex('semantic', 'dark', 'bg-elevated'),
+  bgSubtle:     tokenToHex('semantic', 'dark', 'bg-subtle'),
+  bgMuted:      tokenToHex('semantic', 'dark', 'bg-muted'),
 
-  textPrimary:   'oklch(0.935 0.008 70)',
-  textSecondary: 'oklch(0.690 0.012 70)',
-  textMuted:     'oklch(0.540 0.010 70)',
-  textOnAccent:  'oklch(1.00 0.000 0)',
-  textOnGold:    'oklch(0.140 0.014 65)',
+  textPrimary:   tokenToHex('semantic', 'dark', 'text-primary'),
+  textSecondary: tokenToHex('semantic', 'dark', 'text-secondary'),
+  textMuted:     tokenToHex('semantic', 'dark', 'text-muted'),
+  textOnAccent:  tokenToHex('semantic', 'dark', 'text-on-accent'),
+  textOnGold:    tokenToHex('semantic', 'dark', 'text-on-gold'),
 
-  borderSubtle: 'oklch(0.330 0.015 65)',
+  borderSubtle: tokenToHex('semantic', 'dark', 'border-subtle'),
 
-  accentPrimary:       'oklch(0.700 0.230 350)',
-  accentPrimaryHover:  'oklch(0.740 0.220 350)',
-  accentPrimarySubtle: 'oklch(0.250 0.065 350)',
-  accentPrimaryText:   'oklch(0.750 0.210 350)',
+  accentPrimary:       tokenToHex('semantic', 'dark', 'accent-primary'),
+  accentPrimaryHover:  tokenToHex('semantic', 'dark', 'accent-primary-hover'),
+  accentPrimarySubtle: tokenToHex('semantic', 'dark', 'accent-primary-subtle'),
+  accentPrimaryText:   tokenToHex('semantic', 'dark', 'accent-primary-text'),
 
-  accentDanger:       'oklch(0.660 0.200 20)',
-  accentDangerHover:  'oklch(0.700 0.190 20)',
-  accentDangerSubtle: 'oklch(0.250 0.055 20)',
-  accentDangerText:   'oklch(0.720 0.180 20)',
+  accentDanger:       tokenToHex('semantic', 'dark', 'accent-danger'),
+  accentDangerHover:  tokenToHex('semantic', 'dark', 'accent-danger-hover'),
+  accentDangerSubtle: tokenToHex('semantic', 'dark', 'accent-danger-subtle'),
+  accentDangerText:   tokenToHex('semantic', 'dark', 'accent-danger-text'),
 
-  accentGold:       'oklch(0.840 0.170 85)',
-  accentGoldHover:  'oklch(0.870 0.155 84)',
-  accentGoldSubtle: 'oklch(0.260 0.065 85)',
-  accentGoldText:   'oklch(0.870 0.155 85)',
+  accentGold:       tokenToHex('semantic', 'dark', 'accent-gold'),
+  accentGoldHover:  tokenToHex('semantic', 'dark', 'accent-gold-hover'),
+  accentGoldSubtle: tokenToHex('semantic', 'dark', 'accent-gold-subtle'),
+  accentGoldText:   tokenToHex('semantic', 'dark', 'accent-gold-text'),
 
-  accentCyan:       'oklch(0.720 0.140 210)',
-  accentCyanHover:  'oklch(0.760 0.130 210)',
-  accentCyanSubtle: 'oklch(0.250 0.045 210)',
-  accentCyanText:   'oklch(0.780 0.130 210)',
+  accentCyan:       tokenToHex('semantic', 'dark', 'accent-cyan'),
+  accentCyanHover:  tokenToHex('semantic', 'dark', 'accent-cyan-hover'),
+  accentCyanSubtle: tokenToHex('semantic', 'dark', 'accent-cyan-subtle'),
+  accentCyanText:   tokenToHex('semantic', 'dark', 'accent-cyan-text'),
 
-  accentGreen:       'oklch(0.680 0.155 148)',
-  accentGreenHover:  'oklch(0.720 0.145 148)',
-  accentGreenSubtle: 'oklch(0.250 0.048 148)',
-  accentGreenText:   'oklch(0.740 0.145 148)',
+  accentGreen:       tokenToHex('semantic', 'dark', 'accent-green'),
+  accentGreenHover:  tokenToHex('semantic', 'dark', 'accent-green-hover'),
+  accentGreenSubtle: tokenToHex('semantic', 'dark', 'accent-green-subtle'),
+  accentGreenText:   tokenToHex('semantic', 'dark', 'accent-green-text'),
 
-  accentPurple:       'oklch(0.700 0.200 300)',
-  accentPurpleHover:  'oklch(0.740 0.190 300)',
-  accentPurpleSubtle: 'oklch(0.250 0.055 300)',
-  accentPurpleText:   'oklch(0.760 0.180 300)',
+  accentPurple:       tokenToHex('semantic', 'dark', 'accent-purple'),
+  accentPurpleHover:  tokenToHex('semantic', 'dark', 'accent-purple-hover'),
+  accentPurpleSubtle: tokenToHex('semantic', 'dark', 'accent-purple-subtle'),
+  accentPurpleText:   tokenToHex('semantic', 'dark', 'accent-purple-text'),
 
   // Syntax highlighting (dark mode — tuned for dark backgrounds,
   // from delightful-design-system.html:2792-2798)
