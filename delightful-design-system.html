@@ -333,9 +333,9 @@
       --badge-py: 2px;
       --badge-px: 10px;
 
-      --toggle-off-bg: var(--primitive-neutral-300);
+      --toggle-off-bg: var(--bg-muted);
       --toggle-on-bg: var(--accent-primary);
-      --toggle-knob: var(--primitive-neutral-0);
+      --toggle-knob: var(--bg-elevated);
 
       /* Z-Index Scale */
       --z-base: 1;
@@ -2025,7 +2025,7 @@
       height: 16px;
       border-radius: 50%;
       background: var(--toggle-knob);
-      box-shadow: 0 1px 3px oklch(0 0 0 / 0.15);
+      box-shadow: var(--shadow-sm);
     }
 
     .range {
@@ -2045,7 +2045,7 @@
         background: var(--accent-primary);
         cursor: pointer;
         border: 2px solid var(--bg-surface);
-        box-shadow: 0 1px 4px oklch(0 0 0 / 0.15);
+        box-shadow: var(--shadow-sm);
       }
 
       &::-moz-range-thumb {
@@ -2055,7 +2055,7 @@
         background: var(--accent-primary);
         cursor: pointer;
         border: 2px solid var(--bg-surface);
-        box-shadow: 0 1px 4px oklch(0 0 0 / 0.15);
+        box-shadow: var(--shadow-sm);
       }
 
       &::-moz-range-track {
@@ -2883,7 +2883,7 @@
       padding-top: var(--space-4);
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 -8px 40px oklch(0 0 0 / 0.1);
+      box-shadow: 0 -4px 0 var(--border-default);
       color: var(--text-primary);
 
       /* Entry & Exit animations */
