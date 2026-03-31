@@ -23,7 +23,8 @@
   --text-muted: oklch(0.560 0.012 60);
   --text-on-accent: oklch(1.00 0.000 0);
   --text-on-gold: oklch(0.220 0.020 70);
-  --border-default: oklch(0.200 0.015 60);
+  --border-default: oklch(0.340 0.025 60);
+  --border-strong: oklch(0.250 0.020 60);
   --border-subtle: oklch(0.820 0.015 70);
 
   --accent-primary: oklch(0.640 0.270 350);
@@ -51,9 +52,9 @@
   --accent-purple-subtle: oklch(0.950 0.035 300);
   --accent-purple-text: oklch(0.560 0.230 300);
 
-  --shadow-sm: 2px 2px 0 var(--text-primary);
-  --shadow-md: 4px 4px 0 var(--text-primary);
-  --shadow-lg: 8px 8px 0 var(--text-primary);
+  --shadow-sm: 2px 2px 0 var(--border-default);
+  --shadow-md: 4px 4px 0 var(--border-default);
+  --shadow-lg: 8px 8px 0 var(--border-default);
   --shadow-pink: 4px 4px 0 var(--accent-primary);
   --shadow-gold: 4px 4px 0 var(--accent-gold);
   --shadow-cyan: 4px 4px 0 var(--accent-cyan);
@@ -288,7 +289,7 @@ body {
   width: 13px; height: 13px;
   border-radius: 50%;
   background: white;
-  box-shadow: 0 1px 2px oklch(0 0 0 / 0.12);
+  box-shadow: 2px 2px 0 var(--border-default);
 }
 .knob-off { left: 2.5px; }
 .knob-on { left: 18px; }
@@ -297,7 +298,7 @@ body {
 .progress-track {
   height: 10px;
   background: var(--bg-muted);
-  border: 1.5px solid var(--border-default);
+  border: 2px solid var(--border-default);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -505,7 +506,7 @@ body {
 }
 .mini-table td {
   padding: 4px 6px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 2px solid var(--border-subtle);
 }
 .mono { font-family: var(--font-mono); font-weight: 500; }
 
@@ -735,10 +736,10 @@ body {
     <table class="mini-table">
       <thead><tr><th>Token</th><th>Family</th><th>Lightness</th><th>Chroma</th><th>Hue</th><th style="width:60px;">Preview</th></tr></thead>
       <tbody>
-        <tr><td class="mono">pink-400</td><td>Primary</td><td>0.640</td><td>0.270</td><td>350°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.640 0.270 350);border:1px solid var(--border-default);"></div></td></tr>
-        <tr><td class="mono">gold-400</td><td>Warning</td><td>0.840</td><td>0.175</td><td>85°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.840 0.175 85);border:1px solid var(--border-default);"></div></td></tr>
-        <tr><td class="mono">cyan-400</td><td>Tertiary</td><td>0.650</td><td>0.148</td><td>210°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.650 0.148 210);border:1px solid var(--border-default);"></div></td></tr>
-        <tr><td class="mono">purple-400</td><td>Creative</td><td>0.640</td><td>0.220</td><td>300°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.640 0.220 300);border:1px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">pink-400</td><td>Primary</td><td>0.640</td><td>0.270</td><td>350°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.640 0.270 350);border:2px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">gold-400</td><td>Warning</td><td>0.840</td><td>0.175</td><td>85°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.840 0.175 85);border:2px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">cyan-400</td><td>Tertiary</td><td>0.650</td><td>0.148</td><td>210°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.650 0.148 210);border:2px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">purple-400</td><td>Creative</td><td>0.640</td><td>0.220</td><td>300°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.640 0.220 300);border:2px solid var(--border-default);"></div></td></tr>
       </tbody>
     </table>
   </div>

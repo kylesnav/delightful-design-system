@@ -22,7 +22,7 @@
   --text-secondary: oklch(0.690 0.012 70);
   --text-muted: oklch(0.540 0.010 70);
   --text-on-accent: oklch(1.00 0.000 0);
-  --text-on-gold: oklch(0.160 0.014 65);
+  --text-on-gold: oklch(0.140 0.014 65);
   --border-default: oklch(0.550 0.010 65);
   --border-subtle: oklch(0.330 0.015 65);
 
@@ -288,7 +288,7 @@ body {
   width: 13px; height: 13px;
   border-radius: 50%;
   background: white;
-  box-shadow: 0 1px 2px oklch(0 0 0 / 0.25);
+  box-shadow: 2px 2px 0 var(--border-default);
 }
 .knob-off { left: 2.5px; }
 .knob-on { left: 18px; }
@@ -297,7 +297,7 @@ body {
 .progress-track {
   height: 10px;
   background: var(--bg-muted);
-  border: 1.5px solid var(--border-default);
+  border: 2px solid var(--border-default);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -496,7 +496,7 @@ body {
 }
 .mini-table td {
   padding: 4px 6px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 2px solid var(--border-subtle);
 }
 .mono { font-family: var(--font-mono); font-weight: 500; }
 
@@ -726,10 +726,10 @@ body {
     <table class="mini-table">
       <thead><tr><th>Token</th><th>Family</th><th>Lightness</th><th>Chroma</th><th>Hue</th><th style="width:60px;">Preview</th></tr></thead>
       <tbody>
-        <tr><td class="mono">pink-400</td><td>Primary</td><td>0.700</td><td>0.230</td><td>350°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.700 0.230 350);border:1px solid var(--border-default);"></div></td></tr>
-        <tr><td class="mono">gold-400</td><td>Warning</td><td>0.840</td><td>0.175</td><td>85°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.840 0.175 85);border:1px solid var(--border-default);"></div></td></tr>
-        <tr><td class="mono">cyan-400</td><td>Tertiary</td><td>0.720</td><td>0.140</td><td>210°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.720 0.140 210);border:1px solid var(--border-default);"></div></td></tr>
-        <tr><td class="mono">purple-400</td><td>Creative</td><td>0.700</td><td>0.200</td><td>300°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.700 0.200 300);border:1px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">pink-400</td><td>Primary</td><td>0.700</td><td>0.230</td><td>350°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.700 0.230 350);border:2px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">gold-400</td><td>Warning</td><td>0.840</td><td>0.175</td><td>85°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.840 0.175 85);border:2px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">cyan-400</td><td>Tertiary</td><td>0.720</td><td>0.140</td><td>210°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.720 0.140 210);border:2px solid var(--border-default);"></div></td></tr>
+        <tr><td class="mono">purple-400</td><td>Creative</td><td>0.700</td><td>0.200</td><td>300°</td><td><div style="width:100%;height:12px;border-radius:4px;background:oklch(0.700 0.200 300);border:2px solid var(--border-default);"></div></td></tr>
       </tbody>
     </table>
   </div>
