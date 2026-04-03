@@ -149,7 +149,8 @@ The hex palette matches the Ghostty theme files exactly — update one, update b
 
 ## Related
 
-- [`shell/`](../shell/) — Starship prompt and zsh config (works with any terminal)
+- [`shell/`](../shell/) — Tmux, zsh config, and terminal utilities
+- [`starship/`](../starship/) — Starship prompt theme
 - [`ghostty/`](../ghostty/) — Ghostty theme using the same palette
 
 ## License
