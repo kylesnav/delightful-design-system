@@ -24,21 +24,46 @@ claude plugin install kylesnav/delightful-claude-plugin
 
 ### `/build-with-delightful`
 
-Build a new project or UI from the ground up using the Delightful design system. Scaffolds the full token system, builds components using strict design system patterns, then audits for compliance. Zero hardcoded colors, zero arbitrary spacing, full dark mode, all interaction states.
+Build a new project or UI from the ground up. Scaffolds the full token system, builds components using strict patterns, then audits for compliance. Zero hardcoded colors, full dark mode, all interaction states.
 
 ### `/refactor-with-delightful`
 
-Refactor an existing project's UI to use the Delightful design system. Audits the existing codebase first, presents a migration plan, then systematically replaces hardcoded values with tokens. Re-audits until clean.
+Refactor existing UI to use the design system. Audits first, presents a migration plan, then systematically replaces hardcoded values with tokens. Re-audits until clean.
+
+### `/audit-with-delightful`
+
+Run a compliance audit on your project. Scans for hardcoded values, missing interaction states, accessibility gaps, dark mode breakage, and token drift.
+
+### `/present-with-delightful`
+
+Generate self-contained HTML presentations styled with the design system. Turn any topic into a slide deck with sidebar navigation, search, keyboard controls, theme toggle, and the full neo-brutalist aesthetic.
 
 ## Agents
 
 ### `delightful-auditor`
 
-Read-only compliance checker. Scans for hardcoded colors, spacing, and font sizes. Catches missing interaction states, blurred shadows, missing dark mode support, and missing `prefers-reduced-motion` guards.
+Read-only compliance checker. Scans for hardcoded colors, spacing, font sizes, resolved semantic references, missing shadow layers, interaction states, and reduced-motion guards.
 
 ### `delightful-builder`
 
-Full-capability UI builder. Reads the design system reference and constructs components strictly following all rules and patterns.
+UI builder. Reads reference docs and constructs components strictly following all design system rules and patterns.
+
+### `delightful-composer`
+
+Page-level composition agent. Assembles components into complete layouts with responsive behavior, dark mode, and visual hierarchy.
+
+## Reference Docs
+
+| Doc | Content |
+|-----|---------|
+| `tokens.md` | All 3 tiers of token values |
+| `components.md` | 20+ component patterns with CSS/HTML |
+| `interactions.md` | POUNCE/SINK press patterns, motion, animations |
+| `composition.md` | Page layouts, responsive, utilities, checklist |
+| `philosophy.md` | Design rationale and principles |
+| `accessibility.md` | WCAG contract, contrast, focus model |
+| `porting-guide.md` | How to create new platform themes |
+| `governance.md` | How to safely extend the token system |
 
 ## Exportable Tokens
 

@@ -1,6 +1,6 @@
 ---
 name: refactor-with-delightful
-description: Refactor existing project UI to use the Delightful design system. Use when a user says "refactor with delightful", "migrate to delightful", "apply design system", "replace hardcoded styles", or wants to convert ad-hoc CSS to systematic tokens with dark mode and neo-brutalist patterns.
+description: This skill should be used when the user wants to refactor or migrate an existing project's UI to the Delightful design system. Common triggers include "refactor with delightful", "migrate to delightful", "apply design system", "replace hardcoded styles", "convert to delightful tokens", or any request to replace ad-hoc CSS with systematic oklch tokens, dark mode support, and neo-brutalist interaction patterns.
 allowed-tools: "Bash WebFetch"
 metadata:
   author: Delightful Design System
@@ -13,6 +13,8 @@ metadata:
 Refactor an existing project's UI to use the Delightful design system.
 
 ## Instructions
+
+Before starting, read `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md` and `${CLAUDE_PLUGIN_ROOT}/reference/interactions.md` from the plugin directory for token values and interaction patterns.
 
 ### Step 1 — Audit First
 
@@ -48,7 +50,7 @@ Propose a migration order:
 
 Add the full CSS custom property system to the project:
 
-1. Import or inline the token CSS from `themes/css/delightful-tokens.css` (relative to plugin root)
+1. Import or inline the token CSS from `${CLAUDE_PLUGIN_ROOT}/themes/css/delightful-tokens.css`
 2. Add Google Fonts link if not present (Inter + JetBrains Mono)
 3. Add cascade layer order: `@layer reset, primitives, semantic, component, utilities;`
 4. Add the base reset if not present (inside `@layer reset`)
@@ -195,26 +197,4 @@ Solution: These are allowed exceptions — the auditor should skip `:root` and `
 Cause: Old CSS transitions clash with neo-brutalist translate + shadow pattern
 Solution: Remove old `transition` and `:hover` rules before applying Delightful interaction patterns. Use `transition: all var(--motion-fast) var(--ease-out)` as the base.
 
-## Quick Token Reference
-
-**Colors:** `--accent-primary`, `--accent-danger`, `--accent-gold`, `--accent-cyan`, `--accent-green`, `--accent-purple` (each with `-hover`, `-subtle`, `-text` variants)
-
-**Backgrounds:** `--bg-page`, `--bg-surface`, `--bg-elevated`, `--bg-subtle`, `--bg-muted`
-
-**Text:** `--text-primary`, `--text-secondary`, `--text-muted`, `--text-on-accent`, `--text-on-gold`
-
-**Spacing:** `--space-1` (4px), `--space-1-5` (6px), `--space-2` (8px) through `--space-20` (80px)
-
-**Content font sizes:** `--step--2` through `--step-5` (fluid clamp)
-
-**UI font sizes:** `--ui-text-2xs` (11px), `--ui-text-xs` (12px), `--ui-text-sm` (13px), `--ui-text-md` (14px), `--ui-text-lg` (15px), `--ui-text-xl` (17px)
-
-**Control heights:** `--control-sm` (32px), `--control-md` (36px), `--control-lg` (44px), `--control-xl` (56px)
-
-**Shadows:** `--shadow-sm` (2px), `--shadow-md` (4px), `--shadow-lg` (8px), `--shadow-pink`, `--shadow-danger`, `--shadow-gold`, `--shadow-cyan`, `--shadow-green`, `--shadow-purple`
-
-**Radius:** `--radius-sm` (10px), `--radius-md` (16px), `--radius-lg` (24px), `--radius-xl` (32px), `--radius-full` (pill)
-
-**Motion:** `--motion-instant` (100ms), `--motion-fast` (160ms), `--motion-base` (240ms), `--motion-slow` (360ms), `--motion-deliberate` (500ms)
-
-**Easing:** `--ease-out`, `--ease-bounce`, `--ease-smooth`, `--ease-slam`, `--ease-elastic`
+For the complete token reference, see `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md`.

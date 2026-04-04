@@ -1,6 +1,6 @@
 ---
 name: build-with-delightful
-description: Build new web projects and UI using the Delightful design system. Use when a user says "build with delightful", "create a new page", "new project with delightful", "scaffold a UI", or wants to create components, pages, or prototypes following neo-brutalist warm boldness with oklch tokens.
+description: This skill should be used when the user wants to build a new web project, page, or UI component using the Delightful design system. Common triggers include "build with delightful", "create a new page", "scaffold a UI", "make a website", "build a form", "create a component", or any request to construct HTML/CSS from scratch following neo-brutalist patterns with oklch tokens.
 allowed-tools: "Bash WebFetch"
 metadata:
   author: Delightful Design System
@@ -14,9 +14,13 @@ Build a new project or UI from the ground up using the Delightful design system.
 
 ## Instructions
 
-### Step 1 — Read the Reference
+### Step 1 — Read the References
 
-Read `reference/design-system.md` (relative to plugin root) from this plugin. This contains all tokens, component patterns, and rules.
+Read these files from the plugin directory:
+- `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md` — All token values (colors, spacing, typography, motion)
+- `${CLAUDE_PLUGIN_ROOT}/reference/components.md` — Component patterns with full CSS and HTML
+- `${CLAUDE_PLUGIN_ROOT}/reference/interactions.md` — POUNCE/SINK press patterns, animation keyframes
+- `${CLAUDE_PLUGIN_ROOT}/reference/composition.md` — Page layouts, responsive patterns, utility classes
 
 ### Step 2 — Scaffold the Token System
 
@@ -36,7 +40,7 @@ Set up the project foundation:
 9. Add animation keyframes inside `@media (prefers-reduced-motion: no-preference)`
 10. Add skip navigation link as first element in `<body>`
 
-You can copy the complete token system from `themes/css/delightful-tokens.css` in this plugin.
+Copy the complete token system from `${CLAUDE_PLUGIN_ROOT}/themes/css/delightful-tokens.css`.
 
 ### Step 3 — Build
 
@@ -46,11 +50,11 @@ Create components and pages using **only** Delightful tokens and patterns:
 - Every spacing value uses `var(--space-*)`
 - Every content font size uses `var(--step-*)`, every control font size uses `var(--ui-text-*)`
 - Every border-radius uses `var(--radius-*)`
-- Shadows are solid (zero blur): `Xpx Ypx 0`
+- Shadows use layered approach: hard offset (zero blur) + ambient depth
 - Borders are `2px solid` on cards/buttons
 - All interactive elements have: `:hover` (lift + shadow), `:active` (press + no shadow), `:focus-visible` (outline), `:disabled` (opacity 0.4)
 - Neo-brutalist card hover: `transform: translate(-4px, -4px); box-shadow: var(--shadow-lg);`
-- Neo-brutalist button hover: `transform: translateY(-2px); box-shadow: var(--shadow-lg);`
+- Neo-brutalist button hover: `transform: translateY(-2px); box-shadow: var(--shadow-md);`
 - Neo-brutalist active (all): `transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-primary);`
 - Transition timing: `transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear`
 - Use native `<details>`/`<summary>` for accordions, native `<input type="range">` for sliders
@@ -80,34 +84,6 @@ If the auditor finds violations:
 ### Step 6 — Visual Check
 
 If browser tools are available (Playwright MCP), open the result and screenshot to verify it looks correct. Check both light and dark mode.
-
-## Quick Token Reference
-
-**Colors:** `--accent-primary`, `--accent-danger`, `--accent-gold`, `--accent-cyan`, `--accent-green`, `--accent-purple` (each with `-hover`, `-subtle`, `-text` variants)
-
-**Backgrounds:** `--bg-page`, `--bg-surface`, `--bg-elevated`, `--bg-subtle`, `--bg-muted`
-
-**Text:** `--text-primary`, `--text-secondary`, `--text-muted`, `--text-on-accent`, `--text-on-gold`
-
-**Spacing:** `--space-1` (4px), `--space-1-5` (6px), `--space-2` (8px) through `--space-20` (80px)
-
-**Content font sizes:** `--step--2` through `--step-5` (fluid clamp)
-
-**UI font sizes:** `--ui-text-2xs` (11px), `--ui-text-xs` (12px), `--ui-text-sm` (13px), `--ui-text-md` (14px), `--ui-text-lg` (15px), `--ui-text-xl` (17px)
-
-**Control heights:** `--control-sm` (32px), `--control-md` (36px), `--control-lg` (44px), `--control-xl` (56px)
-
-**Z-index:** `--z-base` (1), `--z-sticky` (100), `--z-fixed` (200), `--z-overlay` (300), `--z-modal` (1000), `--z-toast` (1100), `--z-tooltip` (1500)
-
-**Container widths:** `--container-sm` (640px), `--container-md` (960px), `--container-lg` (1200px)
-
-**Shadows:** `--shadow-sm` (2px), `--shadow-md` (4px), `--shadow-lg` (8px), `--shadow-pink`, `--shadow-danger`, `--shadow-gold`, `--shadow-cyan`, `--shadow-green`, `--shadow-purple`
-
-**Radius:** `--radius-sm` (10px), `--radius-md` (16px), `--radius-lg` (24px), `--radius-xl` (32px), `--radius-full` (pill)
-
-**Motion:** `--motion-instant` (100ms), `--motion-fast` (160ms), `--motion-base` (240ms), `--motion-slow` (360ms), `--motion-deliberate` (500ms)
-
-**Easing:** `--ease-out`, `--ease-bounce`, `--ease-smooth`, `--ease-slam`, `--ease-elastic`
 
 ## Examples
 

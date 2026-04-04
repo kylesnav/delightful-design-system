@@ -23,10 +23,16 @@ const VERSION_FILES = [
     key: 'version',
   },
   {
-    path: path.join(ROOT_DIR, 'claude-plugin/.claude-plugin/plugin.json'),
-    label: 'claude-plugin/.claude-plugin/plugin.json',
+    path: path.join(ROOT_DIR, 'claude-plugin/plugin.json'),
+    label: 'claude-plugin/plugin.json',
     type: 'json',
     key: 'version',
+  },
+  {
+    path: path.join(ROOT_DIR, 'claude-plugin/marketplace.json'),
+    label: 'claude-plugin/marketplace.json',
+    type: 'json-nested',
+    jsonPath: ['plugins', 0, 'version'],
   },
   {
     path: path.join(ROOT_DIR, 'obsidian-theme/manifest.json'),
@@ -44,6 +50,11 @@ const VERSION_FILES = [
     label: 'claude-plugin/skills/refactor-with-delightful/SKILL.md',
     type: 'yaml-frontmatter',
   },
+  {
+    path: path.join(ROOT_DIR, 'claude-plugin/skills/audit-with-delightful/SKILL.md'),
+    label: 'claude-plugin/skills/audit-with-delightful/SKILL.md',
+    type: 'yaml-frontmatter',
+  },
 ];
 
 // --- Validation ---
@@ -56,6 +67,17 @@ function updateJsonFile(filePath, key, version) {
   const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   const old = content[key];
   content[key] = version;
+  fs.writeFileSync(filePath, JSON.stringify(content, null, 2) + '\n', 'utf8');
+  return old;
+}
+
+function updateJsonNested(filePath, jsonPath, version) {
+  const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  let obj = content;
+  for (let i = 0; i < jsonPath.length - 1; i++) obj = obj[jsonPath[i]];
+  const lastKey = jsonPath[jsonPath.length - 1];
+  const old = obj[lastKey];
+  obj[lastKey] = version;
   fs.writeFileSync(filePath, JSON.stringify(content, null, 2) + '\n', 'utf8');
   return old;
 }
@@ -110,6 +132,8 @@ function run() {
     let oldVersion;
     if (file.type === 'json') {
       oldVersion = updateJsonFile(file.path, file.key, version);
+    } else if (file.type === 'json-nested') {
+      oldVersion = updateJsonNested(file.path, file.jsonPath, version);
     } else if (file.type === 'yaml-frontmatter') {
       oldVersion = updateYamlFrontmatter(file.path, version);
     }
