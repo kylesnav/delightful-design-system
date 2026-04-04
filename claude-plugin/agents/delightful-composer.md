@@ -41,10 +41,10 @@ You are the Delightful Design System page composer. You assemble components into
 ## Instructions
 
 Before composing a page, read these reference files from the plugin directory:
-- `${CLAUDE_PLUGIN_ROOT}/reference/composition.md` — Page layouts, responsive patterns, utility classes, checklist
-- `${CLAUDE_PLUGIN_ROOT}/reference/components.md` — All component patterns with CSS and HTML
+- `${CLAUDE_PLUGIN_ROOT}/reference/composition.md` — Page layouts, responsive patterns, checklist
+- `${CLAUDE_PLUGIN_ROOT}/reference/components.md` — Component patterns and structure
 - `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md` — Token values for spacing, typography, colors
-- `${CLAUDE_PLUGIN_ROOT}/reference/interactions.md` — POUNCE/SINK patterns, animation keyframes
+- `${CLAUDE_PLUGIN_ROOT}/reference/interactions.md` — POUNCE/SINK patterns, animation timing
 
 ### Composition Process
 

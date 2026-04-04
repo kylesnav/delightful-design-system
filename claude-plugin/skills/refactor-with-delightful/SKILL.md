@@ -1,200 +1,164 @@
 ---
 name: refactor-with-delightful
-description: This skill should be used when the user wants to refactor or migrate an existing project's UI to the Delightful design system. Common triggers include "refactor with delightful", "migrate to delightful", "apply design system", "replace hardcoded styles", "convert to delightful tokens", or any request to replace ad-hoc CSS with systematic oklch tokens, dark mode support, and neo-brutalist interaction patterns.
+description: This skill should be used when the user wants to refactor or migrate existing UI to the Delightful design system — in any format. Common triggers include "refactor with delightful", "migrate to delightful", "apply design system", "replace hardcoded styles", "convert to delightful tokens", "update my Figma to use delightful", or any request to replace ad-hoc styling with systematic oklch tokens, dark mode, and neo-brutalist patterns. Works with code, Figma designs, or any available tool.
 allowed-tools: "Bash WebFetch"
 metadata:
   author: Delightful Design System
   version: 0.7.0
-  tags: [design-system, css, refactoring, migration, oklch]
+  tags: [design-system, css, refactoring, migration, oklch, figma]
 ---
 
 # Refactor with Delightful
 
-Refactor an existing project's UI to use the Delightful design system.
+Migrate existing UI to the Delightful design system. Works on code files, Figma designs, live pages, or any combination — adapts to whatever tools are available.
 
 ## Instructions
 
 Before starting, read `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md` and `${CLAUDE_PLUGIN_ROOT}/reference/interactions.md` from the plugin directory for token values and interaction patterns.
 
-### Step 1 — Audit First
+### Step 1 — Audit the Existing Work
 
-Launch the `delightful-auditor` agent to scan the existing codebase. The auditor produces a report that maps:
+Determine what you're auditing and use the best available method:
 
-- All hardcoded colors to which Delightful tokens they should become
-- All arbitrary spacing to which `--space-*` values
-- All font sizes to which `--step-*` or `--ui-text-*` values
-- Components that don't follow Delightful patterns
-- Missing dark mode support
+- **Code files** (HTML, CSS, JSX, TSX, Vue, Svelte): Launch the `delightful-auditor` agent to scan the codebase
+- **Figma design** (user provides URL or file): Use Figma MCP tools to read the design, then check colors/spacing/typography against Delightful token values
+- **Live page** (user provides URL or page is running): Use Chrome DevTools MCP to inspect computed styles, or take a screenshot for visual comparison
+- **Screenshot/image**: Read the image and assess visual compliance (colors, spacing, shadow style, interaction indicators)
+
+The audit should map:
+- All hardcoded/arbitrary colors → which Delightful semantic tokens they should become
+- All arbitrary spacing → which `--space-*` values
+- All font sizes → which `--step-*` or `--ui-text-*` values
 - Missing interaction states (hover, active, focus-visible)
-- Blurred shadows that should be solid
+- Missing dark mode support
+- Blurred shadows that should be solid (hard offset + ambient depth)
 - Missing `prefers-reduced-motion` guards
 
 ### Step 2 — Present the Migration Plan
 
-Show the user the audit findings organized by priority:
+Show the audit findings organized by priority:
 
 1. **Critical (Errors):** Hardcoded colors, arbitrary spacing/font sizes, blurred shadows
 2. **Important (Warnings):** Missing interaction states, missing dark mode, missing reduced-motion
-3. **Nice-to-have (Info):** Non-oklch colors, border pattern inconsistencies
+3. **Nice-to-have (Info):** Non-oklch colors, border inconsistencies, missing skip links
 
 Propose a migration order:
-1. Inject the token system first
+1. Establish the token system
 2. Migrate colors to semantic tokens
-3. Migrate spacing to `--space-*` scale
-4. Migrate content typography to fluid `--step-*` scale, control typography to `--ui-text-*` scale
+3. Migrate spacing to scale
+4. Migrate typography to type scale
 5. Add interaction states
 6. Add dark mode support
 7. Add reduced-motion guards
 
-### Step 3 — Inject Tokens
+### Step 3 — Establish the Token System
 
-Add the full CSS custom property system to the project:
+Inject the Delightful token foundation appropriate to the target format:
 
-1. Import or inline the token CSS from `${CLAUDE_PLUGIN_ROOT}/themes/css/delightful-tokens.css`
-2. Add Google Fonts link if not present (Inter + JetBrains Mono)
-3. Add cascade layer order: `@layer reset, primitives, semantic, component, utilities;`
-4. Add the base reset if not present (inside `@layer reset`)
-5. Set body styles using tokens
-6. Add global `:focus-visible` style
-7. Set up `data-theme` attribute on `<html>` for dark mode
-8. Add reduced-motion media query
-9. Add skip navigation link if not present
+**If code (HTML/CSS):**
+1. Import or inline tokens from `${CLAUDE_PLUGIN_ROOT}/themes/css/delightful-tokens.css`
+2. Add Google Fonts, cascade layers, base reset, dark mode toggle, skip link, reduced-motion guard
+
+**If Figma:**
+1. Create variable collections: primitives (7 color scales), semantic (light + dark modes), spacing, typography
+2. Set up light/dark mode variable modes
+3. Create effect styles for shadows (solid offset + ambient depth)
+
+**If React/framework:**
+1. Import token CSS or create a JS/TS token module
+2. Set up theme provider for dark mode switching
 
 ### Step 4 — Migrate Systematically
 
-Replace values file-by-file, component-by-component:
+Replace values using the token mapping from `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md`. The mapping applies regardless of output format — only the syntax changes:
 
-**Colors to Semantic tokens:**
-- Near-black/dark text to `var(--text-primary)`
-- Gray text to `var(--text-secondary)` or `var(--text-muted)`
-- White text on colored bg to `var(--text-on-accent)`
-- Background whites to `var(--bg-surface)` or `var(--bg-page)`
-- Subtle grays to `var(--bg-subtle)` or `var(--bg-muted)`
-- Pink/primary to `var(--accent-primary)` family
-- Red/error/danger to `var(--accent-danger)` family
-- Gold/warning to `var(--accent-gold)` family
-- Cyan to `var(--accent-cyan)` family
-- Green/success to `var(--accent-green)` family
-- Purple/creative to `var(--accent-purple)` family
+**Color mapping (semantic intent → token):**
+| Intent | Token | CSS | Figma Variable |
+|--------|-------|-----|----------------|
+| Primary text | `text-primary` | `var(--text-primary)` | `Semantic/Text/Primary` |
+| Page background | `bg-page` | `var(--bg-page)` | `Semantic/Background/Page` |
+| Primary accent | `accent-primary` | `var(--accent-primary)` | `Semantic/Accent/Primary` |
+| Danger/error | `accent-danger` | `var(--accent-danger)` | `Semantic/Accent/Danger` |
 
-**Spacing to Scale:**
-- Map each pixel value to nearest `--space-*` token
-- 4px=1, 6px=1-5, 8px=2, 12px=3, 16px=4, 20px=5, 24px=6, 32px=8, 40px=10, 48px=12, 64px=16, 80px=20
+**Spacing mapping (pixel value → token):**
+4px→space-1, 6px→space-1-5, 8px→space-2, 12px→space-3, 16px→space-4, 20px→space-5, 24px→space-6, 32px→space-8, 40px→space-10, 48px→space-12, 64px→space-16, 80px→space-20
 
-**Content typography to Fluid scale:**
-- Body text to `--step-0`
-- Subheadings to `--step-1` or `--step-2`
-- Headings to `--step-3` through `--step-5`
+**Typography mapping:**
+- Content: body→step-0, subheadings→step-1/step-2, headings→step-3 through step-5
+- Controls: badges→ui-text-2xs (11px), captions→ui-text-xs (12px), inputs→ui-text-md (14px), buttons→ui-text-lg (15px)
 
-**Control typography to UI text scale:**
-- Badges, table headers to `--ui-text-2xs` (11px)
-- Captions, hints, form errors to `--ui-text-xs` (12px)
-- Tables, sidebar items, small buttons to `--ui-text-sm` (13px)
-- Inputs, selects, alerts, tabs to `--ui-text-md` (14px)
-- Medium buttons to `--ui-text-lg` (15px)
-- Large buttons to `--ui-text-xl` (17px)
+**Shadow migration:**
+- Replace any blurred shadow with layered solid: hard offset (zero blur) + ambient depth
+- `shadow-sm` (2px 2px 0), `shadow-md` (4px 4px 0 + ambient), `shadow-lg` (8px 8px 0 + ambient)
 
-**Control heights:**
-- Small controls (32px) to `--control-sm`
-- Default controls (36px) to `--control-md`
-- Medium controls (44px) to `--control-lg`
-- Large controls (56px) to `--control-xl`
-
-**Shadows to Neo-brutalist solid:**
-- Replace any `box-shadow` with blur radius to solid offsets
-- `--shadow-sm` (2px 2px 0), `--shadow-md` (4px 4px 0), `--shadow-lg` (8px 8px 0)
-
-**Z-index to scale:**
-- Replace hardcoded z-index values with `var(--z-*)` tokens
-- 1 → `--z-base`, 100 → `--z-sticky`, 200 → `--z-fixed`, 300 → `--z-overlay`, 1000 → `--z-modal`, 1100 → `--z-toast`, 1500 → `--z-tooltip`
-
-**Borders to 2px solid pattern:**
-- Cards, buttons: `border: 2px solid var(--text-primary)`
-- Subtle dividers: `border: 1px solid var(--border-subtle)`
-
-**Interactions to Delightful patterns:**
-- Card hover: `transform: translate(-4px, -4px)` + `box-shadow: var(--shadow-lg)`
-- Button hover: `transform: translateY(-2px)` + `box-shadow: var(--shadow-lg)`
-- Active (all): `transform: translate(2px, 2px)` + `box-shadow: 0 0 0 var(--text-primary)`
-- Transition timing: `transform var(--motion-instant) linear, box-shadow var(--motion-instant) linear`
-- Focus: `:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }`
-
-**Native form controls:**
-- Replace custom accordion JS with native `<details>` / `<summary>` + `.accordion-item` pattern
-- Replace custom slider JS with native `<input type="range">` + `.slider-group` pattern
-- Replace custom checkbox/radio JS with native inputs where possible
-
-**Container queries:**
-- Convert component-level media queries to container queries where appropriate
-- Set `container-type: inline-size` on parent, use `@container (max-width: ...)` breakpoints
+**Interaction pattern migration:**
+- Card hover: lift (-4px, -4px) + shadow escalation to `shadow-lg`
+- Button hover: lift (-2px) + shadow escalation
+- Active/press: sink (2px, 2px) + shadow collapse
+- Focus: 2px solid outline with offset
+- Disabled: opacity 0.4, no pointer events
+- In Figma: express as component variants (Rest, Hover, Active, Focus, Disabled) with prototyping
 
 ### Step 5 — Re-audit
 
-Run the `delightful-auditor` agent again to verify zero violations remain. If violations exist, fix them and re-audit.
+Verify the migration using the same method as Step 1:
+- **Code:** Re-run the `delightful-auditor` agent
+- **Figma:** Review variables are applied, no raw color fills remain
+- **Live page:** Re-screenshot in both themes
+- **Any format:** Check against the quality gate — zero hardcoded colors, zero arbitrary spacing, all interaction states present
 
-### Step 6 — Visual Regression
+If violations remain, fix and re-audit until clean.
 
-If browser tools are available, screenshot the result in both light and dark mode to confirm the refactor looks intentional and cohesive.
+### Step 6 — Visual Verification
+
+Verify the result looks intentional and cohesive:
+- **Chrome DevTools MCP:** Navigate to the page, screenshot light and dark mode
+- **Figma MCP:** Get a screenshot of the updated design
+- **Computer Use:** Take a screenshot of whatever's on screen
+- **No visual tools:** Skip — the audit pass is sufficient
 
 ## Migration Tips
 
-- **Don't change semantics** — only change styling. The HTML structure should stay the same unless needed for dark mode support.
-- **Work one file at a time** — complete the migration for each file before moving to the next.
-- **Test dark mode as you go** — toggle `data-theme` after each file to catch issues early.
-- **Preserve existing layouts** — the grid/flex structure doesn't need to change. Focus on colors, spacing, typography, and interaction patterns.
-- **Handle third-party styles carefully** — don't modify vendor CSS. Override with higher specificity using Delightful tokens.
+- **Don't change semantics** — only change styling. Structure stays the same unless needed for dark mode.
+- **Work one component/file at a time** — complete migration before moving to the next.
+- **Test dark mode as you go** — catch issues early.
+- **Preserve existing layouts** — focus on colors, spacing, typography, and interaction patterns.
+- **Handle third-party styles carefully** — override with tokens, don't modify vendor code.
 
 ## Examples
 
-### Example 1: Generic Tailwind Project
+### Example 1: Code Project Refactor
 User says "Refactor this project to use delightful"
-Actions:
-1. Audit finds: 47 hardcoded colors, 23 arbitrary spacing values, 0 dark mode support
-2. Present migration plan to user
-3. Inject tokens, migrate file-by-file
-4. Re-audit: zero violations
-Result: Project fully migrated with dark mode, neo-brutalist interactions, systematic tokens
+→ Audit finds hardcoded colors/spacing, inject tokens, migrate file-by-file, re-audit until clean.
 
-### Example 2: React Component Library
-User says "Migrate my components to the delightful design system"
-Actions:
-1. Audit finds: inline styles with hex colors, px-based spacing, no interaction states
-2. Plan: inject tokens into global CSS, update each component stylesheet
-3. Replace inline colors with CSS custom properties, spacing with scale tokens
-4. Add hover/active/focus-visible states to all interactive components
-5. Re-audit confirms compliance
-Result: Component library now uses systematic tokens, has dark mode, follows neo-brutalist patterns
+### Example 2: Figma Design Migration
+User says "Update my Figma file to use delightful tokens"
+→ Read Figma design via MCP, map existing fills/spacing to Delightful variables, create variable collections, rebind all layers.
 
-### Example 3: Static HTML Site
-User says "Apply delightful to my portfolio site"
-Actions:
-1. Audit finds: mixed hex/rgb colors, arbitrary margin/padding, blurred drop-shadows
-2. Inject full token system into main stylesheet
-3. Replace colors file-by-file, convert shadows to solid offsets
-4. Add dark mode toggle and reduced-motion guards
-5. Re-audit: clean
-Result: Portfolio site with warm cream backgrounds, solid shadows, full dark mode support
+### Example 3: Live Page + Code
+User says "This page looks off, migrate it to delightful" (provides URL)
+→ Screenshot via Chrome DevTools, identify violations visually, find the source files, refactor code, re-screenshot to verify.
+
+### Example 4: Screenshot-Based Audit
+User says "Does this match the delightful design system?" (provides screenshot)
+→ Read the image, compare colors/shadows/spacing against token values, report what's off and what tokens to use.
 
 ## Troubleshooting
 
 ### Colors still look wrong in dark mode
-Cause: Using primitive tokens (`--primitive-*`) directly instead of semantic tokens
-Solution: Replace all `--primitive-*` references with `--bg-*`, `--text-*`, or `--accent-*` semantic tokens
+Cause: Using primitive tokens directly instead of semantic tokens
+Fix: Replace `--primitive-*` with `--bg-*`, `--text-*`, `--accent-*` semantic tokens
 
 ### Shadows have blur/glow effect
-Cause: `box-shadow` has a non-zero blur radius (e.g., `0 4px 12px`)
-Solution: Use solid shadows only: `4px 4px 0` — zero blur radius is the neo-brutalist rule
+Cause: Non-zero blur radius on the hard offset layer
+Fix: Hard offset = zero blur always. Ambient depth layer may have blur.
 
-### Animations feel janky on some devices
-Cause: Missing `prefers-reduced-motion` guard
-Solution: Wrap all `@keyframes` and animation properties in `@media (prefers-reduced-motion: no-preference)`
+### Can't read the Figma file
+Cause: Figma MCP not connected or no file access
+Fix: Ask user to connect Figma MCP, or work from a screenshot/exported CSS instead
 
-### Auditor reports false positives on token definitions
-Cause: Auditor flagging oklch values inside `:root` or `[data-theme]` custom property definitions
-Solution: These are allowed exceptions — the auditor should skip `:root` and `[data-theme]` blocks
-
-### Existing hover effects conflict with Delightful patterns
-Cause: Old CSS transitions clash with neo-brutalist translate + shadow pattern
-Solution: Remove old `transition` and `:hover` rules before applying Delightful interaction patterns. Use `transition: all var(--motion-fast) var(--ease-out)` as the base.
+### Audit reports too many violations
+Cause: Large legacy codebase
+Fix: Prioritize Errors first, then Warnings. Use this skill for systematic migration rather than fixing one-by-one.
 
 For the complete token reference, see `${CLAUDE_PLUGIN_ROOT}/reference/tokens.md`.

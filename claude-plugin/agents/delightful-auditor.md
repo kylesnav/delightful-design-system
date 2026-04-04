@@ -1,6 +1,6 @@
 ---
 name: delightful-auditor
-description: Use this agent to check code compliance with the Delightful design system, audit for token violations, or verify accessibility.
+description: Use this agent to check code file compliance with the Delightful design system — scans for token violations, missing states, and accessibility gaps. For non-code audits (Figma, screenshots, live pages), use the /audit-with-delightful skill instead.
 
   <example>
   Context: User has a project and wants to check design system compliance
