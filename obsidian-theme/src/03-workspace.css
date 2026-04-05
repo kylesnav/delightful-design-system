@@ -383,6 +383,13 @@
      6. BACKLINKS + SEARCH RESULTS
      ======================================================================== */
 
+  /* Backlinks footer — breathing room between note content and backlinks */
+  .mod-footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--border-subtle);
+  }
+
   /* Backlink section headers — "Linked mentions", "Unlinked mentions" */
   .backlink-pane .tree-item-self.search-result-file-title {
     font-weight: 600;

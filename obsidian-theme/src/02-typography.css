@@ -344,6 +344,15 @@
     transform: scale(0.88);
   }
 
+  /* Block content inside tasks — breathing room around code blocks,
+     blockquotes, and other block elements nested in task items */
+  .markdown-rendered .task-list-item pre,
+  .markdown-rendered .task-list-item blockquote,
+  .markdown-rendered .task-list-item .callout {
+    margin-top: var(--space-3);   /* 12px above block */
+    margin-bottom: var(--space-4); /* 16px below block — generous before next item */
+  }
+
   /* ========================================================================
      7. LINKS — Internal, External, Unresolved
      Underline style: bottom-border (not text-decoration) for DS crispness.

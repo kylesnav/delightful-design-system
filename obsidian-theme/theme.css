@@ -3,7 +3,7 @@
  * @description A joyous, neo-brutalist theme built on the Delightful Design System.
  * @author Kyle Snavely
  * @version 0.7.0
- * @built 2026-04-05 06:49:18
+ * @built 2026-04-05 06:55:58
  */
 
 /* ==========================================================================
@@ -775,7 +775,7 @@ body {
   --pill-border-color: transparent;
   /* --- Typography — families + base size --- */
   --font-text-size:        14px;
-  --delightful-text-size:  14px;  /* reading/editing text, independent of baseFontSize */
+  --delightful-text-size:  16px;  /* reading/editing text, independent of baseFontSize */
   --font-interface-theme:  var(--font-sans);
   --font-text-theme:       var(--font-sans);
   --font-monospace-theme:  var(--font-mono);
@@ -1202,6 +1202,15 @@ body {
   /* Click squeeze — satisfying tactile feedback */
   .markdown-rendered .task-list-item-checkbox:active {
     transform: scale(0.88);
+  }
+
+  /* Block content inside tasks — breathing room around code blocks,
+     blockquotes, and other block elements nested in task items */
+  .markdown-rendered .task-list-item pre,
+  .markdown-rendered .task-list-item blockquote,
+  .markdown-rendered .task-list-item .callout {
+    margin-top: var(--space-3);   /* 12px above block */
+    margin-bottom: var(--space-4); /* 16px below block — generous before next item */
   }
 
   /* ========================================================================
@@ -1871,6 +1880,13 @@ body {
   /* ========================================================================
      6. BACKLINKS + SEARCH RESULTS
      ======================================================================== */
+
+  /* Backlinks footer — breathing room between note content and backlinks */
+  .mod-footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--border-subtle);
+  }
 
   /* Backlink section headers — "Linked mentions", "Unlinked mentions" */
   .backlink-pane .tree-item-self.search-result-file-title {
