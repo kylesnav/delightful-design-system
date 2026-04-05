@@ -19,14 +19,17 @@ Generate self-contained scrolling HTML pages using the Delightful design system.
 
 ## Instructions
 
-### Step 1 — Read the Showcase Template
+### Step 1 — Read the Presentation Template
 
-Search for the showcase template using Glob: `**/delightful-showcase*.html` (search parent directories above the plugin root).
+Search for the dedicated presentation template using Glob: `**/delightful-present-template*.html` (search parent directories above the plugin root, including `${CLAUDE_PLUGIN_ROOT}/templates/`).
 
 - **If found:** Read the entire file. Treat its `<style>` block as the canonical CSS — all 5 `@layer` declarations (~1375 lines). **Copy verbatim — never abbreviate, summarize, or rewrite.**
-- **If not found:** Use `${CLAUDE_PLUGIN_ROOT}/themes/css/delightful-tokens.css` combined with the reference files to build CSS from the component patterns documented in this skill.
+- **If not found:** Fall back to `**/delightful-showcase*.html` and extract only the CSS `<style>` block (ignore any site-specific navigation chrome like topnav bars or repo-sidebars).
+- **If neither found:** Use `${CLAUDE_PLUGIN_ROOT}/themes/css/delightful-tokens.css` combined with the reference files to build CSS from the component patterns documented in this skill.
 
-The showcase is a **three-zone template**: CSS | HTML | JS.
+**Important:** Do NOT modify `delightful-showcase.html` — that is the live website showcase page at delightful.build. Always generate a new file.
+
+The template is a **three-zone template**: CSS | HTML | JS.
 
 ### Step 2 — Read the Plugin References
 

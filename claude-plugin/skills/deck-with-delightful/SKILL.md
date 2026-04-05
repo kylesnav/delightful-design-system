@@ -25,7 +25,9 @@ Generate self-contained slide deck presentations using the Delightful design sys
 Search for the deck template using Glob: `**/delightful-deck-template*.html` (search parent directories above the plugin root).
 
 - **If found:** Read the entire file. This is the engine — CSS, HTML chrome, and JS navigation. **Copy verbatim — never abbreviate, summarize, or rewrite.**
-- **If not found:** Use the showcase template (`**/delightful-showcase*.html`) and extract only the CSS zone, HTML chrome, and JS engine (after `INTERACTIVE_RENDERS`), discarding all slide data.
+- **If not found:** Fall back to the presentation template (`**/delightful-present-template*.html`) and extract only the CSS zone, HTML chrome, and JS engine (after `INTERACTIVE_RENDERS`), discarding all slide data and any site-specific navigation chrome.
+
+**Important:** Do NOT modify `delightful-showcase.html` — that is the live website showcase page at delightful.build. Always generate a new file.
 
 The template has four zones: CSS | HTML Chrome | Slide Data (empty) | JS Engine.
 
