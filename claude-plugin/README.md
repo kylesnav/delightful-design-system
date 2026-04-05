@@ -20,6 +20,90 @@
 claude plugin install kylesnav/delightful-claude-plugin
 ```
 
+## Getting Started
+
+After installing, try one of these to see the system in action:
+
+```
+/present-with-delightful — build a scrolling page about any topic
+/deck-with-delightful    — create a slide deck about any topic
+/audit-with-delightful   — scan your current project for design system violations
+```
+
+Each skill walks you through the full workflow — reading references, planning structure, generating output, and verifying compliance. You don't need to know the token system upfront; the skills handle that.
+
+For quick lookups without running a full skill, use the MCP tools directly:
+
+```
+"What's the primary accent color?"       → lookup_token
+"Show me the card component pattern"     → lookup_component
+"What Delightful token matches #ff69b4?" → map_color
+```
+
+## When to Use What
+
+| I want to... | Use this | Why |
+|---|---|---|
+| Build new UI from scratch | `/build-with-delightful` | Scaffolds tokens, builds components, audits for compliance |
+| Migrate existing UI to Delightful | `/refactor-with-delightful` | Audits first, plans migration, replaces systematically |
+| Check if my code follows the system | `/audit-with-delightful` | Scans for hardcoded values, missing states, a11y gaps |
+| Make a scrolling HTML document | `/present-with-delightful` | Single-page with sticky nav, scroll-reveal, theme toggle |
+| Make a navigable slide deck | `/deck-with-delightful` | Keyboard nav, sidebar TOC, search, transitions |
+| Look up a specific token value | MCP: `lookup_token` | Instant answer without running a full skill |
+| Get a component's CSS + HTML | MCP: `lookup_component` | Copy-ready pattern for any of 20+ components |
+| Find the closest token for a color | MCP: `map_color` | Maps hex/rgb/oklch to the nearest Delightful token |
+| Audit a CSS snippet inline | MCP: `audit_css` | Quick check without scanning the full project |
+
+## Usage Examples
+
+### Build a component
+
+```
+/build-with-delightful
+
+"Build a settings page with a form, toggle switches, and a save button"
+```
+
+Claude reads the reference docs, establishes the token foundation, builds the page with proper OKLCH colors, solid shadows, POUNCE/SINK interactions, and dark mode — then runs the auditor to verify.
+
+### Migrate existing code
+
+```
+/refactor-with-delightful
+
+"Refactor this React app to use the Delightful design system"
+```
+
+Claude audits your current code, presents a migration plan (colors → spacing → typography → interactions), executes each phase, and re-audits until there are zero violations.
+
+### Create a scrolling page
+
+```
+/present-with-delightful
+
+"Build a page summarizing our Q1 product launch"
+```
+
+Claude plans the hero, sections, and components, then generates a single self-contained HTML file with scroll-reveal animations, theme toggle (press T), and full responsive layout.
+
+### Create a slide deck
+
+```
+/deck-with-delightful
+
+"Create a presentation about our microservices architecture"
+```
+
+Claude plans chapter groups and slides, then generates a single HTML file with arrow-key navigation, sidebar table of contents, Cmd+K search, animated counters, and ambient particles.
+
+### Quick token lookup
+
+```
+"What spacing token is closest to 24px?"
+```
+
+The MCP server responds instantly: `--space-6: 24px` — no skill invocation needed.
+
 ## Skills
 
 ### `/build-with-delightful`
@@ -36,7 +120,11 @@ Run a compliance audit on your project. Scans for hardcoded values, missing inte
 
 ### `/present-with-delightful`
 
-Generate self-contained HTML presentations styled with the design system. Turn any topic into a slide deck with sidebar navigation, search, keyboard controls, theme toggle, and the full neo-brutalist aesthetic.
+Generate self-contained scrolling HTML pages styled with the design system. Turn any topic into a single-page document with sticky navigation, scroll-reveal animations, theme toggle, and the full neo-brutalist aesthetic.
+
+### `/deck-with-delightful`
+
+Generate slide deck presentations with keyboard navigation, sidebar table of contents, search, theme toggle, and the full neo-brutalist aesthetic. Turn any topic into an interactive navigable slide-based presentation.
 
 ## Agents
 
