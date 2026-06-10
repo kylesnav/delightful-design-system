@@ -4,7 +4,7 @@ This repo powers `https://delightful.build/` and contains the source-of-truth HT
 
 ## Source of Truth
 
-- `index.html` is the public homepage.
+- `index.html` is the GitHub Pages root redirect to `delightful-design-system.html`.
 - `delightful-design-system.html` is the canonical component/token/interaction reference.
 - `delightful-color.html`, `delightful-motion.html`, and `delightful-animation.html` are companion references.
 - Standalone platform ports live in sibling repos. Do not add local copies back here.
@@ -16,7 +16,7 @@ npm install
 npm test
 ```
 
-Use Browser screenshots for visual changes. Check homepage, design-system, color, motion, and animation pages in light, dark, mobile, and reduced-motion views when their shared tokens or layout systems change.
+Use Browser screenshots for visual changes. Check the root redirect, design-system, color, motion, and animation pages in light, dark, mobile, and reduced-motion views when their shared tokens or layout systems change.
 
 ## Editing Rules
 

@@ -6,13 +6,13 @@ A warm, neo-brutalist design system for editors, terminals, notes, agents, and p
 
 ![Delightful design system preview](screenshots/Delightful-Light.png)
 
-Delightful is built around OKLCH color, sturdy 2px borders, hard offset shadows, and motion that feels quick without feeling twitchy. This repo is the public `delightful.build` site and the source-of-truth reference for the system.
+Delightful is built around OKLCH color, sturdy 2px borders, hard offset shadows, and motion that feels quick without feeling twitchy. This repo is the public `delightful.build` site and the source-of-truth reference for the system. The root URL redirects to the canonical design-system page.
 
 ## Explore
 
 | Page | What it is |
 |---|---|
-| [Homepage](index.html) | Public front door and ecosystem hub for Delightful. |
+| [Root redirect](index.html) | GitHub Pages entrypoint that forwards to the design-system reference. |
 | [Design System](delightful-design-system.html) | Canonical reference for tokens, components, interactions, and composition. |
 | [Color](delightful-color.html) | OKLCH primitives, semantic roles, component bindings, and palette exploration. |
 | [Motion](delightful-motion.html) | CSS motion vocabulary, timing tokens, reduced-motion behavior, and animation patterns. |

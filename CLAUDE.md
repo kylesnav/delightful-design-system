@@ -6,7 +6,7 @@ Public site and source-of-truth reference for `delightful.build`.
 
 `delightful-design-system.html` is the canonical design-system reference. The other HTML pages are companion references and demos:
 
-- `index.html` — public homepage and ecosystem hub
+- `index.html` — GitHub Pages root redirect to the design-system reference
 - `delightful-color.html` — color architecture explorer
 - `delightful-motion.html` — CSS motion catalog
 - `delightful-animation.html` — JavaScript animation demos
